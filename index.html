@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iuav MA Fashion Community</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: #f7f4ef;
+  font-family: 'LFT Etica Mono', monospace;
+}
+canvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+(function(){
+  const canvas = document.getElementById('c');
+  const ctx    = canvas.getContext('2d');
+
+  const DEFS = [
+    { lines:['JOIN THE','COMMUNITY'], href:'Varianti Join our community /join.html', r:162, color:'#D4D4D4', tc:'#ffffff', fs:28 },
+    { lines:['TALENT','RADAR'],       href:'Varianti living archive/Talent Radar.html', r:122, color:'#3E4C5A', tc:'#ffffff', fs:25 },
+    { lines:['MATCHING','IDEAS'],     href:'Varianti Matching ideas/Matching ideas.html', r:138, color:'#F82428', tc:'#ffffff', fs:25 },
+    { lines:['LIVING','ARCHIVE'],     href:'Varianti living archive/Living archive.html', r:200, color:'#0100E2', tc:'#ffffff', fs:38 },
+    { lines:['PASSAPAROLA'],          href:'Varianti living archive/Passaparola.html', r:155, color:'#E1FF92', tc:'#1a1a1a', fs:30 },
+    { lines:['IMAC','IDENTITY'],      href:'Varianti living archive/IMAC identity.html', r:170, color:'#F98161', tc:'#ffffff', fs:32 },
+  ];
+
+  let W, H, balls;
+  let dragging = null, dragOffX = 0, dragOffY = 0;
+  let lastMX = 0, lastMY = 0, mVX = 0, mVY = 0;
+  let downX = 0, downY = 0;
+
+  const DAMPING = 0.995;
+  const BOUNCE  = 0.82;
+  const REPULSE = 1.05;
+  const MIN_SPD = 0.4;
+  const MAX_SPD = 2.8;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    if (!balls) initBalls();
+    else balls.forEach(b => {
+      b.x = Math.max(b.r, Math.min(W - b.r, b.x));
+      b.y = Math.max(b.r, Math.min(H - b.r, b.y));
+    });
+  }
+
+  function initBalls() {
+    const pos = [
+      [0.28,0.28],[0.72,0.25],
+      [0.15,0.58],[0.82,0.55],
+      [0.38,0.82],[0.68,0.80],
+    ];
+    balls = DEFS.map((d, i) => {
+      const angle = Math.random() * Math.PI * 2;
+      const spd   = MIN_SPD + Math.random() * 1.2;
+      return {
+        ...d,
+        x: pos[i][0] * W,
+        y: pos[i][1] * H,
+        vx: Math.cos(angle) * spd,
+        vy: Math.sin(angle) * spd,
+        scale: 1,
+        scaleTarget: 1,
+      };
+    });
+  }
+
+  function enforceSpeed(b, i) {
+    if (i === dragging) return;
+    const spd = Math.sqrt(b.vx*b.vx + b.vy*b.vy);
+    if (spd < MIN_SPD) { const f = MIN_SPD/(spd||0.001); b.vx*=f; b.vy*=f; }
+    if (spd > MAX_SPD) { const f = MAX_SPD/spd;           b.vx*=f; b.vy*=f; }
+  }
+
+  function resolveCollisions() {
+    for (let i = 0; i < balls.length; i++) {
+      for (let j = i+1; j < balls.length; j++) {
+        const a = balls[i], b = balls[j];
+        const dx = b.x-a.x, dy = b.y-a.y;
+        const d  = Math.sqrt(dx*dx+dy*dy);
+        const mn = (a.r+b.r)*1.012;
+        if (d < mn && d > 0.001) {
+          const nx = dx/d, ny = dy/d, ov = (mn-d)/2;
+          if (dragging!==i){ a.x-=nx*ov; a.y-=ny*ov; }
+          if (dragging!==j){ b.x+=nx*ov; b.y+=ny*ov; }
+          const dot = (a.vx-b.vx)*nx+(a.vy-b.vy)*ny;
+          if (dot > 0) {
+            const imp = dot*REPULSE;
+            if (dragging!==i){ a.vx-=imp*nx; a.vy-=imp*ny; }
+            if (dragging!==j){ b.vx+=imp*nx; b.vy+=imp*ny; }
+          }
+        }
+      }
+    }
+  }
+
+  function update() {
+    balls.forEach((b, i) => {
+      if (i === dragging) return;
+      b.vx *= DAMPING; b.vy *= DAMPING;
+      enforceSpeed(b, i);
+      b.x += b.vx; b.y += b.vy;
+      if (b.x-b.r < 0)  { b.x=b.r;   b.vx= Math.abs(b.vx)*BOUNCE; }
+      if (b.x+b.r > W)  { b.x=W-b.r; b.vx=-Math.abs(b.vx)*BOUNCE; }
+      if (b.y-b.r < 0)  { b.y=b.r;   b.vy= Math.abs(b.vy)*BOUNCE; }
+      if (b.y+b.r > H)  { b.y=H-b.r; b.vy=-Math.abs(b.vy)*BOUNCE; }
+    });
+    resolveCollisions();
+    balls.forEach(b => { b.scale += (b.scaleTarget-b.scale)*0.1; });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    balls.forEach(b => {
+      ctx.save();
+      ctx.translate(b.x, b.y);
+      ctx.scale(b.scale, b.scale);
+
+      ctx.shadowColor   = 'rgba(0,0,0,0.13)';
+      ctx.shadowBlur    = b.scaleTarget > 1 ? 44 : 20;
+      ctx.shadowOffsetY = b.scaleTarget > 1 ? 16 :  7;
+
+      ctx.beginPath();
+      ctx.arc(0, 0, b.r, 0, Math.PI*2);
+      ctx.fillStyle = b.color;
+      ctx.fill();
+
+      ctx.shadowColor = 'transparent';
+      ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+
+      ctx.fillStyle    = b.tc;
+      ctx.font         = `700 ${b.fs}px 'LFT Etica Mono', monospace`;
+      ctx.textAlign    = 'center';
+      ctx.textBaseline = 'middle';
+
+      const lh = b.fs * 1.45;
+      const sy = -((b.lines.length-1)*lh)/2;
+      b.lines.forEach((line, li) => ctx.fillText(line, 0, sy+li*lh));
+
+      ctx.restore();
+    });
+  }
+
+  function loop() { update(); draw(); requestAnimationFrame(loop); }
+
+  function getXY(e) {
+    const src = e.touches ? e.touches[0] : e;
+    return { x: src.clientX, y: src.clientY };
+  }
+  function hitTest(x, y) {
+    for (let i = balls.length-1; i >= 0; i--) {
+      const b = balls[i], dx = x-b.x, dy = y-b.y;
+      if (dx*dx+dy*dy < b.r*b.r) return i;
+    }
+    return -1;
+  }
+
+  canvas.addEventListener('mousemove', e => {
+    const {x,y} = getXY(e);
+    mVX = x-lastMX; mVY = y-lastMY;
+    lastMX = x; lastMY = y;
+    if (dragging !== null) {
+      balls[dragging].x = x-dragOffX;
+      balls[dragging].y = y-dragOffY;
+      canvas.style.cursor = 'grabbing';
+    } else {
+      const h = hitTest(x,y);
+      balls.forEach((b,i) => { b.scaleTarget = i===h ? 1.08 : 1; });
+      canvas.style.cursor = h >= 0 ? 'grab' : 'default';
+    }
+  });
+
+  canvas.addEventListener('mousedown', e => {
+    const {x,y} = getXY(e);
+    downX=x; downY=y;
+    const h = hitTest(x,y);
+    if (h >= 0) {
+      dragging=h; dragOffX=x-balls[h].x; dragOffY=y-balls[h].y;
+      balls[h].vx=0; balls[h].vy=0;
+      canvas.style.cursor='grabbing';
+    }
+  });
+
+  canvas.addEventListener('mouseup', e => {
+    if (dragging===null) return;
+    const {x,y} = getXY(e);
+    const moved = Math.abs(x-downX)+Math.abs(y-downY) > 6;
+    if (!moved) {
+      window.location.href = balls[dragging].href;
+    } else {
+      balls[dragging].vx = mVX*0.7;
+      balls[dragging].vy = mVY*0.7;
+    }
+    dragging=null;
+    canvas.style.cursor='default';
+  });
+
+  canvas.addEventListener('mouseleave', () => {
+    if (dragging!==null) {
+      balls[dragging].vx=mVX*0.5; balls[dragging].vy=mVY*0.5;
+      dragging=null;
+    }
+    balls.forEach(b => { b.scaleTarget=1; });
+    canvas.style.cursor='default';
+  });
+
+  canvas.addEventListener('touchstart', e => {
+    e.preventDefault();
+    const {x,y} = getXY(e);
+    downX=x; downY=y; lastMX=x; lastMY=y;
+    const h = hitTest(x,y);
+    if (h>=0){ dragging=h; dragOffX=x-balls[h].x; dragOffY=y-balls[h].y; balls[h].vx=0; balls[h].vy=0; }
+  },{passive:false});
+
+  canvas.addEventListener('touchmove', e => {
+    e.preventDefault();
+    const {x,y} = getXY(e);
+    mVX=x-lastMX; mVY=y-lastMY; lastMX=x; lastMY=y;
+    if (dragging!==null){ balls[dragging].x=x-dragOffX; balls[dragging].y=y-dragOffY; }
+  },{passive:false});
+
+  canvas.addEventListener('touchend', e => {
+    if (dragging===null) return;
+    const moved = Math.abs(lastMX-downX)+Math.abs(lastMY-downY) > 8;
+    if (!moved) {
+      window.location.href = balls[dragging].href;
+    } else {
+      balls[dragging].vx=mVX*0.7; balls[dragging].vy=mVY*0.7;
+    }
+    dragging=null;
+  });
+
+  window.addEventListener('resize', resize);
+  resize();
+  loop();
+})();
+</script>
+</body>
+</html>
