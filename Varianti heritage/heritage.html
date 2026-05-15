@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heritage — Living Archive</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue:   #0100E2;
+  --yellow: #FFF4B6;
+  --mono:   'Space Mono', monospace;
+}
+html, body {
+  height: 100%;
+  background: var(--blue);
+  font-family: var(--mono);
+  color: var(--blue);
+}
+
+/* NAV */
+nav.site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.1rem 2.5rem;
+  background: var(--yellow);
+  border-bottom: 1px solid rgba(1,0,226,0.18);
+}
+.nav-back {
+  font-family: var(--mono); font-size: 0.62rem;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--blue); text-decoration: none;
+  border-bottom: 0.5px solid rgba(1,0,226,0.4); padding-bottom: 2px;
+  transition: color 0.2s;
+}
+.nav-back:hover { color: rgba(1,0,226,0.6); }
+.nav-logo {
+  font-family: var(--mono); font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: rgba(1,0,226,0.5);
+}
+.nav-logo span { color: var(--blue); }
+
+/* PAGE */
+.page {
+  padding-top: 4.5rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  padding-bottom: 2.5rem;
+  gap: 0;
+}
+
+/* ── TOP SECTION: title block (left ~45%) + empty blue (right) ── */
+.top-section {
+  display: grid;
+  grid-template-columns: 45% 55%;
+  margin-bottom: 0;
+}
+
+.block-title {
+  background: var(--yellow);
+  padding: 1.6rem 2rem 1.4rem;
+}
+.block-title h1 {
+  font-family: var(--mono);
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--blue);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.top-right {
+  /* blue — just empty space */
+}
+
+/* ── DIVIDER LINE ── */
+.divider {
+  height: 1px;
+  background: rgba(232,223,168,0.35);
+  margin: 0;
+  width: 100%;
+}
+
+/* ── MIDDLE SECTION: big text block (left) + blue empty (right) ── */
+.mid-section {
+  display: grid;
+  grid-template-columns: 45% 55%;
+  margin-bottom: 0;
+}
+
+.block-desc {
+  background: var(--yellow);
+  padding: 1.8rem 2rem 2rem;
+  border-top: 3px solid var(--blue);
+}
+.block-desc p {
+  font-size: 0.82rem;
+  line-height: 1.9;
+  color: var(--blue);
+  margin-bottom: 1rem;
+}
+.block-desc p:last-child { margin-bottom: 0; }
+.block-desc strong { font-weight: 700; }
+
+.mid-right {
+  /* blue — empty */
+}
+
+/* ── DIVIDER LINE 2 ── */
+.divider2 {
+  height: 1px;
+  background: rgba(232,223,168,0.35);
+  width: 100%;
+}
+
+/* ── BOTTOM SECTION: blue empty (left) + project buttons (right ~55%) ── */
+.bottom-section {
+  display: grid;
+  grid-template-columns: 45% 55%;
+  padding-top: 1.8rem;
+}
+
+.bottom-left {
+  /* blue — empty */
+}
+
+.block-projects {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding-left: 0;
+}
+
+.project-btn {
+  display: block;
+  width: 100%;
+  background: var(--yellow);
+  color: var(--blue);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  padding: 0.85rem 1.2rem;
+  text-align: left;
+  position: relative;
+  transition: background 0.18s, color 0.18s, transform 0.18s;
+}
+.project-btn::after {
+  content: '↗';
+  position: absolute;
+  right: 1rem; top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.45;
+  transition: opacity 0.18s, transform 0.18s;
+}
+.project-btn:hover {
+  background: rgba(232,223,168,0.12);
+  color: var(--yellow);
+  outline: 1px solid var(--yellow);
+  transform: translateX(4px);
+}
+.project-btn:hover::after { opacity: 1; transform: translateY(-50%) translate(3px,-3px); }
+
+/* BREADCRUMB */
+.breadcrumb {
+  margin-top: auto;
+  padding-top: 2.5rem;
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(232,223,168,0.3);
+  display: flex; gap: 0.6rem; align-items: center;
+}
+.breadcrumb a { color: rgba(232,223,168,0.3); text-decoration: none; transition: color 0.2s; }
+.breadcrumb a:hover { color: var(--yellow); }
+.breadcrumb span { opacity: 0.3; }
+
+/* MOBILE */
+@media (max-width: 640px) {
+  .top-section,
+  .mid-section,
+  .bottom-section { grid-template-columns: 1fr; }
+  .top-right, .mid-right, .bottom-left { display: none; }
+  .block-projects { padding-left: 0; }
+}
+
+/* HAMBURGER */
+.hamburger {
+  background: none; border: none; cursor: pointer;
+  display: flex; flex-direction: column; gap: 5px; padding: 4px;
+}
+.hamburger span {
+  display: block; width: 22px; height: 2px; background: var(--blue);
+}
+
+/* MENU OVERLAY */
+.menu-overlay {
+  position: fixed; inset: 0; z-index: 300;
+  background: var(--blue);
+  display: flex; flex-direction: column;
+  padding: 1.1rem 2.5rem 2.5rem;
+  transform: translateY(-100%);
+  transition: transform 0.4s cubic-bezier(0.77,0,0.18,1);
+}
+.menu-overlay.open { transform: translateY(0); }
+
+.menu-top {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--yellow);
+  margin: -1.1rem -2.5rem 0;
+  padding: 1.1rem 2.5rem 1.1rem;
+}
+.menu-site-name {
+  font-family: var(--mono); font-size: 1rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--blue);
+}
+.menu-close {
+  background: none; border: none; cursor: pointer;
+  font-family: var(--mono); font-size: 3.5rem; font-weight: 700;
+  color: var(--blue); line-height: 1;
+  transition: opacity 0.2s;
+}
+.menu-close:hover { opacity: 0.6; }
+
+.menu-rule {
+  height: 1px; background: rgba(255,244,182,0.65); margin-bottom: 0;
+}
+
+.menu-nav {
+  display: flex; flex-direction: column; flex: 1;
+  justify-content: center;
+}
+.menu-item {
+  font-family: 'LFT Etica Mono', monospace;
+  font-size: clamp(1.6rem, 3.5vw, 3rem);
+  font-weight: 700; text-transform: uppercase;
+  color: var(--yellow); text-decoration: none;
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid rgba(255,244,182,0.65);
+  transition: background 0.18s, color 0.18s;
+  letter-spacing: -0.01em;
+}
+.menu-item:first-child { border-top: 1px solid rgba(255,244,182,0.65); }
+.menu-item:hover { background: var(--yellow); color: var(--blue); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="living-archive.html" class="nav-back">← Living Archive</a>
+  <button class="hamburger" id="menuBtn" aria-label="Apri menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MENU OVERLAY -->
+<div class="menu-overlay" id="menuOverlay">
+  <div class="menu-top">
+    <span class="menu-site-name">Iuav MA Fashion Community</span>
+    <button class="menu-close" id="menuClose">✕</button>
+  </div>
+  <div class="menu-rule"></div>
+  <div class="menu-nav">
+    <a href="../Home.html"         class="menu-item">Home</a>
+    <a href="#"                    class="menu-item">Living Archive</a>
+    <a href="../Varianti living archive/Passaparola.html" class="menu-item">Passaparola</a>
+    <a href="../Varianti living archive/IMAC identity.html" class="menu-item">IMAC Identity</a>
+    <a href="../Varianti Join our community /join.html" class="menu-item">Join our community</a>
+    <a href="../Varianti Matching ideas/Matching ideas.html" class="menu-item">Matching ideas</a>
+    <a href="../Varianti living archive/Talent Radar.html" class="menu-item">Talent radar</a>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- TITOLO (sinistra) -->
+  <div class="top-section">
+    <div class="block-title"><h1>Heritage</h1></div>
+    <div class="top-right"></div>
+  </div>
+
+  <!-- TESTO (sinistra) -->
+  <div class="mid-section">
+    <div class="block-desc">
+      <p>This section gathers fashion projects developed around the concept of heritage, understood as the <strong>material, historical, and cultural legacy</strong> of a place.</p>
+      <p>Each work reflects a personal interpretation of origins, traditions, and local narratives translated into contemporary design through textiles, techniques and storytelling.</p>
+    </div>
+    <div class="mid-right"></div>
+  </div>
+
+  <!-- Linea orizzontale posizionata via JS esattamente a metà -->
+  <div id="gap-zone" style="position:relative; min-height:1.5rem;">
+    <div id="mid-line" style="position:absolute; left:0; right:0; height:2px; background:rgba(255,244,182,0.5);"></div>
+  </div>
+
+  <!-- PROGETTI (destra) -->
+  <div class="bottom-section">
+    <div class="bottom-left"></div>
+    <div class="block-projects">
+      <a href="../Varianti studenti/riccardo-cappello.html" class="project-btn">CORPUS TERRAE_Riccardo Cappello</a>
+      <a href="#" class="project-btn">CHIANCITI! CHIANCITI!_Fabrizio Miller</a>
+      <a href="#" class="project-btn">RATS_Gilberto Sborea</a>
+    </div>
+  </div>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="iuav_ma_fashion_community.html">Home</a>
+    <span>→</span>
+    <a href="living-archive.html">Living Archive</a>
+    <span>→</span>
+    Heritage
+  </div>
+
+</div>
+
+<script>
+  function positionLine() {
+    const desc     = document.querySelector('.block-desc');
+    const projects = document.querySelector('.block-projects');
+    const line     = document.getElementById('mid-line');
+    const gap      = document.getElementById('gap-zone');
+
+    const descBottom     = desc.getBoundingClientRect().bottom + window.scrollY;
+    const projectsTop    = projects.getBoundingClientRect().top  + window.scrollY;
+    const gapTop         = gap.getBoundingClientRect().top       + window.scrollY;
+
+    const mid = (descBottom + projectsTop) / 2;
+    line.style.top = (mid - gapTop) + 'px';
+  }
+
+  window.addEventListener('load',   positionLine);
+  window.addEventListener('resize', positionLine);
+
+  const menuBtn     = document.getElementById('menuBtn');
+  const menuClose   = document.getElementById('menuClose');
+  const menuOverlay = document.getElementById('menuOverlay');
+  menuBtn.addEventListener('click',   () => menuOverlay.classList.add('open'));
+  menuClose.addEventListener('click', () => menuOverlay.classList.remove('open'));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') menuOverlay.classList.remove('open');
+  });
+</script>
+</body>
+</html>
