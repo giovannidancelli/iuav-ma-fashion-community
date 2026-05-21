@@ -3,249 +3,293 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Iuav MA Fashion Community</title>
+<title>IMAC — Iuav MA Fashion Community</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body {
-  width: 100%; height: 100%;
-  overflow: hidden;
-  background: #f7f4ef;
-  font-family: 'LFT Etica Mono', monospace;
+
+:root {
+  --blue: rgb(1, 0, 226);
 }
-canvas {
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  overflow: hidden;
+}
+
+/* ── Menu box ── */
+#menu-box {
+  position: fixed;
+  top: 48px;
+  left: 24px;
+  padding: 14px 18px 16px;
+  color: var(--blue);
+}
+
+#menu-box nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#menu-box nav a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+}
+
+#menu-box nav a:hover {
+  text-decoration: none;
+}
+
+/* ── Striscia scorrimento ── */
+#marquee-strip {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 600px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+#marquee-track img {
+  height: 600px;
+  width: auto;
   display: block;
-  width: 100vw;
-  height: 100vh;
+  flex-shrink: 0;
+}
+
+/* ── Pallini fluttuanti ── */
+.bubble {
+  position: fixed;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255, 244, 182) 40%, rgba(255, 244, 182, 0) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+  color: rgb(1, 0, 226);
+  cursor: grab;
+  user-select: none;
+  will-change: transform;
+}
+
+.bubble:active { cursor: grabbing; }
+
+#bubble {
+  width: 130px;
+  height: 130px;
+  font-size: 14px;
+}
+
+#bubble-large {
+  width: 280px;
+  height: 280px;
+  font-size: 26px;
 }
 </style>
 </head>
 <body>
-<canvas id="c"></canvas>
+
+<!-- Menu box -->
+<div id="menu-box">
+  <nav>
+    <a href="about-us.html">about us</a>
+    <a href="living-archive.html">living archive</a>
+    <a href="lets-connect.html">let's connect</a>
+  </nav>
+</div>
+
+<!-- Striscia scorrimento -->
+<div id="marquee-strip">
+  <div id="marquee-track">
+    <img src="Reference /home immagine scorrimento.jpg" alt="">
+  </div>
+</div>
+
+<!-- Pallino piccolo: Join the community -->
+<div id="bubble" class="bubble">Join the<br>community</div>
+
+<!-- Pallino grande: Iuav 4 Venice -->
+<div id="bubble-large" class="bubble">Iuav 4<br>Venice</div>
+
 <script>
-(function(){
-  const canvas = document.getElementById('c');
-  const ctx    = canvas.getContext('2d');
+// ── Marquee ──
+(function () {
+  const track = document.getElementById('marquee-track');
+  const base  = track.querySelector('img');
+  const SPEED = 1.8; // px per frame (sinistra → destra)
 
-  const DEFS = [
-    { lines:['JOIN THE','COMMUNITY'], href:'Varianti Join our community /join.html', r:162, color:'#D4D4D4', tc:'#ffffff', fs:28 },
-    { lines:['TALENT','RADAR'],       href:'Varianti living archive/Talent Radar.html', r:122, color:'#3E4C5A', tc:'#ffffff', fs:25 },
-    { lines:['MATCHING','IDEAS'],     href:'Varianti Matching ideas/Matching ideas.html', r:138, color:'#F82428', tc:'#ffffff', fs:25 },
-    { lines:['LIVING','ARCHIVE'],     href:'Varianti living archive/Living archive.html', r:200, color:'#0100E2', tc:'#ffffff', fs:38 },
-    { lines:['PASSAPAROLA'],          href:'Varianti living archive/Passaparola.html', r:155, color:'#E1FF92', tc:'#1a1a1a', fs:30 },
-    { lines:['IMAC','IDENTITY'],      href:'Varianti living archive/IMAC identity.html', r:170, color:'#F98161', tc:'#ffffff', fs:32 },
-  ];
+  function setup() {
+    const imgW = base.offsetWidth;
+    if (!imgW) { requestAnimationFrame(setup); return; }
 
-  let W, H, balls;
-  let dragging = null, dragOffX = 0, dragOffY = 0;
-  let lastMX = 0, lastMY = 0, mVX = 0, mVY = 0;
-  let downX = 0, downY = 0;
-
-  const DAMPING = 0.995;
-  const BOUNCE  = 0.82;
-  const REPULSE = 1.05;
-  const MIN_SPD = 0.4;
-  const MAX_SPD = 2.8;
-
-  function resize() {
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-    if (!balls) initBalls();
-    else balls.forEach(b => {
-      b.x = Math.max(b.r, Math.min(W - b.r, b.x));
-      b.y = Math.max(b.r, Math.min(H - b.r, b.y));
-    });
-  }
-
-  function initBalls() {
-    const pos = [
-      [0.28,0.28],[0.72,0.25],
-      [0.15,0.58],[0.82,0.55],
-      [0.38,0.82],[0.68,0.80],
-    ];
-    balls = DEFS.map((d, i) => {
-      const angle = Math.random() * Math.PI * 2;
-      const spd   = MIN_SPD + Math.random() * 1.2;
-      return {
-        ...d,
-        x: pos[i][0] * W,
-        y: pos[i][1] * H,
-        vx: Math.cos(angle) * spd,
-        vy: Math.sin(angle) * spd,
-        scale: 1,
-        scaleTarget: 1,
-      };
-    });
-  }
-
-  function enforceSpeed(b, i) {
-    if (i === dragging) return;
-    const spd = Math.sqrt(b.vx*b.vx + b.vy*b.vy);
-    if (spd < MIN_SPD) { const f = MIN_SPD/(spd||0.001); b.vx*=f; b.vy*=f; }
-    if (spd > MAX_SPD) { const f = MAX_SPD/spd;           b.vx*=f; b.vy*=f; }
-  }
-
-  function resolveCollisions() {
-    for (let i = 0; i < balls.length; i++) {
-      for (let j = i+1; j < balls.length; j++) {
-        const a = balls[i], b = balls[j];
-        const dx = b.x-a.x, dy = b.y-a.y;
-        const d  = Math.sqrt(dx*dx+dy*dy);
-        const mn = (a.r+b.r)*1.012;
-        if (d < mn && d > 0.001) {
-          const nx = dx/d, ny = dy/d, ov = (mn-d)/2;
-          if (dragging!==i){ a.x-=nx*ov; a.y-=ny*ov; }
-          if (dragging!==j){ b.x+=nx*ov; b.y+=ny*ov; }
-          const dot = (a.vx-b.vx)*nx+(a.vy-b.vy)*ny;
-          if (dot > 0) {
-            const imp = dot*REPULSE;
-            if (dragging!==i){ a.vx-=imp*nx; a.vy-=imp*ny; }
-            if (dragging!==j){ b.vx+=imp*nx; b.vy+=imp*ny; }
-          }
-        }
-      }
+    // Copie sufficienti a riempire 3× la larghezza dello schermo
+    const needed = Math.ceil((window.innerWidth * 3) / imgW) + 2;
+    for (let i = 1; i < needed; i++) {
+      track.appendChild(base.cloneNode(true));
     }
+
+    // Partiamo spostati di -imgW: le immagini coprono già tutto da sx a dx
+    let pos = -imgW;
+    track.style.transform = `translateX(${pos}px)`;
+
+    function tick() {
+      pos += SPEED;
+      if (pos >= 0) pos -= imgW; // loop invisibile
+      track.style.transform = `translateX(${pos}px)`;
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
   }
 
-  function update() {
-    balls.forEach((b, i) => {
-      if (i === dragging) return;
-      b.vx *= DAMPING; b.vy *= DAMPING;
-      enforceSpeed(b, i);
-      b.x += b.vx; b.y += b.vy;
-      if (b.x-b.r < 0)  { b.x=b.r;   b.vx= Math.abs(b.vx)*BOUNCE; }
-      if (b.x+b.r > W)  { b.x=W-b.r; b.vx=-Math.abs(b.vx)*BOUNCE; }
-      if (b.y-b.r < 0)  { b.y=b.r;   b.vy= Math.abs(b.vy)*BOUNCE; }
-      if (b.y+b.r > H)  { b.y=H-b.r; b.vy=-Math.abs(b.vy)*BOUNCE; }
-    });
-    resolveCollisions();
-    balls.forEach(b => { b.scale += (b.scaleTarget-b.scale)*0.1; });
+  if (base.complete && base.naturalWidth) {
+    requestAnimationFrame(setup);
+  } else {
+    base.addEventListener('load', () => requestAnimationFrame(setup));
   }
-
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    balls.forEach(b => {
-      ctx.save();
-      ctx.translate(b.x, b.y);
-      ctx.scale(b.scale, b.scale);
-
-      ctx.shadowColor   = 'rgba(0,0,0,0.13)';
-      ctx.shadowBlur    = b.scaleTarget > 1 ? 44 : 20;
-      ctx.shadowOffsetY = b.scaleTarget > 1 ? 16 :  7;
-
-      ctx.beginPath();
-      ctx.arc(0, 0, b.r, 0, Math.PI*2);
-      ctx.fillStyle = b.color;
-      ctx.fill();
-
-      ctx.shadowColor = 'transparent';
-      ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
-
-      ctx.fillStyle    = b.tc;
-      ctx.font         = `700 ${b.fs}px 'LFT Etica Mono', monospace`;
-      ctx.textAlign    = 'center';
-      ctx.textBaseline = 'middle';
-
-      const lh = b.fs * 1.45;
-      const sy = -((b.lines.length-1)*lh)/2;
-      b.lines.forEach((line, li) => ctx.fillText(line, 0, sy+li*lh));
-
-      ctx.restore();
-    });
-  }
-
-  function loop() { update(); draw(); requestAnimationFrame(loop); }
-
-  function getXY(e) {
-    const src = e.touches ? e.touches[0] : e;
-    return { x: src.clientX, y: src.clientY };
-  }
-  function hitTest(x, y) {
-    for (let i = balls.length-1; i >= 0; i--) {
-      const b = balls[i], dx = x-b.x, dy = y-b.y;
-      if (dx*dx+dy*dy < b.r*b.r) return i;
-    }
-    return -1;
-  }
-
-  canvas.addEventListener('mousemove', e => {
-    const {x,y} = getXY(e);
-    mVX = x-lastMX; mVY = y-lastMY;
-    lastMX = x; lastMY = y;
-    if (dragging !== null) {
-      balls[dragging].x = x-dragOffX;
-      balls[dragging].y = y-dragOffY;
-      canvas.style.cursor = 'grabbing';
-    } else {
-      const h = hitTest(x,y);
-      balls.forEach((b,i) => { b.scaleTarget = i===h ? 1.08 : 1; });
-      canvas.style.cursor = h >= 0 ? 'grab' : 'default';
-    }
-  });
-
-  canvas.addEventListener('mousedown', e => {
-    const {x,y} = getXY(e);
-    downX=x; downY=y;
-    const h = hitTest(x,y);
-    if (h >= 0) {
-      dragging=h; dragOffX=x-balls[h].x; dragOffY=y-balls[h].y;
-      balls[h].vx=0; balls[h].vy=0;
-      canvas.style.cursor='grabbing';
-    }
-  });
-
-  canvas.addEventListener('mouseup', e => {
-    if (dragging===null) return;
-    const {x,y} = getXY(e);
-    const moved = Math.abs(x-downX)+Math.abs(y-downY) > 6;
-    if (!moved) {
-      window.location.href = balls[dragging].href;
-    } else {
-      balls[dragging].vx = mVX*0.7;
-      balls[dragging].vy = mVY*0.7;
-    }
-    dragging=null;
-    canvas.style.cursor='default';
-  });
-
-  canvas.addEventListener('mouseleave', () => {
-    if (dragging!==null) {
-      balls[dragging].vx=mVX*0.5; balls[dragging].vy=mVY*0.5;
-      dragging=null;
-    }
-    balls.forEach(b => { b.scaleTarget=1; });
-    canvas.style.cursor='default';
-  });
-
-  canvas.addEventListener('touchstart', e => {
-    e.preventDefault();
-    const {x,y} = getXY(e);
-    downX=x; downY=y; lastMX=x; lastMY=y;
-    const h = hitTest(x,y);
-    if (h>=0){ dragging=h; dragOffX=x-balls[h].x; dragOffY=y-balls[h].y; balls[h].vx=0; balls[h].vy=0; }
-  },{passive:false});
-
-  canvas.addEventListener('touchmove', e => {
-    e.preventDefault();
-    const {x,y} = getXY(e);
-    mVX=x-lastMX; mVY=y-lastMY; lastMX=x; lastMY=y;
-    if (dragging!==null){ balls[dragging].x=x-dragOffX; balls[dragging].y=y-dragOffY; }
-  },{passive:false});
-
-  canvas.addEventListener('touchend', e => {
-    if (dragging===null) return;
-    const moved = Math.abs(lastMX-downX)+Math.abs(lastMY-downY) > 8;
-    if (!moved) {
-      window.location.href = balls[dragging].href;
-    } else {
-      balls[dragging].vx=mVX*0.7; balls[dragging].vy=mVY*0.7;
-    }
-    dragging=null;
-  });
-
-  window.addEventListener('resize', resize);
-  resize();
-  loop();
 })();
+
+// ── Bubbles con collisione ──
+let W = window.innerWidth;
+let H = window.innerHeight;
+const DAMPING = 0.995;
+
+const bubbles = [
+  {
+    el: document.getElementById('bubble'),
+    R: 65, SPEED_AUTO: 4.5, SPEED_AFTER: 1.2,
+    x: W * 0.65, y: H * 0.45, vx: 0.7, vy: 0.5,
+    href: 'https://docs.google.com/forms/d/1r43RdSCZdGPQ5wIet1izcyhZdx0vcn32ODd9NwUcQUY/viewform?edit_requested=true',
+    dragging: false, dragOffX: 0, dragOffY: 0,
+    lastMX: 0, lastMY: 0, velX: 0, velY: 0, downX: 0, downY: 0,
+  },
+  {
+    el: document.getElementById('bubble-large'),
+    R: 140, SPEED_AUTO: 1.2, SPEED_AFTER: 0.4,
+    x: W * 0.35, y: H * 0.60, vx: -0.5, vy: 0.4,
+    href: 'iuav-4-venice.html',
+    dragging: false, dragOffX: 0, dragOffY: 0,
+    lastMX: 0, lastMY: 0, velX: 0, velY: 0, downX: 0, downY: 0,
+  },
+];
+
+let draggingBubble = null;
+
+function resolveCollisions() {
+  const a = bubbles[0], b = bubbles[1];
+  const dx = b.x - a.x, dy = b.y - a.y;
+  const dist = Math.sqrt(dx*dx + dy*dy);
+  const minDist = a.R + b.R;
+  if (dist < minDist && dist > 0.001) {
+    const nx = dx/dist, ny = dy/dist;
+    const overlap = (minDist - dist) / 2;
+    if (!a.dragging) { a.x -= nx * overlap; a.y -= ny * overlap; }
+    if (!b.dragging) { b.x += nx * overlap; b.y += ny * overlap; }
+    const dot = (a.vx - b.vx) * nx + (a.vy - b.vy) * ny;
+    if (dot > 0) {
+      if (!a.dragging) { a.vx -= dot * nx; a.vy -= dot * ny; }
+      if (!b.dragging) { b.vx += dot * nx; b.vy += dot * ny; }
+    }
+  }
+}
+
+function loop() {
+  bubbles.forEach(b => {
+    if (!b.dragging) {
+      b.vx *= DAMPING; b.vy *= DAMPING;
+      const spd = Math.sqrt(b.vx*b.vx + b.vy*b.vy);
+      if (spd < b.SPEED_AUTO) { const f = b.SPEED_AUTO/(spd||0.001); b.vx*=f; b.vy*=f; }
+      b.x += b.vx; b.y += b.vy;
+      if (b.x-b.R < 0)  { b.x = b.R;   b.vx =  Math.abs(b.vx); }
+      if (b.x+b.R > W)  { b.x = W-b.R; b.vx = -Math.abs(b.vx); }
+      if (b.y-b.R < 0)  { b.y = b.R;   b.vy =  Math.abs(b.vy); }
+      if (b.y+b.R > H)  { b.y = H-b.R; b.vy = -Math.abs(b.vy); }
+    }
+    b.el.style.left = (b.x - b.R) + 'px';
+    b.el.style.top  = (b.y - b.R) + 'px';
+  });
+  resolveCollisions();
+  requestAnimationFrame(loop);
+}
+
+bubbles.forEach(b => {
+  b.el.style.cursor = 'grab';
+  b.el.addEventListener('mousedown', e => {
+    draggingBubble = b; b.dragging = true;
+    b.downX = e.clientX; b.downY = e.clientY;
+    b.dragOffX = e.clientX - b.x; b.dragOffY = e.clientY - b.y;
+    b.lastMX = e.clientX; b.lastMY = e.clientY;
+    b.vx = 0; b.vy = 0; e.preventDefault();
+  });
+  b.el.addEventListener('touchstart', e => {
+    const t = e.touches[0]; draggingBubble = b; b.dragging = true;
+    b.downX = t.clientX; b.downY = t.clientY;
+    b.dragOffX = t.clientX - b.x; b.dragOffY = t.clientY - b.y;
+    b.lastMX = t.clientX; b.lastMY = t.clientY;
+    b.vx = 0; b.vy = 0; e.preventDefault();
+  }, { passive: false });
+});
+
+window.addEventListener('mousemove', e => {
+  const b = draggingBubble; if (!b) return;
+  b.velX = e.clientX - b.lastMX; b.velY = e.clientY - b.lastMY;
+  b.lastMX = e.clientX; b.lastMY = e.clientY;
+  b.x = Math.max(b.R, Math.min(W-b.R, e.clientX - b.dragOffX));
+  b.y = Math.max(b.R, Math.min(H-b.R, e.clientY - b.dragOffY));
+});
+
+window.addEventListener('mouseup', e => {
+  const b = draggingBubble; if (!b) return;
+  const moved = Math.abs(e.clientX - b.downX) + Math.abs(e.clientY - b.downY) > 6;
+  b.dragging = false; draggingBubble = null;
+  if (!moved && b.href) { window.open(b.href, '_blank'); return; }
+  b.vx = b.velX * 0.8; b.vy = b.velY * 0.8;
+  const spd = Math.sqrt(b.vx*b.vx + b.vy*b.vy);
+  const cap = spd > b.SPEED_AFTER ? b.SPEED_AFTER/spd : 1;
+  b.vx *= cap; b.vy *= cap;
+  const spd2 = Math.sqrt(b.vx*b.vx + b.vy*b.vy);
+  if (spd2 < 0.3) { const f = 0.3/(spd2||0.001); b.vx*=f; b.vy*=f; }
+});
+
+window.addEventListener('touchmove', e => {
+  const b = draggingBubble; if (!b) return;
+  const t = e.touches[0];
+  b.velX = t.clientX - b.lastMX; b.velY = t.clientY - b.lastMY;
+  b.lastMX = t.clientX; b.lastMY = t.clientY;
+  b.x = Math.max(b.R, Math.min(W-b.R, t.clientX - b.dragOffX));
+  b.y = Math.max(b.R, Math.min(H-b.R, t.clientY - b.dragOffY));
+  e.preventDefault();
+}, { passive: false });
+
+window.addEventListener('touchend', () => {
+  const b = draggingBubble; if (!b) return;
+  b.dragging = false; draggingBubble = null;
+  b.vx = b.velX * 0.8; b.vy = b.velY * 0.8;
+  const spd = Math.sqrt(b.vx*b.vx + b.vy*b.vy);
+  if (spd < 0.3) { const f = 0.3/(spd||0.001); b.vx*=f; b.vy*=f; }
+});
+
+window.addEventListener('resize', () => { W = window.innerWidth; H = window.innerHeight; });
+
+loop();
 </script>
 </body>
 </html>

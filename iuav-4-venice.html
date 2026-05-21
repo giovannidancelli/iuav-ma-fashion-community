@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iuav 4 Venice — IMAC</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue:   rgb(1, 0, 226);
+  --yellow: rgb(255, 244, 182);
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  color: var(--blue);
+}
+
+/* ── Menu ── */
+#menu-box {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: 240px;
+  padding: 48px 24px;
+  border-right: 1px solid var(--blue);
+  z-index: 200;
+  background: #ffffff;
+}
+
+#menu-box nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#menu-box nav a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.8;
+}
+
+#menu-box nav a:hover { text-decoration: none; }
+
+/* ── Layout ── */
+.content {
+  position: fixed;
+  left: 240px; right: 0; top: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ── */
+.page-header {
+  padding: 28px 48px 18px 32px;
+  flex-shrink: 0;
+}
+
+.page-header h1 {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  color: var(--blue);
+  line-height: 1;
+  margin-bottom: 18px;
+}
+
+.header-inner-divider {
+  height: 1px;
+  background: var(--blue);
+  margin-left: -32px;
+  margin-bottom: 18px;
+}
+
+.header-desc {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--blue);
+  max-width: 520px;
+  text-align: justify;
+  margin-bottom: 0;
+}
+
+.header-desc mark {
+  background: var(--yellow);
+  color: var(--blue);
+  padding: 0 2px;
+}
+
+.h-line {
+  height: 1px;
+  background: var(--blue);
+  flex-shrink: 0;
+}
+
+/* ── Filtri ── */
+.filters {
+  display: flex;
+  gap: 8px;
+  padding: 12px 48px 12px 32px;
+  flex-wrap: wrap;
+  background: #ffffff;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.filter-btn {
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: transparent;
+  border: 1px solid var(--blue);
+  padding: 5px 14px;
+  cursor: pointer;
+  border-radius: 999px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--blue);
+  color: var(--yellow);
+}
+
+/* ── Mappa ── */
+#map {
+  flex: 1;
+  min-height: 0;
+  z-index: 0;
+}
+
+/* ── Zoom control ── */
+.leaflet-control-zoom {
+  border: 1px solid var(--blue) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.leaflet-control-zoom a {
+  background: #ffffff !important;
+  color: var(--blue) !important;
+  border-bottom: 1px solid var(--blue) !important;
+  border-radius: 0 !important;
+  font-family: 'LFT Etica Mono', monospace !important;
+  font-weight: 700 !important;
+  width: 32px !important;
+  height: 32px !important;
+  line-height: 30px !important;
+  font-size: 18px !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background: var(--blue) !important;
+  color: var(--yellow) !important;
+}
+
+.leaflet-control-zoom-out {
+  border-bottom: none !important;
+}
+
+/* ── Attribution ── */
+.leaflet-control-attribution {
+  font-family: 'LFT Etica Mono', monospace !important;
+  font-size: 9px !important;
+  background: rgba(255,255,255,0.75) !important;
+  color: var(--blue) !important;
+}
+
+.leaflet-control-attribution a { color: var(--blue) !important; }
+
+/* ── Marker pin ── */
+.map-pin {
+  background: var(--blue);
+  color: var(--yellow);
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  white-space: nowrap;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  border: 1px solid transparent;
+}
+
+.map-pin:hover {
+  background: var(--yellow);
+  color: var(--blue);
+  border-color: var(--blue);
+}
+
+.map-pin::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--blue);
+}
+
+/* ── Popup ── */
+.leaflet-popup-content-wrapper {
+  background: var(--blue) !important;
+  border-radius: 0 !important;
+  border: 1px solid var(--yellow) !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.leaflet-popup-content {
+  margin: 14px 18px !important;
+  color: var(--yellow);
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+}
+
+.leaflet-popup-tip-container { display: none; }
+
+.leaflet-popup-close-button {
+  color: var(--yellow) !important;
+  font-size: 16px !important;
+  padding: 6px 8px !important;
+}
+
+.popup-name {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.popup-type {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  color: rgba(255, 244, 182, 0.75);
+  margin-bottom: 5px;
+}
+
+.popup-address {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 11px;
+  color: rgba(255, 244, 182, 0.6);
+}
+</style>
+</head>
+<body>
+
+<!-- Menu -->
+<div id="menu-box">
+  <nav>
+    <a href="index.html">home</a>
+    <a href="about-us.html">about us</a>
+    <a href="living-archive.html">living archive</a>
+    <a href="lets-connect.html">let's connect</a>
+  </nav>
+</div>
+
+<div class="content">
+
+  <div class="page-header">
+    <h1>Iuav 4 Venice</h1>
+    <div class="header-inner-divider"></div>
+    <p class="header-desc">This section maps across Venice Island and Mestre all the <mark>companies, points of sale and external realities</mark> that can be useful to students — from production and fabric suppliers to studios, cultural institutions and professional services connected to the fashion community.</p>
+  </div>
+
+  <div class="h-line"></div>
+
+  <div id="map"></div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function () {
+
+  const map = L.map('map', {
+    center: [45.452, 12.268],
+    zoom: 12,
+    zoomControl: false
+  });
+
+  // Zoom control bottom-right
+  L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+  // CartoDB Positron — pulito e minimale
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(map);
+
+  // ── Luoghi ──────────────────────────────────────────────────────────
+  // Aggiungi nuove voci in questo array per espandere la mappa.
+  // cat: education | industry | fabric | studio | culture | services
+  const places = [
+    {
+      name: 'IUAV — Tolentini',
+      cat: 'education',
+      type: 'University Campus',
+      address: 'Santa Croce 191, Venezia',
+      lat: 45.4378, lng: 12.3209
+    },
+    {
+      name: 'IUAV — Cotonificio',
+      cat: 'education',
+      type: 'University Campus',
+      address: 'Dorsoduro 2196, Venezia',
+      lat: 45.4295, lng: 12.3192
+    },
+    {
+      name: 'Fondaco dei Tedeschi',
+      cat: 'culture',
+      type: 'Department Store — Fashion & Design',
+      address: 'Calle del Fontego dei Tedeschi, Venezia',
+      lat: 45.4399, lng: 12.3373
+    },
+    {
+      name: 'Museo del Merletto',
+      cat: 'culture',
+      type: 'Lace Museum',
+      address: 'Piazza Galuppi 187, Burano',
+      lat: 45.4852, lng: 12.4167
+    },
+    {
+      name: 'Museo del Vetro',
+      cat: 'culture',
+      type: 'Glass Museum',
+      address: 'Fondamenta Marco Giustinian 8, Murano',
+      lat: 45.4565, lng: 12.3534
+    },
+    {
+      name: 'Palais Venezia',
+      cat: 'studio',
+      type: 'Fashion Studio',
+      address: 'Venezia',
+      lat: 45.4360, lng: 12.3330
+    },
+    {
+      name: 'Venezia Unica',
+      cat: 'services',
+      type: 'City Services & Transport',
+      address: 'Piazzale Roma, Venezia',
+      lat: 45.4406, lng: 12.3211
+    },
+    {
+      name: 'Mercato di Rialto',
+      cat: 'fabric',
+      type: 'Materials & Crafts Market',
+      address: 'Campo della Pescaria, Venezia',
+      lat: 45.4393, lng: 12.3355
+    },
+    {
+      name: 'Porto Marghera',
+      cat: 'industry',
+      type: 'Industrial Zone',
+      address: 'Via Fratelli Bandiera, Marghera',
+      lat: 45.4622, lng: 12.2372
+    },
+    {
+      name: 'Centro Commerciale Nave de Vero',
+      cat: 'services',
+      type: 'Shopping & Services',
+      address: 'Via Ca\' Rossa 44, Marghera',
+      lat: 45.4700, lng: 12.2215
+    },
+    {
+      name: 'Stazione di Mestre',
+      cat: 'services',
+      type: 'Train Station',
+      address: 'Piazza Stazione, Mestre',
+      lat: 45.4934, lng: 12.2373
+    },
+    {
+      name: 'Piazza Ferretto',
+      cat: 'culture',
+      type: 'City Centre Mestre',
+      address: 'Piazza Ferretto, Mestre',
+      lat: 45.4966, lng: 12.2415
+    },
+  ];
+
+  // ── Crea marker ───────────────────────────────────────────────────
+  const layerGroups = {};
+  const allLayers   = L.layerGroup().addTo(map);
+
+  places.forEach(p => {
+    const icon = L.divIcon({
+      className: '',
+      html: `<div class="map-pin">${p.name}</div>`,
+      iconAnchor: [0, 28]
+    });
+
+    const popupHtml = `
+      <div class="popup-name">${p.name}</div>
+      <div class="popup-type">${p.type}</div>
+      <div class="popup-address">${p.address}</div>
+    `;
+
+    const marker = L.marker([p.lat, p.lng], { icon })
+      .bindPopup(popupHtml, { maxWidth: 260 });
+
+    if (!layerGroups[p.cat]) layerGroups[p.cat] = [];
+    layerGroups[p.cat].push(marker);
+    allLayers.addLayer(marker);
+  });
+
+  // ── Filtri ────────────────────────────────────────────────────────
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cat = btn.dataset.cat;
+      allLayers.clearLayers();
+
+      if (cat === 'all') {
+        places.forEach((p, i) => {
+          const icon = L.divIcon({
+            className: '',
+            html: `<div class="map-pin">${p.name}</div>`,
+            iconAnchor: [0, 28]
+          });
+          L.marker([p.lat, p.lng], { icon })
+            .bindPopup(`
+              <div class="popup-name">${p.name}</div>
+              <div class="popup-type">${p.type}</div>
+              <div class="popup-address">${p.address}</div>
+            `, { maxWidth: 260 })
+            .addTo(allLayers);
+        });
+      } else {
+        (layerGroups[cat] || []).forEach(m => allLayers.addLayer(m));
+      }
+    });
+  });
+
+  window.addEventListener('load', () => map.invalidateSize());
+
+})();
+</script>
+</body>
+</html>

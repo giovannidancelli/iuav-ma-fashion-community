@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Industries — Let's Connect — IMAC</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root { --blue: rgb(1, 0, 226); }
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background: #ffffff;
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  color: var(--blue);
+}
+
+/* ── Menu ── */
+#menu-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 240px;
+  padding: 48px 24px 48px 24px;
+  border-right: 1px solid var(--blue);
+  z-index: 10;
+  background: #ffffff;
+}
+
+#menu-box nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#menu-box nav a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.8;
+}
+
+#menu-box nav a:hover { text-decoration: none; }
+
+/* ── Contenuto principale ── */
+.content {
+  margin-left: 240px;
+  padding: 28px 48px 80px 32px;
+}
+
+/* Header: titolo + testo */
+.header {
+  margin-bottom: 28px;
+}
+
+.header h1 {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  color: var(--blue);
+  margin-bottom: 18px;
+  line-height: 1;
+}
+
+.header-inner-divider {
+  height: 1px;
+  background: var(--blue);
+  margin-left: -32px;
+  margin-bottom: 18px;
+}
+
+.header-desc {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--blue);
+  max-width: 520px;
+  text-align: justify;
+}
+
+.header-desc mark {
+  background: rgb(255, 244, 182);
+  color: var(--blue);
+  padding: 0 2px;
+}
+
+/* Linea divisoria */
+.divider {
+  height: 1px;
+  background: var(--blue);
+  margin-bottom: 0;
+  margin-left: -32px;
+}
+
+/* Sezione griglia con sfondo blu */
+.grid-section {
+  background: var(--blue);
+  margin-left: -32px;
+  margin-right: -48px;
+  padding: 28px 48px 48px 32px;
+}
+
+/* Griglia aziende 3×2 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.grid-item .img-wrap {
+  width: 100%;
+  align-self: stretch;
+  aspect-ratio: 3 / 4;
+  background: #e0e0e0;
+  overflow: hidden;
+}
+
+.grid-item .img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+a.company-name { text-decoration: none; }
+
+.grid-item:hover .img-wrap {
+  opacity: 0.5;
+  transition: opacity 0.25s ease;
+}
+
+.grid-item .img-wrap {
+  transition: opacity 0.25s ease;
+}
+
+.grid-item:hover .company-name {
+  background: var(--blue);
+  color: rgb(255, 244, 182);
+  outline: 1px solid rgb(255, 244, 182);
+}
+
+.grid-item:hover .company-type {
+  background: var(--blue);
+  color: rgb(255, 244, 182);
+  outline: 1px solid rgb(255, 244, 182);
+}
+
+.grid-item .company-name {
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: rgb(255, 244, 182);
+  padding: 0 3px;
+  display: inline;
+}
+
+.grid-item .company-type {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  color: var(--blue);
+  background: rgb(255, 244, 182);
+  padding: 0 3px;
+  display: inline;
+}
+</style>
+</head>
+<body>
+
+<!-- Menu -->
+<div id="menu-box">
+  <nav>
+    <a href="../index.html">home</a>
+    <a href="../about-us.html">about us</a>
+    <a href="../living-archive.html">living archive</a>
+    <a href="../lets-connect.html">let's connect</a>
+  </nav>
+</div>
+
+<div class="content">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>industries</h1>
+    <div class="header-inner-divider"></div>
+    <p class="header-desc">This section maps the fashion industries connected to the IUAV community, <mark>brands, production companies, stores and points of sale</mark> that share a vision of creative practice. Each entry represents a possible encounter between emerging talent and professional contexts shaping contemporary fashion.</p>
+  </div>
+
+  <!-- Divider -->
+  <div class="divider"></div>
+
+  <!-- Griglia aziende -->
+  <div class="grid-section">
+  <div class="grid">
+
+    <div class="grid-item">
+      <a href="../Varianti industries/berto-industria-tessile.html" style="display:block; width:100%;">
+        <div class="img-wrap">
+          <img src="../Varianti industries/Immagini/denim.jpg" alt="Berto Industria Tessile">
+        </div>
+      </a>
+      <a href="../Varianti industries/berto-industria-tessile.html" class="company-name">Berto Industria Tessile</a>
+      <span class="company-type">denim production</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap">
+        <!-- sostituire con: <img src="..." alt="Tricot Cafè"> -->
+      </div>
+      <span class="company-name">Tricot Cafè</span>
+      <span class="company-type">fabric shop</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap">
+        <!-- sostituire con: <img src="..." alt="EUROCOM s.r.l."> -->
+      </div>
+      <span class="company-name">EUROCOM s.r.l.</span>
+      <span class="company-type">leather production</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap"></div>
+      <span class="company-name">Azienda</span>
+      <span class="company-type">Tipo / settore</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap"></div>
+      <span class="company-name">Azienda</span>
+      <span class="company-type">Tipo / settore</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap"></div>
+      <span class="company-name">Azienda</span>
+      <span class="company-type">Tipo / settore</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap"></div>
+      <span class="company-name">Azienda</span>
+      <span class="company-type">Tipo / settore</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap"></div>
+      <span class="company-name">Azienda</span>
+      <span class="company-type">Tipo / settore</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap"></div>
+      <span class="company-name">Azienda</span>
+      <span class="company-type">Tipo / settore</span>
+    </div>
+
+  </div>
+  </div>
+</div>
+
+</body>
+</html>

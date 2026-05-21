@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heritage — Living Archive — IMAC</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root { --blue: rgb(1, 0, 226); }
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background: #ffffff;
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  color: var(--blue);
+}
+
+/* ── Menu ── */
+#menu-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 240px;
+  padding: 48px 24px 48px 24px;
+  border-right: 1px solid var(--blue);
+  z-index: 10;
+  background: #ffffff;
+}
+
+#menu-box nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#menu-box nav a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.8;
+}
+
+#menu-box nav a:hover { text-decoration: none; }
+
+/* ── Contenuto principale ── */
+.content {
+  margin-left: 240px;
+  padding: 28px 48px 80px 32px;
+}
+
+/* Header: titolo + testo */
+.header {
+  margin-bottom: 28px;
+}
+
+.header h1 {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  color: var(--blue);
+  margin-bottom: 18px;
+  line-height: 1;
+}
+
+.header-inner-divider {
+  height: 1px;
+  background: var(--blue);
+  margin-left: -32px;
+  margin-bottom: 18px;
+}
+
+.header-desc {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--blue);
+  max-width: 520px;
+  text-align: justify;
+}
+
+.header-desc mark {
+  background: rgb(255, 244, 182);
+  color: var(--blue);
+  padding: 0 2px;
+}
+
+/* Linea divisoria */
+.divider {
+  height: 1px;
+  background: var(--blue);
+  margin-bottom: 0;
+  margin-left: -32px;
+}
+
+/* Sezione griglia con sfondo blu */
+.grid-section {
+  background: var(--blue);
+  margin-left: -32px;
+  margin-right: -48px;
+  padding: 28px 48px 48px 32px;
+}
+
+/* Griglia immagini 3×2 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.grid-item .img-wrap {
+  width: 100%;
+  align-self: stretch;
+  aspect-ratio: 3 / 4;
+  background: #e0e0e0;
+  overflow: hidden;
+}
+
+.grid-item .img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+a.student-name { text-decoration: none; }
+
+/* Zoom interattivo */
+.img-wrap.zoom-img {
+  overflow: visible;
+  position: relative;
+  z-index: 0;
+}
+
+.img-wrap.zoom-img:hover {
+  z-index: 10;
+  opacity: 1;
+}
+
+.zoom-img img {
+  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: center center;
+}
+
+.grid-item:has(.zoom-img):hover .img-wrap {
+  opacity: 1;
+}
+
+.grid-item .img-wrap {
+  transition: opacity 0.25s ease;
+}
+
+.grid-item:hover .img-wrap {
+  opacity: 0.5;
+}
+
+.grid-section .grid-item:hover .student-name {
+  background: var(--blue);
+  color: rgb(255, 244, 182);
+  outline: 1px solid rgb(255, 244, 182);
+}
+
+.grid-section .grid-item:hover .project-title {
+  background: var(--blue);
+  color: rgb(255, 244, 182);
+  outline: 1px solid rgb(255, 244, 182);
+}
+
+.grid-item .student-name {
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: rgb(255, 244, 182);
+  padding: 0 3px;
+  display: inline;
+}
+
+.grid-item .project-title {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  color: var(--blue);
+  background: rgb(255, 244, 182);
+  padding: 0 3px;
+  display: inline;
+}
+
+/* Su sfondo blu il giallo rimane, ma serve un wrapper bianco intorno ai testi */
+.grid-section .grid-item .student-name,
+.grid-section .grid-item .project-title {
+  color: var(--blue);
+}
+</style>
+</head>
+<body>
+
+<!-- Menu -->
+<div id="menu-box">
+  <nav>
+    <a href="../index.html">home</a>
+    <a href="../about-us.html">about us</a>
+    <a href="../living-archive.html">living archive</a>
+    <a href="#">let's connect</a>
+  </nav>
+</div>
+
+<div class="content">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>heritage</h1>
+    <div class="header-inner-divider"></div>
+    <p class="header-desc">This section gathers fashion projects developed around the concept of heritage, understood as the <mark>material, historical, and cultural legacy</mark> of a place. Each work reflects a personal interpretation of origins, traditions, and local narratives translated into contemporary design through textiles, techniques and storytelling.</p>
+  </div>
+
+  <!-- Divider -->
+  <div class="divider"></div>
+
+  <!-- Griglia progetti -->
+  <div class="grid-section">
+  <div class="grid">
+
+    <div class="grid-item">
+      <a href="../Profili studenti/riccardo-cappello.html" style="display:block; width:100%;">
+        <div class="img-wrap zoom-img zoom-static" style="background: none;">
+          <img src="../Progetti studenti/Riccardo Cappello/shoot 02 copia 2.png" alt="Corpus Terrae">
+        </div>
+      </a>
+      <a href="../Profili studenti/riccardo-cappello.html" class="student-name">Riccardo Cappello</a>
+      <span class="project-title">Corpus Terrae</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap">
+        <!-- sostituire con: <img src="..." alt="Chianciti! Chianciti!"> -->
+      </div>
+      <span class="student-name">Fabrizio Miller</span>
+      <span class="project-title">Chianciti! Chianciti!</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap">
+        <!-- sostituire con: <img src="..." alt="Rats"> -->
+      </div>
+      <span class="student-name">Gilberto Sborea</span>
+      <span class="project-title">Rats</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap">
+        <!-- sostituire con immagine studente -->
+      </div>
+      <span class="student-name">Studente</span>
+      <span class="project-title">Titolo progetto</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap">
+        <!-- sostituire con immagine studente -->
+      </div>
+      <span class="student-name">Studente</span>
+      <span class="project-title">Titolo progetto</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap">
+        <!-- sostituire con immagine studente -->
+      </div>
+      <span class="student-name">Studente</span>
+      <span class="project-title">Titolo progetto</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap"></div>
+      <span class="student-name">Studente</span>
+      <span class="project-title">Titolo progetto</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap"></div>
+      <span class="student-name">Studente</span>
+      <span class="project-title">Titolo progetto</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap"></div>
+      <span class="student-name">Studente</span>
+      <span class="project-title">Titolo progetto</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap"></div>
+      <span class="student-name">Studente</span>
+      <span class="project-title">Titolo progetto</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap"></div>
+      <span class="student-name">Studente</span>
+      <span class="project-title">Titolo progetto</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap"></div>
+      <span class="student-name">Studente</span>
+      <span class="project-title">Titolo progetto</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap"></div>
+      <span class="student-name">Studente</span>
+      <span class="project-title">Titolo progetto</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap"></div>
+      <span class="student-name">Studente</span>
+      <span class="project-title">Titolo progetto</span>
+    </div>
+
+    <div class="grid-item">
+      <div class="img-wrap"></div>
+      <span class="student-name">Studente</span>
+      <span class="project-title">Titolo progetto</span>
+    </div>
+
+  </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.zoom-img').forEach(wrap => {
+  const img = wrap.querySelector('img');
+  wrap.addEventListener('mouseenter', () => {
+    img.style.transform = 'scale(1.22)';
+  });
+  if (!wrap.classList.contains('zoom-static')) {
+    wrap.addEventListener('mousemove', e => {
+      const rect = wrap.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+      const y = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
+      img.style.transformOrigin = `${x}% ${y}%`;
+    });
+  }
+  wrap.addEventListener('mouseleave', () => {
+    img.style.transform = 'scale(1)';
+    setTimeout(() => { img.style.transformOrigin = 'center center'; }, 350);
+  });
+});
+</script>
+</body>
+</html>

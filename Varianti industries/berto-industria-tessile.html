@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Berto Industria Tessile — Industries — IMAC</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue:   rgb(1, 0, 226);
+  --yellow: rgb(255, 244, 182);
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background: #ffffff;
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  color: var(--blue);
+}
+
+/* ── Menu ── */
+#menu-box {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: 240px;
+  padding: 48px 24px;
+  border-right: 1px solid var(--blue);
+  z-index: 20;
+  background: #ffffff;
+}
+
+#menu-box nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#menu-box nav a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.8;
+}
+
+#menu-box nav a:hover { text-decoration: none; }
+
+/* ── Content ── */
+.content {
+  margin-left: 240px;
+  padding: 28px 48px 80px 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  margin-bottom: 0;
+}
+
+.header h1 {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.header h1 + * { margin-bottom: 28px; }
+
+.divider {
+  height: 1px;
+  background: var(--blue);
+  margin-left: -32px;
+  margin-bottom: 0;
+}
+
+/* ── Blue profile section ── */
+.profile-section {
+  background: var(--blue);
+  margin-left: -32px;
+  margin-right: -48px;
+  padding: 36px 48px 48px 32px;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.photo-wrap {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  max-height: 320px;
+}
+
+.photo-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.info-block h2 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin-bottom: 10px;
+}
+
+.info-block p,
+.info-block a:not(.website-link) {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--yellow);
+  text-decoration: none;
+}
+
+.info-block a:not(.website-link):hover { text-decoration: underline; }
+
+.info-rule {
+  height: 1px;
+  background: rgba(255, 244, 182, 0.2);
+}
+
+.company-desc {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--yellow);
+}
+
+.company-desc mark {
+  background: var(--yellow);
+  color: var(--blue);
+  padding: 0 2px;
+}
+
+.contacts-row {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.map-img {
+  width: 220px;
+  height: auto;
+  display: block;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.map-img:hover { opacity: 0.85; }
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  background: var(--blue);
+  padding: 5px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--yellow);
+}
+
+.website-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: var(--yellow);
+  border: 1px solid var(--yellow);
+  padding: 10px 20px;
+  text-decoration: none;
+  transition: color 0.2s, background 0.2s;
+}
+
+.website-link:hover {
+  color: var(--yellow);
+  background: var(--blue);
+}
+
+/* ── Student collaborations grid ── */
+.collab-header {
+  margin-top: 48px;
+  margin-bottom: 28px;
+}
+
+.collab-header h2 {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  color: var(--blue);
+  margin-bottom: 18px;
+  line-height: 1;
+}
+
+.collab-divider {
+  height: 1px;
+  background: var(--blue);
+  margin-left: -32px;
+  margin-bottom: 0;
+}
+
+.grid-section {
+  background: var(--blue);
+  margin-left: -32px;
+  margin-right: -48px;
+  padding: 28px 48px 48px 32px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.grid-item .img-wrap {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: #c8c8c8;
+  overflow: hidden;
+  transition: opacity 0.25s ease;
+}
+
+.grid-item .img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.grid-item:hover .img-wrap { opacity: 0.5; }
+
+.grid-item .student-name {
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: var(--yellow);
+  padding: 0 3px;
+  display: inline;
+}
+
+.grid-item .project-title {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  color: var(--blue);
+  background: var(--yellow);
+  padding: 0 3px;
+  display: inline;
+}
+
+.grid-item:hover .student-name {
+  background: var(--blue);
+  color: var(--yellow);
+  outline: 1px solid var(--yellow);
+}
+
+.grid-item:hover .project-title {
+  background: var(--blue);
+  color: var(--yellow);
+  outline: 1px solid var(--yellow);
+}
+</style>
+</head>
+<body>
+
+<!-- Menu -->
+<div id="menu-box">
+  <nav>
+    <a href="../index.html">home</a>
+    <a href="../about-us.html">about us</a>
+    <a href="../living-archive.html">living archive</a>
+    <a href="../lets-connect.html">let's connect</a>
+  </nav>
+</div>
+
+<div class="content">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>Berto Industria Tessile</h1>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Company profile -->
+  <div class="profile-section">
+
+    <div class="photo-wrap">
+      <img src="Immagini/denim.jpg" alt="Berto Industria Tessile">
+    </div>
+
+    <div class="profile-info">
+
+      <div class="info-block">
+        <p class="company-desc">Company specialized in the production of high quality and sustainable <mark>denim.</mark></p>
+      </div>
+
+      <div class="info-rule"></div>
+
+      <div class="info-block">
+        <h2>Contacts</h2>
+        <div class="contacts-row">
+          <div>
+            <p>Via Mazzini, 11, 35024 Bovolenta (PD)</p>
+            <p>+39 049 959 9711</p>
+          </div>
+          <a href="https://www.google.com/maps/place/Via+Mazzini,+11,+35024+Bovolenta+PD" target="_blank">
+            <img src="Immagini/mappa.jpg" alt="Mappa" class="map-img">
+          </a>
+        </div>
+      </div>
+
+      <div class="info-rule"></div>
+
+      <div class="info-block">
+        <a href="https://www.berto.it/" target="_blank" class="website-link">website ↗</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Student projects grid -->
+  <div class="collab-header">
+    <h2>student collaborations</h2>
+  </div>
+
+  <div class="collab-divider"></div>
+
+  <div class="grid-section">
+    <div class="grid">
+
+      <div class="grid-item">
+        <div class="img-wrap">
+          <!-- sostituire con: <img src="..." alt="Studente"> -->
+        </div>
+        <span class="student-name">Studente</span>
+        <span class="project-title">Titolo progetto</span>
+      </div>
+
+      <div class="grid-item">
+        <div class="img-wrap"></div>
+        <span class="student-name">Studente</span>
+        <span class="project-title">Titolo progetto</span>
+      </div>
+
+      <div class="grid-item">
+        <div class="img-wrap"></div>
+        <span class="student-name">Studente</span>
+        <span class="project-title">Titolo progetto</span>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

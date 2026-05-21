@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riccardo Cappello — Heritage — IMAC</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue:   rgb(1, 0, 226);
+  --yellow: rgb(255, 244, 182);
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  color: var(--blue);
+}
+
+/* ── Menu ── */
+#menu-box {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: 240px;
+  padding: 48px 24px;
+  border-right: 1px solid var(--blue);
+  z-index: 20;
+  background: #ffffff;
+}
+
+#menu-box nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#menu-box nav a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.8;
+}
+
+#menu-box nav a:hover { text-decoration: none; }
+
+/* ── Flip container ── */
+.flip-container {
+  position: fixed;
+  left: 240px; right: 0; top: 0; bottom: 0;
+  perspective: 1400px;
+}
+
+.flipper {
+  width: 100%; height: 100%;
+  position: relative;
+}
+
+/* Each face scrolls independently — no preserve-3d so overflow-y works */
+.face {
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  overflow-y: auto;
+  will-change: transform;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.face.front {
+  transform: rotateY(0deg);
+}
+
+.face.back {
+  transform: rotateY(90deg); /* hidden edge-on until flipped */
+  pointer-events: none;
+}
+
+/* ── FRONT: progetto ── */
+.front-content {
+  padding: 48px 48px 80px 32px;
+}
+
+.front-header {
+  margin-bottom: 0;
+}
+
+.front-header h1 {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.front-header .project-cat {
+  font-size: 14px;
+  opacity: 0.6;
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  margin-bottom: 28px;
+}
+
+.front-divider {
+  height: 1px;
+  background: var(--blue);
+  margin-left: -32px;
+  margin-bottom: 0;
+}
+
+/* Sezione blu progetto */
+.project-section {
+  background: var(--blue);
+  margin-left: -32px;
+  margin-right: -48px;
+  padding: 36px 48px 36px 32px;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 40px;
+  align-items: start;
+  min-height: 392px;
+}
+
+.project-image-wrap {
+  width: 100%;
+  aspect-ratio: 19 / 10;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.project-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.project-image-wrap:hover img { transform: scale(1.02); }
+
+.flip-hint {
+  position: absolute;
+  bottom: 16px; right: 16px;
+  background: var(--yellow);
+  color: var(--blue);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  opacity: 0;
+  transition: opacity 0.25s;
+  pointer-events: none;
+}
+
+.project-image-wrap:hover .flip-hint { opacity: 1; }
+
+/* Testo descrizione */
+.project-desc {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.project-desc p {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--yellow);
+  text-align: justify;
+}
+
+.project-desc p + p { margin-top: 1.2em; }
+
+/* ── Gallery ── */
+.gallery-sep {
+  border: none;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.35);
+  margin: 0 -48px 0 -32px;
+}
+
+.gallery-section {
+  background: var(--blue);
+  margin-left: -32px;
+  margin-right: -48px;
+  padding: 36px 48px 64px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.g-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+/* item normale: 1/3 della riga */
+.gallery-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* item grande: 2/3 della riga */
+.gallery-item.large {
+  flex: 2;
+}
+
+/* item molto grande: 3/4 della riga */
+.gallery-item.xlarge {
+  flex: 3;
+}
+
+/* dittico: due immagini affiancate senza gap */
+.g-diptych {
+  display: flex;
+  gap: 0;
+  align-items: flex-start;
+}
+
+.gallery-item .g-diptych img {
+  width: 50%;
+  height: auto;
+  display: block;
+}
+
+/* riga con immagini vicine/sovrapposte */
+.g-row.overlap {
+  gap: 0;
+}
+
+.g-row.overlap .gallery-item + .gallery-item {
+  margin-left: -32px;
+  position: relative;
+  z-index: 1;
+}
+
+/* riga con gap ridotto */
+.g-row.tight {
+  gap: 0;
+}
+
+/* riga shoots: gap grande dopo 01, gap piccolo dopo 02 */
+.g-row-shoots {
+  gap: 0;
+}
+
+.g-row-shoots .g-s01 { flex: 2; margin-right: 40px; }
+.g-row-shoots .g-s02 { flex: 1; margin-right: 6px; }
+.g-row-shoots .g-s04 { flex: 1; margin-top: 40px; }
+
+.g-stack .gallery-item {
+  flex: unset;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.gallery-caption {
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--yellow);
+  color: var(--blue);
+  padding: 0 4px;
+  align-self: flex-start;
+}
+
+/* riga sheets/lineup: grid 1fr/2fr, altezze uguali */
+.g-row-lineup {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 14px;
+}
+
+.g-row-lineup .gallery-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.g-row-lineup .gallery-item img {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  object-fit: cover;
+}
+
+/* riga mood: grid 2fr/1fr, mood occupa entrambe le righe */
+.g-row-mood {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 14px;
+}
+
+.g-row-mood .g-mood {
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.g-row-mood .g-mood img {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  object-fit: cover;
+}
+
+/* ── BACK: profilo ── */
+.back-content {
+  padding: 48px 48px 80px 32px;
+}
+
+.back-header {
+  margin-bottom: 0;
+}
+
+.back-header h1 {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.back-header .subtitle {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  opacity: 0.6;
+  margin-bottom: 28px;
+}
+
+.back-divider {
+  height: 1px;
+  background: var(--blue);
+  margin-left: -32px;
+  margin-bottom: 0;
+}
+
+.profile-section {
+  background: var(--blue);
+  margin-left: -32px;
+  margin-right: -48px;
+  padding: 36px 48px 48px 32px;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 40px;
+  align-items: start;
+  min-height: 392px;
+}
+
+.photo-wrap {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: #c8c8c8;
+  overflow: hidden;
+  max-height: 320px;
+  position: relative;
+  cursor: pointer;
+}
+
+.photo-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.photo-wrap:hover img { transform: scale(1.02); }
+
+.photo-wrap .flip-hint {
+  position: absolute;
+  bottom: 16px; right: 16px;
+  background: var(--yellow);
+  color: var(--blue);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  opacity: 0;
+  transition: opacity 0.25s;
+  pointer-events: none;
+}
+
+.photo-wrap:hover .flip-hint { opacity: 1; }
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.info-block h2 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin-bottom: 6px;
+}
+
+.info-block p,
+.info-block a:not(.project-link) {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--yellow);
+  text-decoration: none;
+}
+
+.info-block a:hover { text-decoration: underline; }
+
+.info-rule {
+  height: 1px;
+  background: rgba(255, 244, 182, 0.2);
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.skill-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: var(--yellow);
+  padding: 4px 14px;
+  border-radius: 999px;
+}
+
+.graduation-text {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--yellow);
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: var(--yellow);
+  padding: 10px 20px;
+  text-decoration: none;
+  transition: opacity 0.15s;
+  border: none;
+  cursor: pointer;
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+}
+
+.project-link:hover { opacity: 0.8; }
+
+/* ── Inline contact form ── */
+@keyframes formSlideIn {
+  0%   { transform: translateY(-6px); opacity: 0.6; }
+  65%  { transform: translateY(2px);  opacity: 1; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+
+.contact-inline {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  margin-top: 0;
+  transition: grid-template-rows 0.48s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.28s ease,
+              margin-top 0.28s ease;
+}
+
+.contact-inline.open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 20px;
+}
+
+.contact-inline-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.contact-inline.open .contact-inline-inner {
+  animation: formSlideIn 0.52s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+}
+
+@keyframes formSlideOut {
+  0%   { transform: translateY(0);    opacity: 1; }
+  100% { transform: translateY(-8px); opacity: 0; }
+}
+
+.contact-inline.is-closing .contact-inline-inner {
+  animation: formSlideOut 0.28s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.contact-inline.is-closing {
+  transition: grid-template-rows 0.42s cubic-bezier(0.4, 0, 0.6, 1),
+              opacity 0.28s ease,
+              margin-top 0.32s ease;
+}
+
+.contact-inline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  border-top: 1px solid rgba(255, 244, 182, 0.3);
+  padding-top: 16px;
+}
+
+.contact-inline-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--yellow);
+}
+
+.contact-inline-close {
+  background: none;
+  border: 1px solid rgba(255, 244, 182, 0.4);
+  color: var(--yellow);
+  font-size: 13px;
+  font-weight: 700;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'LFT Etica Mono', monospace;
+  transition: background 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+
+.contact-inline-close:hover {
+  background: rgba(255, 244, 182, 0.12);
+  border-color: var(--yellow);
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+
+.form-group label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--yellow);
+}
+
+.form-group input,
+.form-group textarea {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-size: 13px;
+  color: var(--blue);
+  background: #ffffff;
+  border: none;
+  padding: 8px 12px;
+  outline: none;
+  width: 100%;
+  resize: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  background: var(--yellow);
+}
+
+.form-group--mb { margin-bottom: 14px; }
+
+.form-submit {
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: var(--yellow);
+  border: none;
+  padding: 10px 22px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.form-submit:hover { opacity: 0.8; }
+
+.flip-back-btn {
+  display: block;
+  margin-top: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+  opacity: 0.45;
+  transition: opacity 0.2s;
+}
+
+.flip-back-btn:hover { opacity: 1; }
+
+/* ── Marquee strip (project page) ── */
+.proj-marquee {
+  overflow: hidden;
+  height: 420px;
+  margin: 0 -48px -64px -32px;
+}
+
+.proj-marquee-track {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  will-change: transform;
+}
+
+.proj-marquee-track img {
+  height: 100%;
+  width: auto;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* ── Lightbox ── */
+#lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(1, 0, 226, 0.92);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s;
+  cursor: pointer;
+}
+
+#lightbox.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#lightbox-inner {
+  position: relative;
+  display: inline-flex;
+}
+
+#lightbox-close {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  background: var(--yellow);
+  color: var(--blue);
+  border: none;
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  transition: background 0.15s, color 0.15s;
+}
+
+#lightbox-close:hover {
+  background: var(--blue);
+  color: var(--yellow);
+  outline: 1px solid var(--yellow);
+}
+
+#lightbox img {
+  max-width: 88vw;
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  transform: scale(0.9);
+  opacity: 0;
+  transition: transform 0.28s cubic-bezier(0.2, 0, 0, 1), opacity 0.22s ease;
+  cursor: default;
+}
+
+#lightbox.open img {
+  transform: scale(1);
+  opacity: 1;
+}
+</style>
+</head>
+<body>
+
+<!-- Menu -->
+<div id="menu-box">
+  <nav>
+    <a href="../index.html">home</a>
+    <a href="../about-us.html">about us</a>
+    <a href="../living-archive.html">living archive</a>
+    <a href="../lets-connect.html">let's connect</a>
+  </nav>
+</div>
+
+<!-- Flip container -->
+<div class="flip-container">
+  <div class="flipper" id="flipper">
+
+    <!-- ═══ FRONT: progetto ═══ -->
+    <div class="face front" id="faceFront">
+      <div class="front-content">
+
+        <div class="front-header">
+          <h1>Corpus Terrae</h1>
+          <p class="project-cat">Riccardo Cappello — Heritage — Living Archive</p>
+        </div>
+
+        <div class="front-divider"></div>
+
+        <div class="project-section">
+
+          <!-- Immagine cliccabile -->
+          <div class="project-image-wrap" id="flipTrigger">
+            <img src="../Progetti studenti/Riccardo Cappello/copertina.jpeg" alt="Corpus Terrae">
+            <div class="flip-hint">AUTHOR ↺</div>
+          </div>
+
+          <!-- Descrizione -->
+          <div class="project-desc">
+            <p>The project stems from the exploration of a profound connection between body, territory, and memory, developing from the ancient knowledge of Apulian transhumance. The collection interprets this legacy as a living practice, translating it into a contemporary vision in which time is stratified and transformed. The figure of the shepherd is reinterpreted as a modern wayfarer, balanced between the natural dimension and the urban context, bearer of an ever-evolving identity.</p>
+            <p>The garments take on an active function: not just aesthetic elements, but tools that accompany the body as it adapts, protects itself, and changes. Wool becomes an expressive language, while cowbells transform into audible signs of belonging, evoking a collective memory that persists in the present.</p>
+            <p>The project occupies a space between ritual and innovation, exploring the relationship between the archaic and the contemporary. Each piece represents a symbolic threshold, offering a reflection on embracing change without losing ties to one's roots.</p>
+          </div>
+
+        </div>
+
+        <hr class="gallery-sep">
+
+        <!-- ── Gallery ── -->
+        <div class="gallery-section">
+
+          <!-- mood grande + yarns/knitting stitches impilati -->
+          <div class="g-row-mood">
+            <div class="gallery-item g-mood">
+              <img src="../Progetti studenti/Riccardo Cappello/mood.jpg" alt="Mood">
+              <span class="gallery-caption">mood</span>
+            </div>
+            <div class="gallery-item">
+              <img src="../Progetti studenti/Riccardo Cappello/filati.jpg" alt="Yarns">
+              <span class="gallery-caption">yarns</span>
+            </div>
+            <div class="gallery-item">
+              <img src="../Progetti studenti/Riccardo Cappello/punti.jpg" alt="Knitting stitches">
+              <span class="gallery-caption">knitting stitches</span>
+            </div>
+          </div>
+
+          <!-- technical sheets + line-up -->
+          <div class="g-row-lineup">
+            <div class="gallery-item">
+              <img src="../Progetti studenti/Riccardo Cappello/schede .jpg" alt="Technical sheets">
+              <span class="gallery-caption">technical sheets</span>
+            </div>
+            <div class="gallery-item">
+              <img src="../Progetti studenti/Riccardo Cappello/figurini.jpg" alt="Line-up">
+              <span class="gallery-caption">line-up</span>
+            </div>
+          </div>
+
+          <!-- shoots -->
+          <div class="g-row g-row-shoots">
+            <div class="gallery-item g-s01">
+              <img src="../Progetti studenti/Riccardo Cappello/shoot 01 copia.png" alt="">
+              <span class="gallery-caption">shooting</span>
+            </div>
+            <div class="gallery-item g-s02">
+              <img src="../Progetti studenti/Riccardo Cappello/shoot 02.png" alt="">
+            </div>
+            <div class="gallery-item g-s04">
+              <img src="../Progetti studenti/Riccardo Cappello/shoot 04 copia.png" alt="">
+            </div>
+          </div>
+
+          <!-- shoot 03 -->
+          <div class="g-row" style="margin-top: -40px; justify-content: center;">
+            <div class="gallery-item" style="max-width: 52%;">
+              <img src="../Progetti studenti/Riccardo Cappello/shoot 03.png" alt="">
+            </div>
+          </div>
+
+          <!-- Marquee strip -->
+          <div class="proj-marquee" id="projMarquee">
+            <div class="proj-marquee-track" id="projMarqueeTrack">
+              <img src="../Progetti studenti/Riccardo Cappello/01.png" alt="">
+              <img src="../Progetti studenti/Riccardo Cappello/02.png" alt="">
+              <img src="../Progetti studenti/Riccardo Cappello/03.png" alt="">
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══ BACK: profilo ═══ -->
+    <div class="face back" id="faceBack">
+      <div class="back-content">
+
+        <div class="back-header">
+          <h1>Riccardo Cappello</h1>
+        </div>
+
+        <div class="back-divider"></div>
+
+        <div class="profile-section">
+
+          <!-- Foto cliccabile per tornare al progetto -->
+          <div class="photo-wrap" id="flipBackTrigger">
+            <!-- <img src="..." alt="Riccardo Cappello"> -->
+            <div class="flip-hint">PROJECT ↺</div>
+          </div>
+
+          <!-- Info -->
+          <div class="profile-info">
+
+            <div class="info-block">
+              <p class="graduation-text">Graduated in Moda | Fashion — Iuav University of Venice, March 2027</p>
+            </div>
+
+            <div class="info-rule"></div>
+
+            <div class="info-block">
+              <h2>Contacts</h2>
+              <a href="mailto:riccardocappello@gmail.com">riccardocappello@gmail.com</a>
+              <p>+39 378 3427012</p>
+            </div>
+
+            <div class="info-rule"></div>
+
+            <div class="info-block">
+              <h2>Skills</h2>
+              <div class="skills">
+                <span class="skill-tag">Tailoring</span>
+                <span class="skill-tag">Videomaking</span>
+                <span class="skill-tag">Modeling</span>
+              </div>
+            </div>
+
+            <div class="info-rule"></div>
+
+            <div class="info-block">
+              <button type="button" class="project-link" id="contactBtn">CONTACT ME</button>
+              <div id="contactInline" class="contact-inline" aria-hidden="true">
+                <div class="contact-inline-inner">
+                  <div class="contact-inline-header">
+                    <span class="contact-inline-title">Get in touch</span>
+                    <button type="button" class="contact-inline-close" id="contactClose">✕</button>
+                  </div>
+                  <form id="contactForm">
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label for="cf-nome">First name</label>
+                        <input type="text" id="cf-nome" required placeholder="Giovanni">
+                      </div>
+                      <div class="form-group">
+                        <label for="cf-cognome">Last name</label>
+                        <input type="text" id="cf-cognome" required placeholder="Rossi">
+                      </div>
+                    </div>
+                    <div class="form-group form-group--mb">
+                      <label for="cf-email">Your email</label>
+                      <input type="email" id="cf-email" required placeholder="name@example.com">
+                    </div>
+                    <div class="form-group form-group--mb">
+                      <label for="cf-msg">Message</label>
+                      <textarea id="cf-msg" rows="3" required placeholder="Briefly describe why you'd like to get in touch…"></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">Send message →</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <button class="flip-back-btn" id="flipBack">← torna al progetto</button>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" aria-hidden="true">
+  <div id="lightbox-inner">
+    <button id="lightbox-close">✕</button>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+</div>
+
+<script>
+(function () {
+  const front = document.getElementById('faceFront');
+  const back  = document.getElementById('faceBack');
+  let busy = false;
+  const HALF = 430; // ms — matches the CSS transition duration
+
+  const easeIn  = 'transform 0.43s cubic-bezier(0.4, 0, 1, 1)';
+  const easeOut = 'transform 0.43s cubic-bezier(0, 0, 0.2, 1)';
+
+  function flipToBack() {
+    if (busy) return;
+    busy = true;
+    // Phase 1: fold front away (0 → 90deg)
+    front.style.transition = easeIn;
+    front.style.transform  = 'rotateY(90deg)';
+    setTimeout(() => {
+      // Phase 2: snap back to 90deg (no transition) then unfold to 0
+      back.style.transition = 'none';
+      back.style.transform  = 'rotateY(90deg)';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          back.style.transition   = easeOut;
+          back.style.transform    = 'rotateY(0deg)';
+          back.style.pointerEvents  = 'auto';
+          front.style.pointerEvents = 'none';
+          setTimeout(() => { busy = false; }, HALF);
+        });
+      });
+    }, HALF);
+  }
+
+  function flipToFront() {
+    if (busy) return;
+    busy = true;
+    // Phase 1: fold back away (0 → -90deg, opposite direction)
+    back.style.transition = easeIn;
+    back.style.transform  = 'rotateY(-90deg)';
+    setTimeout(() => {
+      // Phase 2: snap front to -90deg then unfold to 0
+      front.style.transition = 'none';
+      front.style.transform  = 'rotateY(-90deg)';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          front.style.transition   = easeOut;
+          front.style.transform    = 'rotateY(0deg)';
+          front.style.pointerEvents  = 'auto';
+          back.style.pointerEvents   = 'none';
+          setTimeout(() => { busy = false; }, HALF);
+        });
+      });
+    }, HALF);
+  }
+
+  document.getElementById('flipTrigger').addEventListener('click', flipToBack);
+  document.getElementById('flipBackTrigger').addEventListener('click', flipToFront);
+  document.getElementById('flipBack').addEventListener('click', flipToFront);
+
+  // Sync blue box heights so profile section matches project section
+  function syncBlueBoxes() {
+    const projSection = document.querySelector('.face.front .project-section');
+    const profSection = document.querySelector('.face.back .profile-section');
+    const frontHeader = document.querySelector('.face.front .front-header');
+    const backHeader  = document.querySelector('.face.back .back-header');
+    if (!projSection || !profSection || !frontHeader || !backHeader) return;
+    profSection.style.minHeight = '';
+    backHeader.style.paddingBottom = '';
+    const diff = frontHeader.getBoundingClientRect().height - backHeader.getBoundingClientRect().height;
+    if (diff > 0) backHeader.style.paddingBottom = diff + 'px';
+    profSection.style.minHeight = projSection.getBoundingClientRect().height + 'px';
+  }
+
+  window.addEventListener('load', syncBlueBoxes);
+  window.addEventListener('resize', syncBlueBoxes);
+
+  // Lightbox
+  const lightbox    = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const galleryImgs = Array.from(document.querySelectorAll('.gallery-section img')).filter(img => !img.closest('.proj-marquee'));
+  let currentIndex  = 0;
+
+  function openLightbox(index) {
+    currentIndex = (index + galleryImgs.length) % galleryImgs.length;
+    if (lightbox.classList.contains('open')) {
+      // Già aperto: fade out → cambia immagine → fade in
+      lightboxImg.style.opacity  = '0';
+      lightboxImg.style.transform = 'scale(0.94)';
+      setTimeout(() => {
+        lightboxImg.src = galleryImgs[currentIndex].src;
+        lightboxImg.alt = galleryImgs[currentIndex].alt;
+        lightboxImg.style.opacity  = '1';
+        lightboxImg.style.transform = 'scale(1)';
+      }, 200);
+    } else {
+      lightboxImg.src = galleryImgs[currentIndex].src;
+      lightboxImg.alt = galleryImgs[currentIndex].alt;
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+  }
+
+  galleryImgs.forEach((img, i) => {
+    img.style.cursor = 'pointer';
+    img.addEventListener('click', () => openLightbox(i));
+  });
+
+  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeLightbox();
+    } else if (lightbox.classList.contains('open')) {
+      if (e.key === 'ArrowRight') openLightbox(currentIndex + 1);
+      if (e.key === 'ArrowLeft')  openLightbox(currentIndex - 1);
+    }
+  });
+})();
+
+// Contact inline form
+(function () {
+  const inline = document.getElementById('contactInline');
+  const btn    = document.getElementById('contactBtn');
+  const close  = document.getElementById('contactClose');
+
+  btn.addEventListener('click', () => {
+    inline.classList.add('open');
+    inline.setAttribute('aria-hidden', 'false');
+  });
+
+  close.addEventListener('click', () => {
+    inline.classList.add('is-closing');
+    setTimeout(() => {
+      inline.classList.remove('open');
+      inline.setAttribute('aria-hidden', 'true');
+    }, 210);
+    setTimeout(() => {
+      inline.classList.remove('is-closing');
+    }, 620);
+  });
+
+  document.getElementById('contactForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const nome    = document.getElementById('cf-nome').value.trim();
+    const cognome = document.getElementById('cf-cognome').value.trim();
+    const email   = document.getElementById('cf-email').value.trim();
+    const msg     = document.getElementById('cf-msg').value.trim();
+
+    const subject = encodeURIComponent('Messaggio da ' + nome + ' ' + cognome + ' — IMAC');
+    const body    = encodeURIComponent(
+      'Nome: ' + nome + ' ' + cognome + '\n' +
+      'Email: ' + email + '\n\n' +
+      msg
+    );
+
+    window.location.href = 'mailto:riccardocappello@gmail.com?subject=' + subject + '&body=' + body;
+  });
+})();
+
+// Project marquee
+(function () {
+  const track = document.getElementById('projMarqueeTrack');
+  if (!track) return;
+  const baseImgs = Array.from(track.querySelectorAll('img'));
+  const SPEED = 1.5;
+
+  function setup() {
+    const totalW = baseImgs.reduce((sum, img) => sum + img.offsetWidth, 0);
+    if (!totalW) { requestAnimationFrame(setup); return; }
+
+    const needed = Math.ceil((window.innerWidth * 3) / totalW) + 2;
+    for (let i = 0; i < needed; i++) {
+      baseImgs.forEach(img => track.appendChild(img.cloneNode(true)));
+    }
+
+    let pos = -totalW;
+    track.style.transform = `translateX(${pos}px)`;
+
+    function tick() {
+      pos += SPEED;
+      if (pos >= 0) pos -= totalW;
+      track.style.transform = `translateX(${pos}px)`;
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  Promise.all(
+    baseImgs.map(img => img.complete && img.naturalWidth
+      ? Promise.resolve()
+      : new Promise(r => img.addEventListener('load', r)))
+  ).then(() => requestAnimationFrame(setup));
+})();
+</script>
+</body>
+</html>
