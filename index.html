@@ -22,10 +22,36 @@ html, body {
 /* ── Menu box ── */
 #menu-box {
   position: fixed;
-  top: 48px;
+  top: 24px;
   left: 24px;
   padding: 14px 18px 16px;
   color: var(--blue);
+  z-index: 10;
+}
+
+/* ── Sign in ── */
+#sign-in-btn {
+  display: block;
+  text-align: left;
+  width: 100%;
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+#sign-in-btn:hover {
+  text-decoration: none;
 }
 
 #menu-box nav {
@@ -71,6 +97,7 @@ html, body {
   width: auto;
   display: block;
   flex-shrink: 0;
+  filter: hue-rotate(-20deg) saturate(1.2) brightness(1.1);
 }
 
 /* ── Pallini fluttuanti ── */
@@ -104,6 +131,12 @@ html, body {
   height: 280px;
   font-size: 26px;
 }
+
+#bubble-logo {
+  width: 170px;
+  height: 170px;
+  background: url('Logo.png') center / contain no-repeat;
+}
 </style>
 </head>
 <body>
@@ -112,8 +145,10 @@ html, body {
 <div id="menu-box">
   <nav>
     <a href="about-us.html">about us</a>
+    <button id="sign-in-btn">sign in</button>
     <a href="living-archive.html">living archive</a>
-    <a href="lets-connect.html">let's connect</a>
+    <a href="lets-network.html">let's network</a>
+    <a href="lets-share.html">let's share</a>
   </nav>
 </div>
 
@@ -129,6 +164,9 @@ html, body {
 
 <!-- Pallino grande: Iuav 4 Venice -->
 <div id="bubble-large" class="bubble">Iuav 4<br>Venice</div>
+
+<!-- Pallino logo: IMAC -->
+<div id="bubble-logo" class="bubble"></div>
 
 <script>
 // ── Marquee ──
@@ -175,8 +213,8 @@ const DAMPING = 0.995;
 const bubbles = [
   {
     el: document.getElementById('bubble'),
-    R: 65, SPEED_AUTO: 4.5, SPEED_AFTER: 1.2,
-    x: W * 0.65, y: H * 0.45, vx: 0.7, vy: 0.5,
+    R: 65, SPEED_AUTO: 1.8, SPEED_AFTER: 0.8,
+    x: W * 0.65, y: H * 0.45, vx: 0.5, vy: 0.4,
     href: 'https://docs.google.com/forms/d/1r43RdSCZdGPQ5wIet1izcyhZdx0vcn32ODd9NwUcQUY/viewform?edit_requested=true',
     dragging: false, dragOffX: 0, dragOffY: 0,
     lastMX: 0, lastMY: 0, velX: 0, velY: 0, downX: 0, downY: 0,
@@ -189,12 +227,19 @@ const bubbles = [
     dragging: false, dragOffX: 0, dragOffY: 0,
     lastMX: 0, lastMY: 0, velX: 0, velY: 0, downX: 0, downY: 0,
   },
+  {
+    el: document.getElementById('bubble-logo'),
+    R: 85, SPEED_AUTO: 1.0, SPEED_AFTER: 0.5,
+    x: W * 0.80, y: H * 0.25, vx: -0.4, vy: 0.6,
+    href: null,
+    dragging: false, dragOffX: 0, dragOffY: 0,
+    lastMX: 0, lastMY: 0, velX: 0, velY: 0, downX: 0, downY: 0,
+  },
 ];
 
 let draggingBubble = null;
 
-function resolveCollisions() {
-  const a = bubbles[0], b = bubbles[1];
+function resolvePair(a, b) {
   const dx = b.x - a.x, dy = b.y - a.y;
   const dist = Math.sqrt(dx*dx + dy*dy);
   const minDist = a.R + b.R;
@@ -209,6 +254,12 @@ function resolveCollisions() {
       if (!b.dragging) { b.vx += dot * nx; b.vy += dot * ny; }
     }
   }
+}
+
+function resolveCollisions() {
+  resolvePair(bubbles[0], bubbles[1]);
+  resolvePair(bubbles[0], bubbles[2]);
+  resolvePair(bubbles[1], bubbles[2]);
 }
 
 function loop() {
@@ -291,5 +342,6 @@ window.addEventListener('resize', () => { W = window.innerWidth; H = window.inne
 
 loop();
 </script>
+<script src="search.js" data-root=""></script>
 </body>
 </html>

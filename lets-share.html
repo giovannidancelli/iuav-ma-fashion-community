@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Let's Share — IMAC</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue:   rgb(1, 0, 226);
+  --yellow: rgb(255, 244, 182);
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  color: var(--blue);
+}
+
+/* ── Menu ── */
+#menu-box {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: 240px;
+  padding: 48px 24px;
+  border-right: 1px solid var(--blue);
+  z-index: 200;
+  background: #ffffff;
+}
+
+#menu-box nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#menu-box nav a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.8;
+}
+#menu-box nav a:hover { text-decoration: none; }
+
+/* ── Layout ── */
+.content {
+  position: fixed;
+  left: 240px; right: 0; top: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ── */
+.page-header {
+  padding: 28px 0 0 32px;
+  flex-shrink: 0;
+  background: #ffffff;
+}
+
+.page-header h1 {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  color: var(--blue);
+  line-height: 1;
+  margin-bottom: 18px;
+}
+
+.header-inner-divider {
+  height: 1px;
+  background: var(--blue);
+  margin-left: -32px;
+  margin-bottom: 0;
+}
+
+/* ── Due colonne header ── */
+.header-body {
+  display: flex;
+  align-items: stretch;
+  min-height: 0;
+}
+
+.header-label-col {
+  flex-shrink: 0;
+  border-right: 1px solid var(--blue);
+  padding: 20px 20px 28px 0;
+}
+
+.header-label-col img {
+  display: block;
+  height: 460px;
+  width: auto;
+}
+
+.header-text-col {
+  flex: 1;
+  padding: 20px 40px 20px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 14px;
+}
+
+.header-intro {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--blue);
+}
+
+.header-how {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--blue);
+}
+
+.header-how mark {
+  background: var(--yellow);
+  color: var(--blue);
+  padding: 0 4px;
+}
+
+.header-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-left: 2px solid var(--blue);
+  padding-left: 14px;
+}
+
+.header-step {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--blue);
+  padding: 8px 0;
+}
+
+.header-step:last-child { border-bottom: none; }
+
+
+.h-line {
+  height: 1px;
+  background: var(--blue);
+  flex-shrink: 0;
+  margin-top: 0;
+}
+
+/* ── Area scrollabile (header + feed) ── */
+#scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--blue);
+}
+
+#scroll-area::-webkit-scrollbar { width: 4px; }
+#scroll-area::-webkit-scrollbar-track { background: transparent; }
+#scroll-area::-webkit-scrollbar-thumb { background: rgba(1, 0, 226, 0.2); border-radius: 2px; }
+
+/* ── Feed ── */
+#feed {
+  flex: 1;
+  padding: 8px 32px 16px;
+  display: flex;
+  flex-direction: column;
+  background: var(--blue);
+  min-height: 100vh;
+}
+
+/* ── Post ── */
+.post {
+  padding: 22px 0;
+  border-bottom: 1px solid rgba(255, 244, 182, 0.15);
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.post-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--yellow);
+  color: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.post-author {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--yellow);
+}
+
+.post-time {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  color: rgba(255, 244, 182, 0.45);
+  margin-left: auto;
+}
+
+.post-body {
+  padding-left: 44px;
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.post-text {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--yellow);
+  flex: 1;
+}
+
+/* Immagine reale */
+.post-image {
+  display: block;
+  flex-shrink: 0;
+  width: 200px;
+  height: 140px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 244, 182, 0.3);
+}
+
+/* Riquadro grigio placeholder */
+.post-img-placeholder {
+  flex-shrink: 0;
+  width: 200px;
+  height: 140px;
+  background: #808080;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.post-img-placeholder svg {
+  opacity: 0.5;
+}
+
+.post-img-placeholder span {
+  font-family: 'LFT Etica Light', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── Input bar (locked) ── */
+#input-bar {
+  flex-shrink: 0;
+  background: var(--blue);
+  border-top: 1px solid rgba(255, 244, 182, 0.18);
+  padding: 12px 32px 14px;
+  position: relative;
+  cursor: pointer;
+}
+
+/* Transparent overlay that catches all clicks on the bar */
+#input-bar-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  cursor: pointer;
+}
+
+#input-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  width: 100%;
+  opacity: 0.28;
+  pointer-events: none;
+  user-select: none;
+}
+
+#input-text {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--yellow);
+  background: transparent;
+  border: 1px solid rgba(255, 244, 182, 0.5);
+  padding: 8px 14px;
+  flex: 1;
+  resize: none;
+  outline: none;
+  line-height: 1.6;
+  height: 38px;
+  overflow: hidden;
+}
+#input-text::placeholder { color: rgba(255, 244, 182, 0.5); }
+
+/* Bottone immagine */
+#img-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 244, 182, 0.5);
+  border-left: none;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  color: rgba(255, 244, 182, 0.7);
+}
+#img-btn svg { pointer-events: none; }
+#img-input { display: none; }
+
+/* Bottone POST */
+#send-btn {
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--blue);
+  background: var(--yellow);
+  border: 1px solid var(--yellow);
+  border-left: none;
+  padding: 0 20px;
+  cursor: pointer;
+  height: 38px;
+  flex-shrink: 0;
+}
+
+.input-hint {
+  font-family: 'LFT Etica Light', sans-serif;
+  font-size: 10px;
+  color: rgba(255, 244, 182, 0.18);
+  margin-top: 6px;
+  pointer-events: none;
+}
+
+/* ── Sign-in popup ── */
+#signin-popup {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--yellow);
+  border: 1px solid rgba(1, 0, 226, 0.4);
+  padding: 18px 40px 18px 20px;
+  z-index: 500;
+  min-width: 300px;
+  display: none;
+  box-shadow: none;
+}
+
+#signin-popup.visible { display: block; }
+
+/* Triangle pointer at bottom */
+#signin-popup::before {
+  content: '';
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 9px solid rgba(1, 0, 226, 0.4);
+}
+#signin-popup::after {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid var(--yellow);
+}
+
+#signin-popup-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--blue);
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 2px;
+  opacity: 0.75;
+}
+#signin-popup-close:hover { opacity: 1; }
+
+.popup-signin-title {
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 8px;
+}
+
+.popup-signin-sub {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  color: rgba(1, 0, 226, 0.6);
+}
+
+.popup-signin-sub a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.popup-signin-sub a:hover { text-decoration: none; }
+
+</style>
+</head>
+<body>
+
+<!-- Menu -->
+<div id="menu-box">
+  <nav>
+    <a href="index.html">home</a>
+    <a href="about-us.html">about us</a>
+    <a href="index.html">sign in</a>
+    <a href="living-archive.html">living archive</a>
+    <a href="lets-network.html">let's network</a>
+    <a href="lets-share.html">let's share</a>
+  </nav>
+</div>
+
+<div class="content">
+
+  <div id="scroll-area">
+  <div class="page-header">
+    <h1>let's share</h1>
+    <div class="header-inner-divider"></div>
+    <div class="header-body">
+      <!-- Etichetta verticale sinistra -->
+      <div class="header-label-col">
+        <img src="Etichetta 2.png" alt="Label">
+      </div>
+      <!-- Testo destra -->
+      <div class="header-text-col">
+        <p class="header-intro">This page is Iuav Master Fashion Community's blog. Share your projects with the community and show off the results!</p>
+        <p class="header-how"><mark>How it works</mark>:</p>
+        <div class="header-steps">
+          <p class="header-step">Find the project/item you're interested in through the Living Archive page, where you can also view the student's profile.</p>
+          <p class="header-step">Connect with the student through the platforms and addresses listed in their personal profile.</p>
+          <p class="header-step">Obtain the project/item you're interested in through a private agreement.</p>
+          <p class="header-step">Share the project/item with the community and comment on the results!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="h-line"></div>
+
+  <div id="feed"></div>
+  </div><!-- fine #scroll-area -->
+
+  <!-- Barra di input (locked — click opens sign-in popup) -->
+  <div id="input-bar">
+    <!-- Invisible overlay that intercepts clicks -->
+    <div id="input-bar-overlay"></div>
+    <div id="input-row">
+      <textarea id="input-text" placeholder="share something with the community…"></textarea>
+      <button id="img-btn" title="Attach image">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <rect x="1" y="3" width="14" height="10" rx="1" stroke="currentColor" stroke-width="1.2"/>
+          <circle cx="5.5" cy="6.5" r="1.2" fill="currentColor"/>
+          <path d="M1 11l3.5-3.5 2.5 2.5 2-2 4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <input id="img-input" type="file" accept="image/*">
+      <button id="send-btn">POST</button>
+    </div>
+    <div class="input-hint">sign in to post</div>
+  </div>
+
+</div>
+
+<!-- Sign-in popup -->
+<div id="signin-popup">
+  <button id="signin-popup-close">✕</button>
+  <div class="popup-signin-title">Sign in to chat with the community</div>
+  <div class="popup-signin-sub"><a href="index.html">sign in</a></div>
+</div>
+
+<script>
+(function () {
+
+  const SAMPLES = [
+    {
+      author: 'Francesca Caneva',
+      time: '3d ago',
+      text: 'Posted a few fabric swatches in the studio — leftover from my collection work, great for experimenting. Help yourself!',
+      img: null
+    },
+    {
+      author: 'Giovanni Dancelli',
+      time: '2d ago',
+      text: 'Looking for someone with pattern-making skills to collaborate on a structured jacket. Happy to exchange time and materials.',
+      img: '__placeholder__'
+    },
+    {
+      author: 'Agnese Prandi',
+      time: '1d ago',
+      text: 'Just finished a small capsule of upcycled pieces. Available to borrow for shoots or study — reach out!',
+      img: '__placeholder__'
+    },
+    {
+      author: 'Flora Conticello',
+      time: '5h ago',
+      text: 'Sharing my editorial from last semester — if anyone is interested in shooting together for the next one, let me know.',
+      img: null
+    },
+    {
+      author: 'Alice Schiappacasse',
+      time: '2h ago',
+      text: 'Riccardo borrowed me his sweater from his project Corpus Terrae, beautiful garment to study and understand the technique behind it. Great!',
+      img: '__placeholder__'
+    },
+  ];
+
+  const feed = document.getElementById('feed');
+
+  function initials(name) {
+    return name.trim().split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+  }
+  function esc(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  const PLACEHOLDER_SVG = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.4"/>
+    <circle cx="8" cy="9" r="2" fill="currentColor"/>
+    <path d="M2 17l5-5 4 4 3-3 6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`;
+
+  function imgBlock(img) {
+    if (!img) return '';
+    if (img === '__placeholder__') {
+      return `<div class="post-img-placeholder">${PLACEHOLDER_SVG}<span>image</span></div>`;
+    }
+    return `<img class="post-image" src="${img}" alt="">`;
+  }
+
+  function renderPost(post, prepend) {
+    const el = document.createElement('div');
+    el.className = 'post';
+    el.innerHTML = `
+      <div class="post-header">
+        <div class="post-avatar">${initials(post.author)}</div>
+        <span class="post-author">${esc(post.author)}</span>
+        <span class="post-time">${esc(post.time)}</span>
+      </div>
+      <div class="post-body">
+        ${imgBlock(post.img)}
+        <div class="post-text">${esc(post.text)}</div>
+      </div>
+    `;
+    if (prepend) {
+      feed.insertBefore(el, feed.firstChild);
+      el.style.opacity = '0';
+      el.style.transition = 'opacity 0.3s';
+      requestAnimationFrame(() => { el.style.opacity = '1'; });
+    } else {
+      feed.appendChild(el);
+    }
+  }
+
+  // localStorage
+  function loadSaved() {
+    try { return JSON.parse(localStorage.getItem('imac_share_v2') || '[]'); }
+    catch { return []; }
+  }
+  function addSaved(post) {
+    const saved = loadSaved();
+    saved.unshift(post);
+    localStorage.setItem('imac_share_v2', JSON.stringify(saved.slice(0, 100)));
+  }
+
+  // Init
+  SAMPLES.forEach(p => renderPost(p, false));
+  loadSaved().forEach(p => renderPost(p, false));
+  feed.scrollTop = feed.scrollHeight;
+
+  // ── Sign-in popup ─────────────────────────────────────────────────
+  const popup   = document.getElementById('signin-popup');
+  const inputBar = document.getElementById('input-bar');
+
+  function showPopup() {
+    const barRect = inputBar.getBoundingClientRect();
+    popup.style.bottom = (window.innerHeight - barRect.top + 14) + 'px';
+    popup.classList.add('visible');
+  }
+
+  document.getElementById('input-bar-overlay').addEventListener('click', showPopup);
+
+  document.getElementById('signin-popup-close').addEventListener('click', e => {
+    e.stopPropagation();
+    popup.classList.remove('visible');
+  });
+
+  document.addEventListener('click', e => {
+    if (!popup.contains(e.target) && e.target.id !== 'input-bar-overlay') {
+      popup.classList.remove('visible');
+    }
+  });
+
+})();
+</script>
+<script src="search.js" data-root=""></script>
+</body>
+</html>

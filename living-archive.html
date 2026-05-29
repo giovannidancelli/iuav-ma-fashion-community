@@ -38,12 +38,16 @@ canvas {
 
 #menu-box nav a {
   color: var(--blue);
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
   font-size: 22px;
   font-weight: 700;
   letter-spacing: 0.05em;
   line-height: 1.8;
 }
+
+#menu-box nav a:hover { text-decoration: none; }
 
 #menu-box nav a span {
   text-decoration: none;
@@ -57,8 +61,10 @@ canvas {
   <nav>
     <a href="index.html"><span>home</span></a>
     <a href="about-us.html"><span>about</span> <span>us</span></a>
+    <a href="index.html"><span>sign</span> <span>in</span></a>
     <a href="living-archive.html"><span>living</span> <span>archive</span></a>
-    <a href="lets-connect.html"><span>let's</span> <span>connect</span></a>
+    <a href="lets-network.html"><span>let's</span> <span>network</span></a>
+    <a href="lets-share.html"><span>let's</span> <span>share</span></a>
   </nav>
 </div>
 
@@ -138,8 +144,8 @@ canvas {
         const a = balls[i], b = balls[j];
         const dx = b.x-a.x, dy = b.y-a.y;
         const d  = Math.sqrt(dx*dx+dy*dy);
-        // soglia bassa: le bolle possono sovrapporsi fino al 55% del raggio combinato
-        const mn = (a.r + b.r) * 0.45;
+        // le bolle si toccano appena, massimo 10% di sovrapposizione
+        const mn = (a.r + b.r) * 0.90;
         if (d < mn && d > 0.001) {
           const nx = dx/d, ny = dy/d, ov = (mn-d)/2;
           if (dragging!==i){ a.x-=nx*ov; a.y-=ny*ov; }
@@ -202,11 +208,11 @@ canvas {
       ctx.translate(b.x, b.y);
       ctx.scale(b.scale, b.scale);
 
-      // Gradiente radiale: pieno al centro, sfuma verso trasparente
+      // Gradiente radiale: solido fino all'80%, poi sfuma sul bordo
       const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, b.r);
       grad.addColorStop(0,    'rgba(1, 0, 226, 1)');
-      grad.addColorStop(0.55, 'rgba(1, 0, 226, 0.9)');
-      grad.addColorStop(0.82, 'rgba(1, 0, 226, 0.45)');
+      grad.addColorStop(0.80, 'rgba(1, 0, 226, 1)');
+      grad.addColorStop(0.93, 'rgba(1, 0, 226, 0.55)');
       grad.addColorStop(1,    'rgba(1, 0, 226, 0)');
 
       ctx.beginPath();
@@ -324,5 +330,6 @@ canvas {
   loop();
 })();
 </script>
+<script src="search.js" data-root=""></script>
 </body>
 </html>

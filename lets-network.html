@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Let's Network — IMAC</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root { --blue: rgb(1, 0, 226); }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: rgb(1, 0, 226);
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+}
+
+canvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* ── Menu ── */
+#menu-box {
+  position: fixed;
+  top: 48px;
+  left: 24px;
+  z-index: 10;
+}
+
+#menu-box nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#menu-box nav a {
+  color: rgb(255, 244, 182);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+}
+
+#menu-box nav a:hover { text-decoration: none; }
+
+#menu-box nav a span {
+  text-decoration: none;
+}
+</style>
+</head>
+<body>
+
+<!-- Menu -->
+<div id="menu-box">
+  <nav>
+    <a href="index.html"><span>home</span></a>
+    <a href="about-us.html"><span>about</span> <span>us</span></a>
+    <a href="index.html"><span>sign</span> <span>in</span></a>
+    <a href="living-archive.html"><span>living</span> <span>archive</span></a>
+    <a href="lets-network.html"><span>let's</span> <span>network</span></a>
+    <a href="lets-share.html"><span>let's</span> <span>share</span></a>
+  </nav>
+</div>
+
+<canvas id="c"></canvas>
+
+<script>
+(function(){
+  const canvas = document.getElementById('c');
+  const ctx    = canvas.getContext('2d');
+
+  const DEFS = [
+    { lines:['INDUSTRIES'],             r: 165, fs: 27, href: 'Varianti%20lets%20connect/industries.html' },
+    { lines:['IMAGE','MAKERS'],         r: 126, fs: 22 },
+    { lines:['STYLING','PRACTISES'],    r: 144, fs: 20 },
+    { lines:['STUDIOS'],                r: 110, fs: 25 },
+    { lines:['CASTING &','SCOUTING'],   r: 146, fs: 19 },
+    { lines:['SPECIALIZED','SERVICES'], r: 158, fs: 21 },
+    { lines:['ARTISAN','NETWORK'],      r: 136, fs: 21 },
+  ];
+
+  let W, H, balls;
+  let dragging = null, dragOffX = 0, dragOffY = 0;
+  let lastMX = 0, lastMY = 0, mVX = 0, mVY = 0;
+  let downX = 0, downY = 0;
+
+  const DAMPING = 0.995, BOUNCE = 0.82, REPULSE = 1.05;
+  const MIN_SPD = 1.8, MAX_SPD = 4.0;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    if (!balls) initBalls();
+    else balls.forEach(b => {
+      b.x = Math.max(b.r, Math.min(W - b.r, b.x));
+      b.y = Math.max(b.r, Math.min(H - b.r, b.y));
+    });
+  }
+
+  function initBalls() {
+    const pos = [
+      [0.20, 0.30], [0.62, 0.22],
+      [0.14, 0.55], [0.48, 0.50], [0.80, 0.46],
+      [0.30, 0.78], [0.68, 0.74],
+    ];
+    balls = DEFS.map((d, i) => {
+      const angle = Math.random() * Math.PI * 2;
+      const spd   = MIN_SPD + Math.random() * 1.0;
+      return {
+        ...d,
+        x: pos[i][0] * W,
+        y: pos[i][1] * H,
+        vx: Math.cos(angle) * spd,
+        vy: Math.sin(angle) * spd,
+        scale: 1, scaleTarget: 1,
+      };
+    });
+  }
+
+  function enforceSpeed(b, i) {
+    if (i === dragging) return;
+    const spd = Math.sqrt(b.vx*b.vx + b.vy*b.vy);
+    if (spd < MIN_SPD) { const f = MIN_SPD/(spd||0.001); b.vx*=f; b.vy*=f; }
+    if (spd > MAX_SPD) { const f = MAX_SPD/spd;           b.vx*=f; b.vy*=f; }
+  }
+
+  function resolveCollisions() {
+    for (let i = 0; i < balls.length; i++) {
+      for (let j = i+1; j < balls.length; j++) {
+        const a = balls[i], b = balls[j];
+        const dx = b.x-a.x, dy = b.y-a.y;
+        const d  = Math.sqrt(dx*dx+dy*dy);
+        const mn = (a.r + b.r) * 0.90;
+        if (d < mn && d > 0.001) {
+          const nx = dx/d, ny = dy/d, ov = (mn-d)/2;
+          if (dragging!==i){ a.x-=nx*ov; a.y-=ny*ov; }
+          if (dragging!==j){ b.x+=nx*ov; b.y+=ny*ov; }
+          const dot = (a.vx-b.vx)*nx+(a.vy-b.vy)*ny;
+          if (dot > 0) {
+            const imp = dot*REPULSE;
+            if (dragging!==i){ a.vx-=imp*nx; a.vy-=imp*ny; }
+            if (dragging!==j){ b.vx+=imp*nx; b.vy+=imp*ny; }
+          }
+        }
+      }
+    }
+  }
+
+  function resolveMenuCollision() {
+    const mr = menuBox.getBoundingClientRect();
+    balls.forEach((b, i) => {
+      if (i === dragging) return;
+      const pad = 14;
+      const left   = mr.left   - b.r - pad;
+      const right  = mr.right  + b.r + pad;
+      const top    = mr.top    - b.r - pad;
+      const bottom = mr.bottom + b.r + pad;
+      if (b.x > left && b.x < right && b.y > top && b.y < bottom) {
+        const dLeft   = b.x - left;
+        const dRight  = right  - b.x;
+        const dTop    = b.y - top;
+        const dBottom = bottom - b.y;
+        const minD = Math.min(dLeft, dRight, dTop, dBottom);
+        if      (minD === dLeft)   { b.x = left;   b.vx = -Math.abs(b.vx); }
+        else if (minD === dRight)  { b.x = right;  b.vx =  Math.abs(b.vx); }
+        else if (minD === dTop)    { b.y = top;     b.vy = -Math.abs(b.vy); }
+        else                       { b.y = bottom;  b.vy =  Math.abs(b.vy); }
+      }
+    });
+  }
+
+  function update() {
+    balls.forEach((b, i) => {
+      if (i === dragging) return;
+      b.vx *= DAMPING; b.vy *= DAMPING;
+      enforceSpeed(b, i);
+      b.x += b.vx; b.y += b.vy;
+      if (b.x-b.r < 0)  { b.x=b.r;   b.vx= Math.abs(b.vx)*BOUNCE; }
+      if (b.x+b.r > W)  { b.x=W-b.r; b.vx=-Math.abs(b.vx)*BOUNCE; }
+      if (b.y-b.r < 0)  { b.y=b.r;   b.vy= Math.abs(b.vy)*BOUNCE; }
+      if (b.y+b.r > H)  { b.y=H-b.r; b.vy=-Math.abs(b.vy)*BOUNCE; }
+    });
+    resolveCollisions();
+    resolveMenuCollision();
+    balls.forEach(b => { b.scale += (b.scaleTarget - b.scale) * 0.1; });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    balls.forEach(b => {
+      ctx.save();
+      ctx.translate(b.x, b.y);
+      ctx.scale(b.scale, b.scale);
+
+      const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, b.r);
+      grad.addColorStop(0,    'rgba(255, 244, 182, 1)');
+      grad.addColorStop(0.80, 'rgba(255, 244, 182, 1)');
+      grad.addColorStop(0.93, 'rgba(255, 244, 182, 0.55)');
+      grad.addColorStop(1,    'rgba(255, 244, 182, 0)');
+
+      ctx.beginPath();
+      ctx.arc(0, 0, b.r, 0, Math.PI*2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      ctx.fillStyle    = 'rgb(1, 0, 226)';
+      ctx.font         = `700 ${b.fs}px 'LFT Etica Mono', monospace`;
+      ctx.textAlign    = 'center';
+      ctx.textBaseline = 'middle';
+      const lh = b.fs * 1.45;
+      const sy = -((b.lines.length-1)*lh)/2;
+      b.lines.forEach((line, li) => ctx.fillText(line, 0, sy+li*lh));
+
+      ctx.restore();
+    });
+  }
+
+  const menuBox = document.getElementById('menu-box');
+  const menuWords = menuBox.querySelectorAll('span');
+
+  function updateMenuColor() {
+    menuWords.forEach(span => {
+      const r = span.getBoundingClientRect();
+      const overlap = balls.some(b => {
+        const radius = b.r * 0.7;
+        const nearX = Math.max(r.left, Math.min(b.x, r.right));
+        const nearY = Math.max(r.top,  Math.min(b.y, r.bottom));
+        const dx = b.x - nearX, dy = b.y - nearY;
+        return (dx*dx + dy*dy) < radius*radius;
+      });
+      span.style.color = overlap ? 'rgb(1, 0, 226)' : 'rgb(255, 244, 182)';
+    });
+  }
+
+  function loop() { update(); draw(); updateMenuColor(); requestAnimationFrame(loop); }
+
+  function getXY(e) {
+    const src = e.touches ? e.touches[0] : e;
+    return { x: src.clientX, y: src.clientY };
+  }
+  function hitTest(x, y) {
+    for (let i = balls.length-1; i >= 0; i--) {
+      const b = balls[i], dx = x-b.x, dy = y-b.y;
+      if (dx*dx+dy*dy < b.r*b.r) return i;
+    }
+    return -1;
+  }
+
+  canvas.addEventListener('mousemove', e => {
+    const {x,y} = getXY(e);
+    mVX = x-lastMX; mVY = y-lastMY; lastMX = x; lastMY = y;
+    if (dragging !== null) {
+      balls[dragging].x = x-dragOffX; balls[dragging].y = y-dragOffY;
+      canvas.style.cursor = 'grabbing';
+    } else {
+      const h = hitTest(x,y);
+      balls.forEach((b,i) => { b.scaleTarget = i===h ? 1.08 : 1; });
+      canvas.style.cursor = h >= 0 ? 'grab' : 'default';
+    }
+  });
+
+  canvas.addEventListener('mousedown', e => {
+    const {x,y} = getXY(e);
+    downX=x; downY=y;
+    const h = hitTest(x,y);
+    if (h >= 0) {
+      dragging=h; dragOffX=x-balls[h].x; dragOffY=y-balls[h].y;
+      balls[h].vx=0; balls[h].vy=0; canvas.style.cursor='grabbing';
+    }
+  });
+
+  canvas.addEventListener('mouseup', e => {
+    if (dragging===null) return;
+    const {x,y} = getXY(e);
+    const moved = Math.abs(x-downX)+Math.abs(y-downY) > 6;
+    if (!moved && balls[dragging].href) {
+      window.location.href = balls[dragging].href;
+    } else {
+      balls[dragging].vx=mVX*0.7; balls[dragging].vy=mVY*0.7;
+    }
+    dragging=null; canvas.style.cursor='default';
+  });
+
+  canvas.addEventListener('mouseleave', () => {
+    if (dragging!==null) { balls[dragging].vx=mVX*0.5; balls[dragging].vy=mVY*0.5; dragging=null; }
+    balls.forEach(b => { b.scaleTarget=1; }); canvas.style.cursor='default';
+  });
+
+  canvas.addEventListener('touchstart', e => {
+    e.preventDefault();
+    const {x,y} = getXY(e);
+    downX=x; downY=y; lastMX=x; lastMY=y;
+    const h = hitTest(x,y);
+    if (h>=0){ dragging=h; dragOffX=x-balls[h].x; dragOffY=y-balls[h].y; balls[h].vx=0; balls[h].vy=0; }
+  },{passive:false});
+
+  canvas.addEventListener('touchmove', e => {
+    e.preventDefault();
+    const {x,y} = getXY(e);
+    mVX=x-lastMX; mVY=y-lastMY; lastMX=x; lastMY=y;
+    if (dragging!==null){ balls[dragging].x=x-dragOffX; balls[dragging].y=y-dragOffY; }
+  },{passive:false});
+
+  canvas.addEventListener('touchend', () => {
+    if (dragging===null) return;
+    balls[dragging].vx=mVX*0.7; balls[dragging].vy=mVY*0.7;
+    dragging=null;
+  });
+
+  window.addEventListener('resize', resize);
+  resize();
+  loop();
+})();
+</script>
+<script src="search.js" data-root=""></script><style>#search-btn { color: rgb(255, 244, 182) !important; }</style>
+</body>
+</html>

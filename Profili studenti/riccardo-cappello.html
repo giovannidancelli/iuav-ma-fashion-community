@@ -624,6 +624,83 @@ html, body {
 
 .form-submit:hover { opacity: 0.8; }
 
+/* ── Availability label & popup ── */
+.availability-label {
+  height: 72px;
+  width: auto;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: opacity 0.15s;
+  display: block;
+}
+.availability-label:hover { opacity: 0.72; }
+
+#avail-popup {
+  position: fixed;
+  background: var(--yellow);
+  border: 1px solid rgba(1, 0, 226, 0.35);
+  padding: 16px 38px 16px 18px;
+  z-index: 500;
+  min-width: 280px;
+  max-width: 360px;
+  display: none;
+}
+#avail-popup.visible { display: block; }
+
+/* Triangle pointing up */
+#avail-popup::before {
+  content: '';
+  position: absolute;
+  top: -9px;
+  left: 24px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 9px solid rgba(1, 0, 226, 0.35);
+}
+#avail-popup::after {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: 25px;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid var(--yellow);
+}
+
+#avail-popup-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--blue);
+  font-size: 15px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 2px;
+  opacity: 0.6;
+}
+#avail-popup-close:hover { opacity: 1; }
+
+.popup-avail-title {
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 8px;
+  line-height: 1.55;
+}
+
+.popup-avail-sub {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(1, 0, 226, 0.65);
+}
+
 .flip-back-btn {
   display: block;
   margin-top: 24px;
@@ -647,6 +724,7 @@ html, body {
   overflow: hidden;
   height: 420px;
   margin: 0 -48px -64px -32px;
+  cursor: pointer;
 }
 
 .proj-marquee-track {
@@ -740,8 +818,10 @@ html, body {
   <nav>
     <a href="../index.html">home</a>
     <a href="../about-us.html">about us</a>
+    <a href="../index.html">sign in</a>
     <a href="../living-archive.html">living archive</a>
-    <a href="../lets-connect.html">let's connect</a>
+    <a href="../lets-network.html">let's network</a>
+    <a href="../lets-share.html">let's share</a>
   </nav>
 </div>
 
@@ -850,7 +930,10 @@ html, body {
       <div class="back-content">
 
         <div class="back-header">
-          <h1>Riccardo Cappello</h1>
+          <div style="display:flex; align-items:center; gap:16px; margin-bottom:10px;">
+            <h1 style="margin-bottom:0;">Riccardo Cappello</h1>
+            <img class="availability-label" id="availLabel" src="../Etichetta 2.png" alt="Available for sharing">
+          </div>
         </div>
 
         <div class="back-divider"></div>
@@ -867,15 +950,34 @@ html, body {
           <div class="profile-info">
 
             <div class="info-block">
-              <p class="graduation-text">Graduated in Moda | Fashion — Iuav University of Venice, March 2027</p>
+              <p class="graduation-text">Graduated in Moda | Fashion — Università Iuav di Venezia, March 2027</p>
             </div>
 
             <div class="info-rule"></div>
 
             <div class="info-block">
               <h2>Contacts</h2>
-              <a href="mailto:riccardocappello@gmail.com">riccardocappello@gmail.com</a>
-              <p>+39 378 3427012</p>
+              <p style="margin-bottom: 14px;">+39 378 3427012</p>
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgb(255,244,182)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" flex-shrink="0">
+                    <rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/>
+                  </svg>
+                  <span style="font-family:'LFT Etica Light',sans-serif; font-weight:300; font-size:16px; line-height:1.7; color:rgb(255,244,182);">riccardocappello@gmail.com</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgb(255,244,182)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="rgb(255,244,182)" stroke="none"/>
+                  </svg>
+                  <span style="font-family:'LFT Etica Light',sans-serif; font-weight:300; font-size:16px; line-height:1.7; color:rgb(255,244,182);">@riccardo.cappello</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgb(255,244,182)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.01M12 10v7m0-5a3 3 0 0 1 6 0v5"/>
+                  </svg>
+                  <span style="font-family:'LFT Etica Light',sans-serif; font-weight:300; font-size:16px; line-height:1.7; color:rgb(255,244,182);">linkedin.com/in/riccardo-cappello</span>
+                </div>
+              </div>
             </div>
 
             <div class="info-rule"></div>
@@ -889,45 +991,10 @@ html, body {
               </div>
             </div>
 
-            <div class="info-rule"></div>
-
-            <div class="info-block">
-              <button type="button" class="project-link" id="contactBtn">CONTACT ME</button>
-              <div id="contactInline" class="contact-inline" aria-hidden="true">
-                <div class="contact-inline-inner">
-                  <div class="contact-inline-header">
-                    <span class="contact-inline-title">Get in touch</span>
-                    <button type="button" class="contact-inline-close" id="contactClose">✕</button>
-                  </div>
-                  <form id="contactForm">
-                    <div class="form-row">
-                      <div class="form-group">
-                        <label for="cf-nome">First name</label>
-                        <input type="text" id="cf-nome" required placeholder="Giovanni">
-                      </div>
-                      <div class="form-group">
-                        <label for="cf-cognome">Last name</label>
-                        <input type="text" id="cf-cognome" required placeholder="Rossi">
-                      </div>
-                    </div>
-                    <div class="form-group form-group--mb">
-                      <label for="cf-email">Your email</label>
-                      <input type="email" id="cf-email" required placeholder="name@example.com">
-                    </div>
-                    <div class="form-group form-group--mb">
-                      <label for="cf-msg">Message</label>
-                      <textarea id="cf-msg" rows="3" required placeholder="Briefly describe why you'd like to get in touch…"></textarea>
-                    </div>
-                    <button type="submit" class="form-submit">Send message →</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-
           </div>
         </div>
 
-        <button class="flip-back-btn" id="flipBack">← torna al progetto</button>
+        <button class="flip-back-btn" id="flipBack">← back to project</button>
 
       </div>
     </div>
@@ -1070,45 +1137,6 @@ html, body {
   });
 })();
 
-// Contact inline form
-(function () {
-  const inline = document.getElementById('contactInline');
-  const btn    = document.getElementById('contactBtn');
-  const close  = document.getElementById('contactClose');
-
-  btn.addEventListener('click', () => {
-    inline.classList.add('open');
-    inline.setAttribute('aria-hidden', 'false');
-  });
-
-  close.addEventListener('click', () => {
-    inline.classList.add('is-closing');
-    setTimeout(() => {
-      inline.classList.remove('open');
-      inline.setAttribute('aria-hidden', 'true');
-    }, 210);
-    setTimeout(() => {
-      inline.classList.remove('is-closing');
-    }, 620);
-  });
-
-  document.getElementById('contactForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const nome    = document.getElementById('cf-nome').value.trim();
-    const cognome = document.getElementById('cf-cognome').value.trim();
-    const email   = document.getElementById('cf-email').value.trim();
-    const msg     = document.getElementById('cf-msg').value.trim();
-
-    const subject = encodeURIComponent('Messaggio da ' + nome + ' ' + cognome + ' — IMAC');
-    const body    = encodeURIComponent(
-      'Nome: ' + nome + ' ' + cognome + '\n' +
-      'Email: ' + email + '\n\n' +
-      msg
-    );
-
-    window.location.href = 'mailto:riccardocappello@gmail.com?subject=' + subject + '&body=' + body;
-  });
-})();
 
 // Project marquee
 (function () {
@@ -1143,7 +1171,45 @@ html, body {
       ? Promise.resolve()
       : new Promise(r => img.addEventListener('load', r)))
   ).then(() => requestAnimationFrame(setup));
+
+  document.getElementById('projMarquee').addEventListener('click', () => {
+    window.location.href = '../lets-share.html';
+  });
 })();
 </script>
+<!-- Availability popup -->
+<div id="avail-popup">
+  <button id="avail-popup-close">✕</button>
+  <div class="popup-avail-title">Riccardo is available for sharing his projects / garments.</div>
+  <div class="popup-avail-sub">Contact him using one of the addresses and platforms listed below.</div>
+</div>
+
+<script>
+(function () {
+  const label = document.getElementById('availLabel');
+  const popup = document.getElementById('avail-popup');
+
+  label.addEventListener('click', function (e) {
+    e.stopPropagation();
+    const rect = label.getBoundingClientRect();
+    popup.style.top  = (rect.bottom + 12) + 'px';
+    popup.style.left = rect.left + 'px';
+    popup.classList.toggle('visible');
+  });
+
+  document.getElementById('avail-popup-close').addEventListener('click', function (e) {
+    e.stopPropagation();
+    popup.classList.remove('visible');
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!popup.contains(e.target) && e.target !== label) {
+      popup.classList.remove('visible');
+    }
+  });
+})();
+</script>
+
+<script src="../search.js" data-root="../"></script>
 </body>
 </html>
