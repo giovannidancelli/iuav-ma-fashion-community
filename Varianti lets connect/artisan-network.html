@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artisan Network: Let's Connect: IMAC</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root { --blue: rgb(1, 0, 226); }
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background: #ffffff;
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  color: var(--blue);
+}
+
+#menu-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 240px;
+  padding: 48px 24px 48px 24px;
+  border-right: 1px solid var(--blue);
+  z-index: 10;
+  background: #ffffff;
+}
+
+#menu-box nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#menu-box nav a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.8;
+}
+
+#menu-box nav a:hover { text-decoration: none; }
+
+.content {
+  margin-left: 240px;
+  padding: 28px 48px 80px 32px;
+}
+
+.header {
+  margin-bottom: 28px;
+}
+
+.header h1 {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  color: var(--blue);
+  margin-bottom: 18px;
+  line-height: 1;
+}
+
+.header-inner-divider {
+  height: 1px;
+  background: var(--blue);
+  margin-left: -32px;
+  margin-bottom: 18px;
+}
+
+.header-desc {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--blue);
+  max-width: 520px;
+  text-align: justify;
+}
+
+.header-desc mark {
+  background: rgb(255, 244, 182);
+  color: var(--blue);
+  padding: 0 2px;
+}
+
+.divider {
+  height: 1px;
+  background: var(--blue);
+  margin-bottom: 0;
+  margin-left: -32px;
+}
+
+.grid-section {
+  background: var(--blue);
+  margin-left: -32px;
+  margin-right: -48px;
+  padding: 28px 48px 48px 32px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.grid-item .img-wrap {
+  width: 100%;
+  align-self: stretch;
+  aspect-ratio: 3 / 4;
+  background: #e0e0e0;
+  overflow: hidden;
+}
+
+.grid-item .img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+a.company-name { text-decoration: none; }
+
+.grid-item:hover .img-wrap {
+  opacity: 0.5;
+  transition: opacity 0.25s ease;
+}
+
+.grid-item .img-wrap {
+  transition: opacity 0.25s ease;
+}
+
+.grid-item:hover .company-name {
+  background: var(--blue);
+  color: rgb(255, 244, 182);
+  outline: 1px solid rgb(255, 244, 182);
+}
+
+.grid-item:hover .company-type {
+  background: var(--blue);
+  color: rgb(255, 244, 182);
+  outline: 1px solid rgb(255, 244, 182);
+}
+
+.grid-item .company-name {
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: rgb(255, 244, 182);
+  padding: 0 3px;
+  display: inline;
+}
+
+.grid-item .company-type {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  color: var(--blue);
+  background: rgb(255, 244, 182);
+  padding: 0 3px;
+  display: inline;
+}
+</style>
+</head>
+<body>
+
+<!-- Menu -->
+<div id="menu-box">
+  <nav>
+    <a href="../index.html">home</a>
+    <a href="../about-us.html">about us</a>
+    <a href="../living-archive.html">living archive</a>
+    <a href="../lets-network.html">let's network</a>
+    <a href="../lets-share.html">let's share</a>
+  </nav>
+</div>
+
+<div class="content">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>artisan network</h1>
+    <div class="header-inner-divider"></div>
+    <p class="header-desc">This section maps the creative studios and artisan practices: <mark>independent labs, experimental collectives and craft-based studios</mark> working at the intersection of fashion, design and contemporary research.</p>
+  </div>
+
+  <!-- Divider -->
+  <div class="divider"></div>
+
+  <!-- Griglia studi -->
+  <div class="grid-section">
+  <div class="grid">
+
+    <div class="grid-item">
+      <a href="../Varianti artisan network/bio-pulisecco.html" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti artisan network/Immagini/bio-pulisecco.jpg" alt="Bio Pulisecco Ever Clean"></div>
+      </a>
+      <a href="../Varianti artisan network/bio-pulisecco.html" class="company-name">Bio Pulisecco Ever Clean</a>
+      <span class="company-type">eco dry cleaning</span>
+    </div>
+
+    <div class="grid-item">
+      <a href="../Varianti artisan network/calzolaio-gastone.html" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti artisan network/Immagini/calzolaio-gastone.jpg" alt="Calzolaio Gastone"></div>
+      </a>
+      <a href="../Varianti artisan network/calzolaio-gastone.html" class="company-name">Calzolaio Gastone</a>
+      <span class="company-type">artisan cobbler</span>
+    </div>
+
+    <div class="grid-item">
+      <a href="../Varianti artisan network/emibio-lab.html" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti artisan network/Immagini/emibio.jpg" alt="Emibio Lab"></div>
+      </a>
+      <a href="../Varianti artisan network/emibio-lab.html" class="company-name">Emibio Lab</a>
+      <span class="company-type">design & materials research</span>
+    </div>
+
+    <div class="grid-item">
+      <a href="../Varianti artisan network/officina-marghera.html" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti artisan network/Immagini/officina-marghera.jpg" alt="Officina Marghera"></div>
+      </a>
+      <a href="../Varianti artisan network/officina-marghera.html" class="company-name">Officina Marghera</a>
+      <span class="company-type">material recovery space</span>
+    </div>
+
+    <div class="grid-item">
+      <a href="../Varianti artisan network/ongaro-lab.html" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti artisan network/Immagini/ongaro.jpg" alt="Ongaro Lab"></div>
+      </a>
+      <a href="../Varianti artisan network/ongaro-lab.html" class="company-name">Ongaro Lab</a>
+      <span class="company-type">creative laboratory</span>
+    </div>
+
+    <div class="grid-item">
+      <a href="../Varianti artisan network/pecora-nera-studio.html" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti artisan network/Immagini/pecora-nera.jpg" alt="Pecora Nera Studio"></div>
+      </a>
+      <a href="../Varianti artisan network/pecora-nera-studio.html" class="company-name">Pecora Nera Studio</a>
+      <span class="company-type">creative studio</span>
+    </div>
+
+    <div class="grid-item">
+      <a href="../Varianti artisan network/sartoria-dona-flor.html" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti artisan network/Immagini/sartoria-dona-flor.jpg" alt="Sartoria Doña Flor"></div>
+      </a>
+      <a href="../Varianti artisan network/sartoria-dona-flor.html" class="company-name">Sartoria Doña Flor</a>
+      <span class="company-type">tailoring atelier</span>
+    </div>
+
+    <div class="grid-item">
+      <a href="../Varianti artisan network/sartoria-futura.html" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti artisan network/Immagini/sartoria-futura.jpg" alt="Sartoria Futura"></div>
+      </a>
+      <a href="../Varianti artisan network/sartoria-futura.html" class="company-name">Sartoria Futura</a>
+      <span class="company-type">custom women's tailoring</span>
+    </div>
+
+    <div class="grid-item">
+      <a href="../Varianti artisan network/sartoria-luana.html" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti artisan network/Immagini/sartoria-luana.jpg" alt="Sartoria Luana"></div>
+      </a>
+      <a href="../Varianti artisan network/sartoria-luana.html" class="company-name">Sartoria Luana</a>
+      <span class="company-type">tailoring & restyling</span>
+    </div>
+
+    <div class="grid-item">
+      <a href="../Varianti artisan network/sartoria-nina.html" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti artisan network/Immagini/sartoria-nina.jpg" alt="Sartoria Nina"></div>
+      </a>
+      <a href="../Varianti artisan network/sartoria-nina.html" class="company-name">Sartoria Nina</a>
+      <span class="company-type">made-to-measure & repairs</span>
+    </div>
+
+    <div class="grid-item">
+      <a href="../Varianti artisan network/suri-studio.html" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti artisan network/Immagini/suri.jpg" alt="Suri Studio"></div>
+      </a>
+      <a href="../Varianti artisan network/suri-studio.html" class="company-name">Suri Studio</a>
+      <span class="company-type">visual design studio</span>
+    </div>
+
+    <div class="grid-item">
+      <a href="../Varianti artisan network/xeroxed.html" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti artisan network/Immagini/xeroxed.jpg" alt="Xeroxed"></div>
+      </a>
+      <a href="../Varianti artisan network/xeroxed.html" class="company-name">Xeroxed</a>
+      <span class="company-type">visual arts collective</span>
+    </div>
+
+  </div>
+  </div>
+</div>
+
+<script src="../search.js" data-root="../"></script>
+</body>
+</html>

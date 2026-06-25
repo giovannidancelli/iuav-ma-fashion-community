@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brodstation: Gabriele Veccari: IMAC</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --blue: rgb(1, 0, 226); --yellow: rgb(255, 244, 182); }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #ffffff; font-family: 'LFT Etica Mono', 'Courier New', monospace; color: var(--blue); }
+#menu-box { position: fixed; top: 0; left: 0; bottom: 0; width: 240px; padding: 48px 24px; border-right: 1px solid var(--blue); z-index: 20; background: #ffffff; }
+#menu-box nav { display: flex; flex-direction: column; gap: 4px; }
+#menu-box nav a { color: var(--blue); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; font-size: 18px; font-weight: 700; letter-spacing: 0.03em; line-height: 1.8; }
+#menu-box nav a:hover { text-decoration: none; }
+.flip-container { position: fixed; left: 240px; right: 0; top: 0; bottom: 0; perspective: 1400px; }
+.flipper { width: 100%; height: 100%; position: relative; }
+.face { position: absolute; inset: 0; background: #ffffff; overflow-y: auto; will-change: transform; transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+.face.front { transform: rotateY(0deg); }
+.face.back  { transform: rotateY(90deg); pointer-events: none; }
+.front-content { padding: 48px 48px 0 32px; }
+.front-header  { margin-bottom: 0; }
+.front-header h1 { font-family: 'LFT Etica Light', 'LFT Etica', sans-serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1; margin-bottom: 10px; }
+.front-header .project-cat { font-size: 14px; opacity: 0.6; font-family: 'LFT Etica Light', 'LFT Etica', sans-serif; font-weight: 300; margin-bottom: 28px; }
+.front-divider { height: 1px; background: var(--blue); margin-left: -32px; margin-bottom: 0; }
+.project-section { background: var(--blue); margin-left: -32px; margin-right: -48px; padding: 36px 48px 36px 32px; display: grid; grid-template-columns: 3fr 2fr; gap: 40px; align-items: start; min-height: 392px; }
+.project-image-wrap { width: 100%; aspect-ratio: 19 / 10; overflow: hidden; position: relative; cursor: pointer; background: rgba(255,255,255,0.08); }
+.project-image-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+.project-image-wrap:hover img { transform: scale(1.02); }
+.flip-hint { position: absolute; bottom: 16px; right: 16px; background: var(--yellow); color: var(--blue); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 12px; opacity: 0; transition: opacity 0.25s; pointer-events: none; }
+.project-image-wrap:hover .flip-hint { opacity: 1; }
+.project-desc p { font-family: 'LFT Etica Light', 'LFT Etica', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.85; color: var(--yellow); text-align: justify; }
+.gallery-sep { border: none; height: 1px; background: rgba(255,255,255,0.35); margin: 0 -48px 0 -32px; }
+.gallery-section { background: var(--blue); margin-left: -32px; margin-right: -48px; padding: 36px 48px 0 32px; display: flex; flex-direction: column; gap: 14px; }
+.g-row { display: flex; gap: 14px; align-items: flex-start; }
+.gallery-item { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.gallery-item img { width: 100%; height: auto; display: block; }
+.back-content { padding: 48px 48px 0 32px; }
+.back-header  { margin-bottom: 0; }
+.back-header h1 { font-family: 'LFT Etica Light', 'LFT Etica', sans-serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1; margin-bottom: 10px; }
+.back-divider { height: 1px; background: var(--blue); margin-left: -32px; margin-bottom: 0; }
+.profile-section { background: var(--blue); margin-left: -32px; margin-right: -48px; padding: 36px 48px 48px 32px; display: grid; grid-template-columns: 240px 1fr; gap: 40px; align-items: start; min-height: 392px; }
+.photo-wrap { width: 100%; aspect-ratio: 3 / 4; background: rgba(255,255,255,0.12); overflow: hidden; max-height: 320px; position: relative; cursor: pointer; }
+.photo-wrap .flip-hint { position: absolute; bottom: 16px; right: 16px; background: var(--yellow); color: var(--blue); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 12px; opacity: 0; transition: opacity 0.25s; pointer-events: none; }
+.photo-wrap:hover .flip-hint { opacity: 1; }
+.profile-info { display: flex; flex-direction: column; gap: 22px; }
+.info-block h2 { font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--yellow); margin-bottom: 6px; }
+.info-block p { font-family: 'LFT Etica Light', 'LFT Etica', sans-serif; font-weight: 300; font-size: 16px; line-height: 1.7; color: var(--yellow); }
+.info-rule { height: 1px; background: rgba(255,244,182,0.2); }
+.skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.skill-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); background: var(--yellow); padding: 4px 14px; border-radius: 999px; }
+.graduation-text { font-family: 'LFT Etica Light', 'LFT Etica', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.7; color: var(--yellow); }
+.flip-back-btn { display: block; margin-top: 24px; background: none; border: none; cursor: pointer; font-family: 'LFT Etica Mono', 'Courier New', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); opacity: 0.45; transition: opacity 0.2s; }
+.flip-back-btn:hover { opacity: 1; }
+.availability-label { height: 72px; width: auto; cursor: pointer; flex-shrink: 0; transition: opacity 0.15s; display: block; }
+.availability-label:hover { opacity: 0.72; }
+#avail-popup { position: fixed; background: var(--yellow); border: 1px solid rgba(1,0,226,0.35); padding: 16px 38px 16px 18px; z-index: 500; min-width: 280px; max-width: 360px; display: none; }
+#avail-popup.visible { display: block; }
+#avail-popup::before { content: ''; position: absolute; top: -9px; left: 24px; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 9px solid rgba(1,0,226,0.35); }
+#avail-popup::after  { content: ''; position: absolute; top: -7px; left: 25px; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 7px solid var(--yellow); }
+#avail-popup-close { position: absolute; top: 10px; right: 12px; background: none; border: none; color: var(--blue); font-size: 15px; cursor: pointer; line-height: 1; padding: 2px; opacity: 0.6; }
+#avail-popup-close:hover { opacity: 1; }
+.popup-avail-title { font-family: 'LFT Etica Mono', 'Courier New', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; line-height: 1.55; }
+.popup-avail-sub { font-family: 'LFT Etica Light', 'LFT Etica', sans-serif; font-weight: 300; font-size: 12px; line-height: 1.6; color: rgba(1,0,226,0.65); }
+#lightbox { position: fixed; inset: 0; background: rgba(1,0,226,0.92); z-index: 300; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.22s; cursor: pointer; }
+#lightbox.open { opacity: 1; pointer-events: auto; }
+#lightbox-inner { position: relative; display: inline-flex; }
+#lightbox-close { position: fixed; top: 24px; right: 24px; width: 48px; height: 48px; background: var(--yellow); color: var(--blue); border: none; font-family: 'LFT Etica Mono', monospace; font-size: 22px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1; transition: background 0.15s, color 0.15s; }
+#lightbox-close:hover { background: var(--blue); color: var(--yellow); outline: 1px solid var(--yellow); }
+#lightbox img { max-width: 88vw; max-height: 88vh; width: auto; height: auto; display: block; object-fit: contain; transform: scale(0.9); opacity: 0; transition: transform 0.28s cubic-bezier(0.2,0,0,1), opacity 0.22s ease; cursor: default; }
+#lightbox.open img { transform: scale(1); opacity: 1; }
+
+/* ── Marquee strip bottom ── */
+.proj-marquee {
+  overflow: hidden;
+  height: 200px;
+  margin: 0 -48px 0 -32px;
+  cursor: pointer;
+}
+.proj-marquee-track {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  will-change: transform;
+}
+.proj-marquee-track img {
+  margin-right: 100px;
+  height: 100%;
+  width: auto;
+  display: block;
+  flex-shrink: 0;
+}
+</style>
+</head>
+<body>
+<div id="menu-box"><nav>
+  <a href="../index.html">home</a>
+  <a href="../about-us.html">about us</a>
+  <a href="../living-archive.html">living archive</a>
+  <a href="../lets-network.html">let's network</a>
+  <a href="../lets-share.html">let's share</a>
+</nav></div>
+<div class="flip-container"><div class="flipper" id="flipper">
+  <div class="face front" id="faceFront"><div class="front-content">
+    <div class="front-header">
+      <h1>Brodstation</h1>
+      <p class="project-cat">Gabriele Veccari, Tailoring · Communication, Living Archive</p>
+    </div>
+    <div class="front-divider"></div>
+    <div class="project-section">
+      <div class="project-image-wrap" id="flipTrigger"><video src="../Progetti studenti/Gabriele Veccari/video gabriele veccari.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video><div class="flip-hint">AUTHOR &#x21BA;</div></div>
+      <div class="project-desc">
+            <p>bloodspinners syndacate or death turbo ronins? single / multiplayer, survive mode.</p>
+          </div>
+    </div>
+        <hr class="gallery-sep">
+        <div class="gallery-section">
+          <div class="g-row">
+            <div class="gallery-item"><img src="../Progetti studenti/Gabriele Veccari/gveccari1 copia.png" alt=""></div>
+            <div class="gallery-item"><img src="../Progetti studenti/Gabriele Veccari/gveccari2 copia.png" alt=""></div>
+          </div>
+          <div class="g-row">
+            <div class="gallery-item"><img src="../Progetti studenti/Gabriele Veccari/gveccari3 copia.png" alt=""></div>
+          </div>
+        
+          <!-- Marquee strip → let's share -->
+          <div class="proj-marquee" id="projMarquee">
+            <div class="proj-marquee-track" id="projMarqueeTrack">
+              <img src="../Progetti studenti/Riccardo Cappello/01.png" alt="">
+              <img src="../Progetti studenti/Riccardo Cappello/02.png" alt="">
+              <img src="../Progetti studenti/Riccardo Cappello/03.png" alt="">
+            </div>
+          </div>
+</div>
+  </div></div>
+  <div class="face back" id="faceBack"><div class="back-content">
+    <div class="back-header">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:10px;">
+        <h1 style="margin-bottom:0;">Gabriele Veccari</h1>
+        <img class="availability-label" id="availLabel" src="../Etichetta 2.png" alt="Available for sharing">
+      </div>
+    </div>
+    <div class="back-divider"></div>
+    <div class="profile-section">
+      <div class="photo-wrap" id="flipBackTrigger"><img src="../Progetti studenti/Gabriele Veccari/COPERTINA.jpg.jpeg" alt="" style="width:100%;height:100%;object-fit:cover;"><div class="flip-hint">PROJECT &#x21BA;</div></div>
+      <div class="profile-info">
+        <div class="info-block"><p class="graduation-text">Second year of Master's Degree in Fashion Design at Università Iuav di Venezia</p></div>
+        <div class="info-rule"></div>
+        <div class="info-block"><h2>Contacts</h2><div style="display:flex; flex-direction:column; gap:8px;"><div style="display:flex; align-items:center; gap:10px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgb(255,244,182)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" flex-shrink="0"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg><a style="font-family:'LFT Etica Light',sans-serif; font-weight:300; font-size:16px; line-height:1.7; color:rgb(255,244,182); text-decoration:none;" href="mailto:g.veccari@stud.iuav.it">g.veccari@stud.iuav.it</a></div><div style="display:flex; align-items:center; gap:10px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgb(255,244,182)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="rgb(255,244,182)" stroke="none"/></svg><a style="font-family:'LFT Etica Light',sans-serif; font-weight:300; font-size:16px; line-height:1.7; color:rgb(255,244,182); text-decoration:none;" href="https://www.instagram.com/vraglord" target="_blank">@vraglord</a></div></div></div>
+        <div class="info-rule"></div>
+        <div class="info-block"><h2>Skills</h2><div class="skills">
+                <span class="skill-tag">collection design</span>
+                <span class="skill-tag">graphic design</span>
+                <span class="skill-tag">streetwear</span>
+              </div></div>
+      </div>
+    </div>
+    <button class="flip-back-btn" id="flipBack">&#8592; back to project</button>
+  </div></div>
+</div></div>
+<div id="lightbox" aria-hidden="true"><div id="lightbox-inner">
+  <button id="lightbox-close">&#x2715;</button>
+  <img id="lightbox-img" src="" alt="">
+</div></div>
+<div id="avail-popup">
+  <button id="avail-popup-close">&#x2715;</button>
+  <div class="popup-avail-title">Gabriele is available for sharing their projects / garments.</div>
+  <div class="popup-avail-sub">Contact them using the addresses and platforms listed below.</div>
+</div>
+<script>(function(){
+  const front=document.getElementById('faceFront'),back=document.getElementById('faceBack');
+  let busy=false; const HALF=430;
+  const eI='transform 0.43s cubic-bezier(0.4,0,1,1)',eO='transform 0.43s cubic-bezier(0,0,0.2,1)';
+  function toBack(){if(busy)return;busy=true;front.style.transition=eI;front.style.transform='rotateY(90deg)';setTimeout(()=>{back.style.transition='none';back.style.transform='rotateY(90deg)';requestAnimationFrame(()=>{requestAnimationFrame(()=>{back.style.transition=eO;back.style.transform='rotateY(0deg)';back.style.pointerEvents='auto';front.style.pointerEvents='none';setTimeout(()=>{busy=false;},HALF);});});},HALF);}
+  function toFront(){if(busy)return;busy=true;back.style.transition=eI;back.style.transform='rotateY(-90deg)';setTimeout(()=>{front.style.transition='none';front.style.transform='rotateY(-90deg)';requestAnimationFrame(()=>{requestAnimationFrame(()=>{front.style.transition=eO;front.style.transform='rotateY(0deg)';front.style.pointerEvents='auto';back.style.pointerEvents='none';setTimeout(()=>{busy=false;},HALF);});});},HALF);}
+  document.getElementById('flipTrigger').addEventListener('click',toBack);
+  document.getElementById('flipBackTrigger').addEventListener('click',toFront);
+  document.getElementById('flipBack').addEventListener('click',toFront);
+  function sync(){const ps=document.querySelector('.face.front .project-section'),pr=document.querySelector('.face.back .profile-section'),fh=document.querySelector('.face.front .front-header'),bh=document.querySelector('.face.back .back-header');if(!ps||!pr||!fh||!bh)return;pr.style.minHeight='';bh.style.paddingBottom='';const d=fh.getBoundingClientRect().height-bh.getBoundingClientRect().height;if(d>0)bh.style.paddingBottom=d+'px';pr.style.minHeight=ps.getBoundingClientRect().height+'px';}
+  window.addEventListener('load',sync);window.addEventListener('resize',sync);
+  const lb=document.getElementById('lightbox'),lbi=document.getElementById('lightbox-img');
+  const gi=Array.from(document.querySelectorAll('.gallery-section img'));let ci=0;
+  function openLB(i){ci=(i+gi.length)%gi.length;if(lb.classList.contains('open')){lbi.style.opacity='0';lbi.style.transform='scale(0.94)';setTimeout(()=>{lbi.src=gi[ci].src;lbi.alt=gi[ci].alt;lbi.style.opacity='1';lbi.style.transform='scale(1)';},200);}else{lbi.src=gi[ci].src;lbi.alt=gi[ci].alt;lb.classList.add('open');lb.setAttribute('aria-hidden','false');}}
+  function closeLB(){lb.classList.remove('open');lb.setAttribute('aria-hidden','true');}
+  gi.forEach((img,i)=>{img.style.cursor='pointer';img.addEventListener('click',()=>openLB(i));});
+  document.getElementById('lightbox-close').addEventListener('click',closeLB);
+  lb.addEventListener('click',e=>{if(e.target===lb)closeLB();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLB();else if(lb.classList.contains('open')){if(e.key==='ArrowRight')openLB(ci+1);if(e.key==='ArrowLeft')openLB(ci-1);}});
+})();
+(function(){const label=document.getElementById('availLabel'),popup=document.getElementById('avail-popup');label.addEventListener('click',function(e){e.stopPropagation();const r=label.getBoundingClientRect();popup.style.top=(r.bottom+12)+'px';popup.style.left=r.left+'px';popup.classList.toggle('visible');});document.getElementById('avail-popup-close').addEventListener('click',function(e){e.stopPropagation();popup.classList.remove('visible');});document.addEventListener('click',function(e){if(!popup.contains(e.target)&&e.target!==label)popup.classList.remove('visible');});})();</script>
+<script>
+// Marquee strip → let's share
+(function () {
+  var track = document.getElementById('projMarqueeTrack');
+  if (!track) return;
+  var baseImgs = Array.from(track.querySelectorAll('img'));
+  var SPEED = 1.2;
+  function setup() {
+    var totalW = baseImgs.reduce(function(sum, img) { return sum + img.offsetWidth; }, 0);
+    if (!totalW) { requestAnimationFrame(setup); return; }
+    var needed = Math.ceil(window.innerWidth * 3 / totalW) + 2;
+    for (var i = 0; i < needed; i++) {
+      baseImgs.forEach(function(img) { track.appendChild(img.cloneNode(true)); });
+    }
+    var pos = -totalW;
+    track.style.transform = 'translateX(' + pos + 'px)';
+    function tick() {
+      pos += SPEED;
+      if (pos >= 0) pos -= totalW;
+      track.style.transform = 'translateX(' + pos + 'px)';
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  Promise.all(baseImgs.map(function(img) {
+    return img.complete && img.naturalWidth ? Promise.resolve() : new Promise(function(r) { img.addEventListener('load', r); });
+  })).then(function() { requestAnimationFrame(setup); });
+  document.getElementById('projMarquee').addEventListener('click', function () {
+    window.location.href = '../lets-share.html';
+  });
+})();
+</script>
+<script src="../search.js" data-root="../"></script>
+</body></html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riccardo Cappello — Heritage — IMAC</title>
+<title>Riccardo Cappello: Heritage: IMAC</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -63,7 +63,7 @@ html, body {
   position: relative;
 }
 
-/* Each face scrolls independently — no preserve-3d so overflow-y works */
+/* Each face scrolls independently, no preserve-3d so overflow-y works */
 .face {
   position: absolute;
   inset: 0;
@@ -84,7 +84,7 @@ html, body {
 
 /* ── FRONT: progetto ── */
 .front-content {
-  padding: 48px 48px 80px 32px;
+  padding: 48px 48px 0 32px;
 }
 
 .front-header {
@@ -192,7 +192,7 @@ html, body {
   background: var(--blue);
   margin-left: -32px;
   margin-right: -48px;
-  padding: 36px 48px 64px 32px;
+  padding: 36px 48px 0 32px;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -270,17 +270,6 @@ html, body {
   display: block;
 }
 
-.gallery-caption {
-  font-family: 'LFT Etica Mono', 'Courier New', monospace;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  background: var(--yellow);
-  color: var(--blue);
-  padding: 0 4px;
-  align-self: flex-start;
-}
 
 /* riga sheets/lineup: grid 1fr/2fr, altezze uguali */
 .g-row-lineup {
@@ -296,10 +285,8 @@ html, body {
 }
 
 .g-row-lineup .gallery-item img {
-  flex: 1;
   width: 100%;
-  min-height: 0;
-  object-fit: cover;
+  height: auto;
 }
 
 /* riga mood: grid 2fr/1fr, mood occupa entrambe le righe */
@@ -317,10 +304,8 @@ html, body {
 }
 
 .g-row-mood .g-mood img {
-  flex: 1;
   width: 100%;
-  min-height: 0;
-  object-fit: cover;
+  height: auto;
 }
 
 /* ── BACK: profilo ── */
@@ -722,8 +707,8 @@ html, body {
 /* ── Marquee strip (project page) ── */
 .proj-marquee {
   overflow: hidden;
-  height: 420px;
-  margin: 0 -48px -64px -32px;
+  height: 200px;
+  margin: 0 -48px 0 -32px;
   cursor: pointer;
 }
 
@@ -735,6 +720,7 @@ html, body {
 }
 
 .proj-marquee-track img {
+  margin-right: 100px;
   height: 100%;
   width: auto;
   display: block;
@@ -818,7 +804,6 @@ html, body {
   <nav>
     <a href="../index.html">home</a>
     <a href="../about-us.html">about us</a>
-    <a href="../index.html">sign in</a>
     <a href="../living-archive.html">living archive</a>
     <a href="../lets-network.html">let's network</a>
     <a href="../lets-share.html">let's share</a>
@@ -835,7 +820,7 @@ html, body {
 
         <div class="front-header">
           <h1>Corpus Terrae</h1>
-          <p class="project-cat">Riccardo Cappello — Heritage — Living Archive</p>
+          <p class="project-cat">Riccardo Cappello, Heritage, Living Archive</p>
         </div>
 
         <div class="front-divider"></div>
@@ -850,9 +835,9 @@ html, body {
 
           <!-- Descrizione -->
           <div class="project-desc">
-            <p>The project stems from the exploration of a profound connection between body, territory, and memory, developing from the ancient knowledge of Apulian transhumance. The collection interprets this legacy as a living practice, translating it into a contemporary vision in which time is stratified and transformed. The figure of the shepherd is reinterpreted as a modern wayfarer, balanced between the natural dimension and the urban context, bearer of an ever-evolving identity.</p>
-            <p>The garments take on an active function: not just aesthetic elements, but tools that accompany the body as it adapts, protects itself, and changes. Wool becomes an expressive language, while cowbells transform into audible signs of belonging, evoking a collective memory that persists in the present.</p>
-            <p>The project occupies a space between ritual and innovation, exploring the relationship between the archaic and the contemporary. Each piece represents a symbolic threshold, offering a reflection on embracing change without losing ties to one's roots.</p>
+            <p>the project stems from the exploration of a profound connection between body, territory, and memory, developing from the ancient knowledge of apulian transhumance. the collection interprets this legacy as a living practice, translating it into a contemporary vision in which time is stratified and transformed. the figure of the shepherd is reinterpreted as a modern wayfarer, balanced between the natural dimension and the urban context, bearer of an ever-evolving identity.</p>
+            <p>the garments take on an active function: not just aesthetic elements, but tools that accompany the body as it adapts, protects itself, and changes. wool becomes an expressive language, while cowbells transform into audible signs of belonging, evoking a collective memory that persists in the present.</p>
+            <p>the project occupies a space between ritual and innovation, exploring the relationship between the archaic and the contemporary. each piece represents a symbolic threshold, offering a reflection on embracing change without losing ties to one's roots.</p>
           </div>
 
         </div>
@@ -866,15 +851,12 @@ html, body {
           <div class="g-row-mood">
             <div class="gallery-item g-mood">
               <img src="../Progetti studenti/Riccardo Cappello/mood.jpg" alt="Mood">
-              <span class="gallery-caption">mood</span>
             </div>
             <div class="gallery-item">
               <img src="../Progetti studenti/Riccardo Cappello/filati.jpg" alt="Yarns">
-              <span class="gallery-caption">yarns</span>
             </div>
             <div class="gallery-item">
               <img src="../Progetti studenti/Riccardo Cappello/punti.jpg" alt="Knitting stitches">
-              <span class="gallery-caption">knitting stitches</span>
             </div>
           </div>
 
@@ -882,11 +864,9 @@ html, body {
           <div class="g-row-lineup">
             <div class="gallery-item">
               <img src="../Progetti studenti/Riccardo Cappello/schede .jpg" alt="Technical sheets">
-              <span class="gallery-caption">technical sheets</span>
             </div>
             <div class="gallery-item">
               <img src="../Progetti studenti/Riccardo Cappello/figurini.jpg" alt="Line-up">
-              <span class="gallery-caption">line-up</span>
             </div>
           </div>
 
@@ -894,7 +874,6 @@ html, body {
           <div class="g-row g-row-shoots">
             <div class="gallery-item g-s01">
               <img src="../Progetti studenti/Riccardo Cappello/shoot 01 copia.png" alt="">
-              <span class="gallery-caption">shooting</span>
             </div>
             <div class="gallery-item g-s02">
               <img src="../Progetti studenti/Riccardo Cappello/shoot 02.png" alt="">
@@ -942,7 +921,7 @@ html, body {
 
           <!-- Foto cliccabile per tornare al progetto -->
           <div class="photo-wrap" id="flipBackTrigger">
-            <!-- <img src="..." alt="Riccardo Cappello"> -->
+            <img src="../Progetti studenti/Riccardo Cappello/copertina.jpeg" alt="Riccardo Cappello" style="width:100%;height:100%;object-fit:cover;">
             <div class="flip-hint">PROJECT ↺</div>
           </div>
 
@@ -950,32 +929,25 @@ html, body {
           <div class="profile-info">
 
             <div class="info-block">
-              <p class="graduation-text">Graduated in Moda | Fashion — Università Iuav di Venezia, March 2027</p>
+              <p class="graduation-text">Second year of Master's Degree in Fashion Design at Università Iuav di Venezia</p>
             </div>
 
             <div class="info-rule"></div>
 
             <div class="info-block">
               <h2>Contacts</h2>
-              <p style="margin-bottom: 14px;">+39 378 3427012</p>
-              <div style="display:flex; flex-direction:column; gap:8px;">
+<div style="display:flex; flex-direction:column; gap:8px;">
                 <div style="display:flex; align-items:center; gap:10px;">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgb(255,244,182)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" flex-shrink="0">
                     <rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/>
                   </svg>
-                  <span style="font-family:'LFT Etica Light',sans-serif; font-weight:300; font-size:16px; line-height:1.7; color:rgb(255,244,182);">riccardocappello@gmail.com</span>
+                  <span style="font-family:'LFT Etica Light',sans-serif; font-weight:300; font-size:16px; line-height:1.7; color:rgb(255,244,182);">r.cappello@stud.iuav.it</span>
                 </div>
                 <div style="display:flex; align-items:center; gap:10px;">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgb(255,244,182)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="rgb(255,244,182)" stroke="none"/>
                   </svg>
-                  <span style="font-family:'LFT Etica Light',sans-serif; font-weight:300; font-size:16px; line-height:1.7; color:rgb(255,244,182);">@riccardo.cappello</span>
-                </div>
-                <div style="display:flex; align-items:center; gap:10px;">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgb(255,244,182)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.01M12 10v7m0-5a3 3 0 0 1 6 0v5"/>
-                  </svg>
-                  <span style="font-family:'LFT Etica Light',sans-serif; font-weight:300; font-size:16px; line-height:1.7; color:rgb(255,244,182);">linkedin.com/in/riccardo-cappello</span>
+                  <span style="font-family:'LFT Etica Light',sans-serif; font-weight:300; font-size:16px; line-height:1.7; color:rgb(255,244,182);">@hp_riccardo_cappello</span>
                 </div>
               </div>
             </div>
@@ -985,9 +957,9 @@ html, body {
             <div class="info-block">
               <h2>Skills</h2>
               <div class="skills">
-                <span class="skill-tag">Tailoring</span>
-                <span class="skill-tag">Videomaking</span>
-                <span class="skill-tag">Modeling</span>
+                <span class="skill-tag">sewing</span>
+                <span class="skill-tag">modeling</span>
+                <span class="skill-tag">graphic design</span>
               </div>
             </div>
 
@@ -1015,7 +987,7 @@ html, body {
   const front = document.getElementById('faceFront');
   const back  = document.getElementById('faceBack');
   let busy = false;
-  const HALF = 430; // ms — matches the CSS transition duration
+  const HALF = 430; // ms, matches the CSS transition duration
 
   const easeIn  = 'transform 0.43s cubic-bezier(0.4, 0, 1, 1)';
   const easeOut = 'transform 0.43s cubic-bezier(0, 0, 0.2, 1)';

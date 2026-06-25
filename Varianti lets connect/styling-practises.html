@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Styling Practises: Let's Connect: IMAC</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root { --blue: rgb(1, 0, 226); }
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background: #ffffff;
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  color: var(--blue);
+}
+
+#menu-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 240px;
+  padding: 48px 24px 48px 24px;
+  border-right: 1px solid var(--blue);
+  z-index: 10;
+  background: #ffffff;
+}
+
+#menu-box nav { display: flex; flex-direction: column; gap: 4px; }
+
+#menu-box nav a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.8;
+}
+
+#menu-box nav a:hover { text-decoration: none; }
+
+.content {
+  margin-left: 240px;
+  padding: 28px 48px 80px 32px;
+}
+
+.header { margin-bottom: 28px; }
+
+.header h1 {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  color: var(--blue);
+  margin-bottom: 18px;
+  line-height: 1;
+}
+
+.header-inner-divider {
+  height: 1px;
+  background: var(--blue);
+  margin-left: -32px;
+  margin-bottom: 18px;
+}
+
+.header-desc {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--blue);
+  max-width: 520px;
+  text-align: justify;
+}
+
+.header-desc mark {
+  background: rgb(255, 244, 182);
+  color: var(--blue);
+  padding: 0 2px;
+}
+
+.divider {
+  height: 1px;
+  background: var(--blue);
+  margin-bottom: 0;
+  margin-left: -32px;
+}
+
+.grid-section {
+  background: var(--blue);
+  margin-left: -32px;
+  margin-right: -48px;
+  padding: 28px 48px 48px 32px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+.grid-item .img-wrap {
+  width: 100%;
+  align-self: stretch;
+  aspect-ratio: 3 / 4;
+  background: #2a2a8a;
+  overflow: hidden;
+  margin-bottom: 2px;
+}
+
+.grid-item .img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.grid-item .img-wrap { transition: opacity 0.25s ease; }
+.grid-item:hover .img-wrap { opacity: 0.6; }
+
+a.person-name { text-decoration: none; }
+
+.grid-item .person-name {
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: rgb(255, 244, 182);
+  padding: 0 3px;
+  display: inline;
+}
+
+.grid-item .person-city {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  color: rgb(255, 244, 182);
+  display: inline;
+}
+
+.grid-item .person-handle {
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: rgb(255, 244, 182);
+  text-decoration: none;
+  opacity: 0.75;
+  display: inline;
+}
+
+.grid-item .person-handle:hover { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div id="menu-box">
+  <nav>
+    <a href="../index.html">home</a>
+    <a href="../about-us.html">about us</a>
+    <a href="../living-archive.html">living archive</a>
+    <a href="../lets-network.html">let's network</a>
+    <a href="../lets-share.html">let's share</a>
+  </nav>
+</div>
+
+<div class="content">
+
+  <div class="header">
+    <h1>styling practises</h1>
+    <div class="header-inner-divider"></div>
+    <p class="header-desc">This section maps the styling scene: <mark>independent stylists, art directors and archivists</mark> working across fashion editorial, creative direction and image research.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid-section">
+  <div class="grid">
+
+    <div class="grid-item">
+      <a href="https://www.instagram.com/gooolly00/" target="_blank" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti styling practises/Immagini/annamaria-pieretti.jpg" alt="Annamaria Pieretti"></div>
+      </a>
+      <span class="person-name">Annamaria Pieretti</span>
+      <span class="person-city">Napoli / Venezia</span>
+      <a href="https://www.instagram.com/gooolly00/" target="_blank" class="person-handle">@gooolly00</a>
+    </div>
+
+    <div class="grid-item">
+      <a href="https://www.instagram.com/zaltieriaurora/" target="_blank" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti styling practises/Immagini/aurora-zaltieri.jpg" alt="Aurora Zaltieri"></div>
+      </a>
+      <span class="person-name">Aurora Zaltieri</span>
+      <span class="person-city">Milano</span>
+      <a href="https://www.instagram.com/zaltieriaurora/" target="_blank" class="person-handle">@zaltieriaurora</a>
+    </div>
+
+    <div class="grid-item">
+      <a href="https://www.instagram.com/contessamiseriaarchivio/" target="_blank" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti styling practises/Immagini/contessa-miseria.jpg" alt="Contessa Miseria Archivio"></div>
+      </a>
+      <span class="person-name">Contessa Miseria Archivio</span>
+      <span class="person-city">Milano</span>
+      <a href="https://www.instagram.com/contessamiseriaarchivio/" target="_blank" class="person-handle">@contessamiseriaarchivio</a>
+    </div>
+
+    <div class="grid-item">
+      <a href="https://www.instagram.com/damianoriccio/" target="_blank" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti styling practises/Immagini/damiano-riccio.jpg" alt="Damiano Riccio"></div>
+      </a>
+      <span class="person-name">Damiano Riccio</span>
+      <span class="person-city">Napoli / Milano</span>
+      <a href="https://www.instagram.com/damianoriccio/" target="_blank" class="person-handle">@damianoriccio</a>
+    </div>
+
+    <div class="grid-item">
+      <a href="https://www.instagram.com/domenico_pertutti/" target="_blank" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti styling practises/Immagini/domenico-caiazza.jpg" alt="Domenico Caiazza"></div>
+      </a>
+      <span class="person-name">Domenico Caiazza</span>
+      <span class="person-city">Napoli</span>
+      <a href="https://www.instagram.com/domenico_pertutti/" target="_blank" class="person-handle">@domenico_pertutti</a>
+    </div>
+
+    <div class="grid-item">
+      <a href="https://www.instagram.com/franciferretti/" target="_blank" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti styling practises/Immagini/francesca-ferretti.jpg" alt="Francesca Ferretti"></div>
+      </a>
+      <span class="person-name">Francesca Ferretti</span>
+      <span class="person-city">Milano</span>
+      <a href="https://www.instagram.com/franciferretti/" target="_blank" class="person-handle">@franciferretti</a>
+    </div>
+
+    <div class="grid-item">
+      <a href="https://www.instagram.com/franncescodangelo/" target="_blank" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti styling practises/Immagini/francesco-dangelo.jpg" alt="Francesco D'Angelo"></div>
+      </a>
+      <span class="person-name">Francesco D'Angelo</span>
+      <span class="person-city">Napoli</span>
+      <a href="https://www.instagram.com/franncescodangelo/" target="_blank" class="person-handle">@franncescodangelo</a>
+    </div>
+
+    <div class="grid-item">
+      <a href="https://www.instagram.com/heishine/" target="_blank" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti styling practises/Immagini/greta-tea.jpg" alt="Greta Tea"></div>
+      </a>
+      <span class="person-name">Greta Tea</span>
+      <span class="person-city">Milano</span>
+      <a href="https://www.instagram.com/heishine/" target="_blank" class="person-handle">@heishine</a>
+    </div>
+
+    <div class="grid-item">
+      <a href="https://www.instagram.com/irinashkap/" target="_blank" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti styling practises/Immagini/irene-pirrone.jpg" alt="Irene Pirrone"></div>
+      </a>
+      <span class="person-name">Irene Pirrone</span>
+      <span class="person-city">Milano</span>
+      <a href="https://www.instagram.com/irinashkap/" target="_blank" class="person-handle">@irinashkap</a>
+    </div>
+
+    <div class="grid-item">
+      <a href="https://www.instagram.com/appocundriaa/" target="_blank" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti styling practises/Immagini/marco-marino.jpg" alt="Marco Marino"></div>
+      </a>
+      <span class="person-name">Marco Marino</span>
+      <span class="person-city">Venezia</span>
+      <a href="https://www.instagram.com/appocundriaa/" target="_blank" class="person-handle">@appocundriaa</a>
+    </div>
+
+    <div class="grid-item">
+      <a href="https://www.instagram.com/roberta_astarita/" target="_blank" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti styling practises/Immagini/roberta-astarita.jpg" alt="Roberta Astarita"></div>
+      </a>
+      <span class="person-name">Roberta Astarita</span>
+      <span class="person-city">Napoli / Milano / Parigi</span>
+      <a href="https://www.instagram.com/roberta_astarita/" target="_blank" class="person-handle">@roberta_astarita</a>
+    </div>
+
+    <div class="grid-item">
+      <a href="https://www.instagram.com/junoooooooox/" target="_blank" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti styling practises/Immagini/tia-quaglia.jpg" alt="Tia Quaglia"></div>
+      </a>
+      <span class="person-name">Tia Quaglia</span>
+      <span class="person-city">Milano / Venezia</span>
+      <a href="https://www.instagram.com/junoooooooox/" target="_blank" class="person-handle">@junoooooooox</a>
+    </div>
+
+  </div>
+  </div>
+</div>
+
+<script src="../search.js" data-root="../"></script>
+</body>
+</html>

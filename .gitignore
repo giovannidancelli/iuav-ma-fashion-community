@@ -1,2 +1,6 @@
 .DS_Store
 .claude/
+*.docx
+~$*
+*.mov
+*.mp4

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Let's Network — IMAC</title>
+<title>Let's Network: IMAC</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -61,7 +61,6 @@ canvas {
   <nav>
     <a href="index.html"><span>home</span></a>
     <a href="about-us.html"><span>about</span> <span>us</span></a>
-    <a href="index.html"><span>sign</span> <span>in</span></a>
     <a href="living-archive.html"><span>living</span> <span>archive</span></a>
     <a href="lets-network.html"><span>let's</span> <span>network</span></a>
     <a href="lets-share.html"><span>let's</span> <span>share</span></a>
@@ -77,12 +76,11 @@ canvas {
 
   const DEFS = [
     { lines:['INDUSTRIES'],             r: 165, fs: 27, href: 'Varianti%20lets%20connect/industries.html' },
-    { lines:['IMAGE','MAKERS'],         r: 126, fs: 22 },
-    { lines:['STYLING','PRACTISES'],    r: 144, fs: 20 },
-    { lines:['STUDIOS'],                r: 110, fs: 25 },
-    { lines:['CASTING &','SCOUTING'],   r: 146, fs: 19 },
-    { lines:['SPECIALIZED','SERVICES'], r: 158, fs: 21 },
-    { lines:['ARTISAN','NETWORK'],      r: 136, fs: 21 },
+    { lines:['IMAGE','MAKERS'],         r: 126, fs: 22, href: 'Varianti%20lets%20connect/image-makers.html' },
+    { lines:['STYLING','PRACTISES'],    r: 144, fs: 20, href: 'Varianti%20lets%20connect/styling-practises.html' },
+    { lines:['CASTING &','SCOUTING'],   r: 146, fs: 19, href: 'Varianti%20lets%20connect/casting-scouting.html' },
+    { lines:['SPECIALIZED','SERVICES'], r: 158, fs: 21, href: 'Varianti%20lets%20connect/specialized-services.html' },
+    { lines:['ARTISAN','NETWORK'],      r: 136, fs: 21, href: 'Varianti%20lets%20connect/artisan-network.html' },
   ];
 
   let W, H, balls;
@@ -105,8 +103,8 @@ canvas {
 
   function initBalls() {
     const pos = [
-      [0.20, 0.30], [0.62, 0.22],
-      [0.14, 0.55], [0.48, 0.50], [0.80, 0.46],
+      [0.20, 0.28], [0.62, 0.22],
+      [0.14, 0.58], [0.80, 0.46],
       [0.30, 0.78], [0.68, 0.74],
     ];
     balls = DEFS.map((d, i) => {

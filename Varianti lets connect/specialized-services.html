@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Specialized Services: Let's Connect: IMAC</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root { --blue: rgb(1, 0, 226); }
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background: #ffffff;
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  color: var(--blue);
+}
+
+#menu-box {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: 240px;
+  padding: 48px 24px 48px 24px;
+  border-right: 1px solid var(--blue);
+  z-index: 10;
+  background: #ffffff;
+}
+
+#menu-box nav { display: flex; flex-direction: column; gap: 4px; }
+
+#menu-box nav a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.8;
+}
+
+#menu-box nav a:hover { text-decoration: none; }
+
+.content {
+  margin-left: 240px;
+  padding: 28px 48px 80px 32px;
+}
+
+.header { margin-bottom: 28px; }
+
+.header h1 {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  color: var(--blue);
+  margin-bottom: 18px;
+  line-height: 1;
+}
+
+.header-inner-divider {
+  height: 1px;
+  background: var(--blue);
+  margin-left: -32px;
+  margin-bottom: 18px;
+}
+
+.header-desc {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--blue);
+  max-width: 520px;
+  text-align: justify;
+}
+
+.header-desc mark {
+  background: rgb(255, 244, 182);
+  color: var(--blue);
+  padding: 0 2px;
+}
+
+.divider {
+  height: 1px;
+  background: var(--blue);
+  margin-bottom: 0;
+  margin-left: -32px;
+}
+
+.grid-section {
+  background: var(--blue);
+  margin-left: -32px;
+  margin-right: -48px;
+  padding: 28px 48px 48px 32px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.grid-item .img-wrap {
+  width: 100%;
+  align-self: stretch;
+  aspect-ratio: 3 / 4;
+  background: #e0e0e0;
+  overflow: hidden;
+}
+
+.grid-item .img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+a.company-name { text-decoration: none; }
+
+.grid-item:hover .img-wrap {
+  opacity: 0.5;
+  transition: opacity 0.25s ease;
+}
+
+.grid-item .img-wrap { transition: opacity 0.25s ease; }
+
+.grid-item:hover .company-name {
+  background: var(--blue);
+  color: rgb(255, 244, 182);
+  outline: 1px solid rgb(255, 244, 182);
+}
+
+.grid-item:hover .company-type {
+  background: var(--blue);
+  color: rgb(255, 244, 182);
+  outline: 1px solid rgb(255, 244, 182);
+}
+
+.grid-item .company-name {
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: rgb(255, 244, 182);
+  padding: 0 3px;
+  display: inline;
+}
+
+.grid-item .company-type {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  color: var(--blue);
+  background: rgb(255, 244, 182);
+  padding: 0 3px;
+  display: inline;
+}
+</style>
+</head>
+<body>
+
+<div id="menu-box">
+  <nav>
+    <a href="../index.html">home</a>
+    <a href="../about-us.html">about us</a>
+    <a href="../living-archive.html">living archive</a>
+    <a href="../lets-network.html">let's network</a>
+    <a href="../lets-share.html">let's share</a>
+  </nav>
+</div>
+
+<div class="content">
+
+  <div class="header">
+    <h1>specialized services</h1>
+    <div class="header-inner-divider"></div>
+    <p class="header-desc">This section maps the specialized production services: <mark>printing studios, laser cutting labs, natural dye workshops and textile finishing services</mark> that support fashion research and creative practice.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid-section">
+  <div class="grid">
+
+    <div class="grid-item">
+      <a href="../Varianti specialized services/officina-colore-naturale.html" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti specialized services/Immagini/officina-colore.jpg" alt="Officina del Colore Naturale"></div>
+      </a>
+      <a href="../Varianti specialized services/officina-colore-naturale.html" class="company-name">Officina del Colore Naturale</a>
+      <span class="company-type">natural dye laboratory</span>
+    </div>
+
+    <div class="grid-item">
+      <a href="../Varianti specialized services/ongaro-lab.html" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti specialized services/Immagini/ongaro-lab.jpg" alt="Ongaro Lab"></div>
+      </a>
+      <a href="../Varianti specialized services/ongaro-lab.html" class="company-name">Ongaro Lab</a>
+      <span class="company-type">textile prints & innovation</span>
+    </div>
+
+    <div class="grid-item">
+      <a href="../Varianti specialized services/pecora-nera-studio.html" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti specialized services/Immagini/pecora-nera.jpg" alt="Pecora Nera Studio"></div>
+      </a>
+      <a href="../Varianti specialized services/pecora-nera-studio.html" class="company-name">Pecora Nera Studio</a>
+      <span class="company-type">knitwear studio</span>
+    </div>
+
+    <div class="grid-item">
+      <a href="../Varianti specialized services/pijeyprint.html" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti specialized services/Immagini/pijeyprint.jpg" alt="Pijeyprint"></div>
+      </a>
+      <a href="../Varianti specialized services/pijeyprint.html" class="company-name">Pijeyprint</a>
+      <span class="company-type">textile printing</span>
+    </div>
+
+    <div class="grid-item">
+      <a href="../Varianti specialized services/stamperia-bertozzi.html" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti specialized services/Immagini/stamperia-bertozzi.jpg" alt="Stamperia Bertozzi"></div>
+      </a>
+      <a href="../Varianti specialized services/stamperia-bertozzi.html" class="company-name">Stamperia Bertozzi</a>
+      <span class="company-type">hand block printing</span>
+    </div>
+
+    <div class="grid-item">
+      <a href="../Varianti specialized services/tagli-laser.html" style="display:block; width:100%;">
+        <div class="img-wrap"><img src="../Varianti specialized services/Immagini/tagli-laser.jpg" alt="Tagli Laser"></div>
+      </a>
+      <a href="../Varianti specialized services/tagli-laser.html" class="company-name">Tagli Laser</a>
+      <span class="company-type">laser cutting studio</span>
+    </div>
+
+  </div>
+  </div>
+</div>
+
+<script src="../search.js" data-root="../"></script>
+</body>
+</html>

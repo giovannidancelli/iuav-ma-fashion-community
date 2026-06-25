@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emotions: Living Archive: IMAC</title>
+<style>*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --blue: rgb(1, 0, 226); --yellow: rgb(255, 244, 182); }
+html, body { width: 100%; min-height: 100%; background: #ffffff; font-family: 'LFT Etica Mono', 'Courier New', monospace; color: var(--blue); }
+#menu-box { position: fixed; top: 0; left: 0; bottom: 0; width: 240px; padding: 48px 24px; border-right: 1px solid var(--blue); z-index: 10; background: #ffffff; }
+#menu-box nav { display: flex; flex-direction: column; gap: 4px; }
+#menu-box nav a { color: var(--blue); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; font-size: 18px; font-weight: 700; letter-spacing: 0.03em; line-height: 1.8; }
+#menu-box nav a:hover { text-decoration: none; }
+.content { margin-left: 240px; padding: 28px 48px 80px 32px; }
+.header { margin-bottom: 28px; }
+.header h1 { font-family: 'LFT Etica Light', 'LFT Etica', sans-serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.2rem); color: var(--blue); margin-bottom: 18px; line-height: 1; }
+.header-inner-divider { height: 1px; background: var(--blue); margin-left: -32px; margin-bottom: 18px; }
+.header-desc { font-family: 'LFT Etica Light', 'LFT Etica', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.8; color: var(--blue); max-width: 520px; text-align: justify; }
+.header-desc mark { background: var(--yellow); color: var(--blue); padding: 0 2px; }
+.divider { height: 1px; background: var(--blue); margin-bottom: 0; margin-left: -32px; }
+.grid-section { background: var(--blue); margin-left: -32px; margin-right: -48px; padding: 28px 48px 48px 32px; }
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.grid-item { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.grid-item .img-wrap { width: 100%; aspect-ratio: 3 / 4; background: rgba(255,255,255,0.1); overflow: hidden; position: relative; z-index: 0; transition: opacity 0.25s ease; }
+.grid-item:hover .img-wrap { opacity: 0.5; }
+.grid-item .img-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94); transform-origin: center center; }
+.grid-item .img-wrap:hover { z-index: 10; opacity: 1 !important; }
+.grid-item .img-wrap:hover img { transform: scale(1.22); }
+.student-name { font-family: 'LFT Etica Mono', 'Courier New', monospace; font-size: 15px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--blue); background: var(--yellow); padding: 0 3px; display: inline; text-decoration: none; }
+.project-title { font-family: 'LFT Etica Light', 'LFT Etica', sans-serif; font-weight: 300; font-size: 14px; letter-spacing: 0.03em; color: var(--blue); background: var(--yellow); padding: 0 3px; display: inline; }
+.grid-item:hover .student-name { background: var(--blue); color: var(--yellow); outline: 1px solid var(--yellow); }
+.grid-item:hover .project-title { background: var(--blue); color: var(--yellow); outline: 1px solid var(--yellow); }
+a.student-name { text-decoration: none; }</style>
+</head>
+<body>
+<div id="menu-box"><nav>
+  <a href="../index.html">home</a>
+  <a href="../about-us.html">about us</a>
+  <a href="../living-archive.html">living archive</a>
+  <a href="../lets-network.html">let's network</a>
+  <a href="../lets-share.html">let's share</a>
+</nav></div>
+<div class="content">
+  <div class="header">
+    <h1>emotions</h1>
+    <div class="header-inner-divider"></div>
+    <p class="header-desc">This section brings together projects in which emotional experience drives the design process. From <mark>grief to joy, intimacy to alienation</mark>, each work translates interior states into wearable form, exploring fashion as an affective language and a way of making feelings visible.</p>
+  </div>
+  <div class="divider"></div>
+  <div class="grid-section">
+    <div class="grid"><div class="grid-item">
+      <a href="../Profili studenti/alice-schiappacasse.html" style="display:block;width:100%;"><div class="img-wrap"><img src="../Progetti studenti/Alice Schiappacasse/COPERTINA .png" alt="Alice Schiappacasse"></div></a>
+      <a href="../Profili studenti/alice-schiappacasse.html" class="student-name">Alice Schiappacasse</a>
+      <span class="project-title">Tra sogno e realtà</span>
+    </div>
+    <div class="grid-item">
+      <a href="../Profili studenti/allegra-gabriele.html" style="display:block;width:100%;"><div class="img-wrap"><img src="../Progetti studenti/Allegra Gabriele/COPERTINA.png" alt="Allegra Gabriele"></div></a>
+      <a href="../Profili studenti/allegra-gabriele.html" class="student-name">Allegra Gabriele</a>
+      <span class="project-title">Sick Soundtrack</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/andrea-ceccarelli.html" style="display:block;width:100%;"><div class="img-wrap"><img src="../Progetti studenti/Andrea Ceccarelli/COPERTINA.jpg" alt="Andrea Ceccarelli"></div></a>
+      <a href="../Profili studenti/andrea-ceccarelli.html" class="student-name">Andrea Ceccarelli</a>
+      <span class="project-title">La sedia</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/fabrizio-miller.html" style="display:block;width:100%;"><div class="img-wrap"><img style="object-fit:cover;" src="../Progetti studenti/Fabrizio Miller/COPERTINA.png" alt="Fabrizio Miller"></div></a>
+      <a href="../Profili studenti/fabrizio-miller.html" class="student-name">Fabrizio Miller</a>
+      <span class="project-title">Chianciti! Chianciti!</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/filippo-solini.html" style="display:block;width:100%;"><div class="img-wrap"><img style="object-fit:cover;" src="../Progetti studenti/Filippo Solini/COPERTINA.jpg" alt="Filippo Solini"></div></a>
+      <a href="../Profili studenti/filippo-solini.html" class="student-name">Filippo Solini</a>
+      <span class="project-title">Turno di notte</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/francesca-caneva.html" style="display:block;width:100%;"><div class="img-wrap"><img style="object-fit:cover;" src="../Progetti studenti/Francesca Caneva/COPERTINA FC.png" alt="Francesca Caneva"></div></a>
+      <a href="../Profili studenti/francesca-caneva.html" class="student-name">Francesca Caneva</a>
+      <span class="project-title">Tessence</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/gaia-buono.html" style="display:block;width:100%;"><div class="img-wrap"><img src="../Progetti studenti/Buono Colavito Plati Anidra (gruppo)/COPERTINA.png" alt="Gaia Buono"></div></a>
+      <a href="../Profili studenti/gaia-buono.html" class="student-name">Gaia Buono</a>
+      <span class="project-title">Fashion materials design project</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/giulia-colavito.html" style="display:block;width:100%;"><div class="img-wrap"><img src="../Progetti studenti/Buono Colavito Plati Anidra (gruppo)/COPERTINA.png" alt="Giulia Colavito"></div></a>
+      <a href="../Profili studenti/giulia-colavito.html" class="student-name">Giulia Colavito</a>
+      <span class="project-title">Fashion materials design project</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/lindu-gozzo.html" style="display:block;width:100%;"><div class="img-wrap"><img src="../Progetti studenti/Lindu Gozzo/COPERTINA LG.png" alt="Lindu Gozzo"></div></a>
+      <a href="../Profili studenti/lindu-gozzo.html" class="student-name">Lindu Gozzo</a>
+      <span class="project-title">Baby on drugs</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/lorenzo-ingollingo.html" style="display:block;width:100%;"><div class="img-wrap"><img src="../Progetti studenti/Lorenzo Ingollingo/COPERTINA.png" alt="Lorenzo Ingollingo"></div></a>
+      <a href="../Profili studenti/lorenzo-ingollingo.html" class="student-name">Lorenzo Ingollingo</a>
+      <span class="project-title">Memorare</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/riccardo-cappello.html" style="display:block;width:100%;"><div class="img-wrap"><img style="object-fit:cover;" src="../Progetti studenti/Riccardo Cappello/COPERTINA.png" alt="Riccardo Cappello"></div></a>
+      <a href="../Profili studenti/riccardo-cappello.html" class="student-name">Riccardo Cappello</a>
+      <span class="project-title">Corpus Terrae</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/roberta-plati.html" style="display:block;width:100%;"><div class="img-wrap"><img src="../Progetti studenti/Buono Colavito Plati Anidra (gruppo)/COPERTINA.png" alt="Roberta Platì"></div></a>
+      <a href="../Profili studenti/roberta-plati.html" class="student-name">Roberta Platì</a>
+      <span class="project-title">Fashion materials design project</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/rossana-la-verde.html" style="display:block;width:100%;"><div class="img-wrap"><img style="object-fit:cover;" src="../Progetti studenti/Rossana La Verde/COPERTINA.jpeg" alt="Rossana La Verde"></div></a>
+      <a href="../Profili studenti/rossana-la-verde.html" class="student-name">Rossana La Verde</a>
+      <span class="project-title">Mi stringo, mi incastro, giro e cado</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/sara-montali.html" style="display:block;width:100%;"><div class="img-wrap"><img src="../Progetti studenti/Sara Montali/COPERTINA.png" alt="Sara Montali"></div></a>
+      <a href="../Profili studenti/sara-montali.html" class="student-name">Sara Montali</a>
+      <span class="project-title">Heirloom Romance</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/teresa-bracaloni.html" style="display:block;width:100%;"><div class="img-wrap"><img src="../Progetti studenti/Teresa Bracaloni/COPERTINA.png" alt="Teresa Bracaloni"></div></a>
+      <a href="../Profili studenti/teresa-bracaloni.html" class="student-name">Teresa Bracaloni</a>
+      <span class="project-title">Pantarei</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/virgilia-mondelli.html" style="display:block;width:100%;"><div class="img-wrap"><img style="object-fit:cover;" src="../Progetti studenti/Virgilia Mondelli/COPERTINA.jpg" alt="Virgilia Mondelli"></div></a>
+      <a href="../Profili studenti/virgilia-mondelli.html" class="student-name">Virgilia Mondelli</a>
+      <span class="project-title">Silenziosa nostalgia</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/yujie-ding.html" style="display:block;width:100%;"><div class="img-wrap"><img style="object-fit:cover;" src="../Progetti studenti/Yujie Ding/COPERTINA.png" alt="Yujie Ding"></div></a>
+      <a href="../Profili studenti/yujie-ding.html" class="student-name">Yujie Ding</a>
+      <span class="project-title">Sono nata per copiare</span>
+    </div></div>
+  </div>
+</div>
+<script>document.querySelectorAll('.grid-item .img-wrap').forEach(wrap=>{
+  const img=wrap.querySelector('img');if(!img)return;
+  wrap.addEventListener('mouseenter',()=>{img.style.transform='scale(1.22)';});
+  wrap.addEventListener('mousemove',e=>{const r=wrap.getBoundingClientRect();img.style.transformOrigin=((e.clientX-r.left)/r.width*100).toFixed(1)+'% '+((e.clientY-r.top)/r.height*100).toFixed(1)+'%';});
+  wrap.addEventListener('mouseleave',()=>{img.style.transform='scale(1)';setTimeout(()=>{img.style.transformOrigin='center center';},350);});
+});</script>
+<script src="../search.js" data-root="../"></script>
+</body></html>

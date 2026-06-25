@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Let's Share — IMAC</title>
+<title>Let's Share: IMAC</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -34,17 +34,17 @@ html, body {
 #menu-box nav {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 #menu-box nav a {
   color: var(--blue);
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  font-size: 18px;
+  text-underline-offset: 4px;
+  font-size: 19px;
   font-weight: 700;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.05em;
   line-height: 1.8;
 }
 #menu-box nav a:hover { text-decoration: none; }
@@ -223,6 +223,22 @@ html, body {
   margin-left: auto;
 }
 
+.post-delete-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 244, 182, 0.2);
+  font-size: 15px;
+  cursor: pointer;
+  padding: 0 2px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.post-delete-btn:hover {
+  color: rgba(255, 244, 182, 0.8);
+}
+
 .post-body {
   padding-left: 44px;
   display: flex;
@@ -249,30 +265,13 @@ html, body {
   border: 1px solid rgba(255, 244, 182, 0.3);
 }
 
-/* Riquadro grigio placeholder */
+/* Riquadro placeholder */
 .post-img-placeholder {
   flex-shrink: 0;
   width: 200px;
   height: 140px;
-  background: #808080;
+  background: #2a2a8a;
   border: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.post-img-placeholder svg {
-  opacity: 0.5;
-}
-
-.post-img-placeholder span {
-  font-family: 'LFT Etica Light', sans-serif;
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
 }
 
 /* ── Input bar (locked) ── */
@@ -355,10 +354,45 @@ html, body {
 
 .input-hint {
   font-family: 'LFT Etica Light', sans-serif;
-  font-size: 10px;
-  color: rgba(255, 244, 182, 0.18);
+  font-size: 11px;
+  color: rgba(255, 244, 182, 0.45);
   margin-top: 6px;
-  pointer-events: none;
+}
+
+#user-row {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+#user-row.visible { display: flex; }
+
+#user-label {
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--yellow);
+}
+
+#change-name-btn {
+  font-family: 'LFT Etica Light', sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  color: rgba(255, 244, 182, 0.6);
+  background: none;
+  border: 1px solid rgba(255, 244, 182, 0.3);
+  padding: 2px 10px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+#change-name-btn:hover {
+  color: var(--yellow);
+  border-color: rgba(255, 244, 182, 0.7);
 }
 
 /* ── Sign-in popup ── */
@@ -424,19 +458,43 @@ html, body {
   margin-bottom: 8px;
 }
 
-.popup-signin-sub {
-  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
-  font-weight: 300;
-  font-size: 12px;
-  color: rgba(1, 0, 226, 0.6);
+#name-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
 }
 
-.popup-signin-sub a {
+#name-form input {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
   color: var(--blue);
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  background: #ffffff;
+  border: 1px solid rgba(1, 0, 226, 0.3);
+  padding: 7px 10px;
+  outline: none;
+  letter-spacing: 0.02em;
 }
-.popup-signin-sub a:hover { text-decoration: none; }
+
+#name-form input:focus { border-color: var(--blue); }
+#name-form input::placeholder { color: rgba(1, 0, 226, 0.35); }
+
+#name-form button[type="submit"] {
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: var(--blue);
+  border: none;
+  padding: 8px 0;
+  cursor: pointer;
+  margin-top: 2px;
+}
+
+#name-form button[type="submit"]:hover { opacity: 0.85; }
 
 </style>
 </head>
@@ -447,7 +505,6 @@ html, body {
   <nav>
     <a href="index.html">home</a>
     <a href="about-us.html">about us</a>
-    <a href="index.html">sign in</a>
     <a href="living-archive.html">living archive</a>
     <a href="lets-network.html">let's network</a>
     <a href="lets-share.html">let's share</a>
@@ -484,10 +541,15 @@ html, body {
   <div id="feed"></div>
   </div><!-- fine #scroll-area -->
 
-  <!-- Barra di input (locked — click opens sign-in popup) -->
+  <!-- Barra di input (locked, click opens sign-in popup) -->
   <div id="input-bar">
     <!-- Invisible overlay that intercepts clicks -->
     <div id="input-bar-overlay"></div>
+    <!-- Riga nome utente (visibile solo dopo login) -->
+    <div id="user-row">
+      <span id="user-label"></span>
+      <button id="change-name-btn">change name</button>
+    </div>
     <div id="input-row">
       <textarea id="input-text" placeholder="share something with the community…"></textarea>
       <button id="img-btn" title="Attach image">
@@ -500,16 +562,20 @@ html, body {
       <input id="img-input" type="file" accept="image/*">
       <button id="send-btn">POST</button>
     </div>
-    <div class="input-hint">sign in to post</div>
+    <div class="input-hint">enter your name to post</div>
   </div>
 
 </div>
 
-<!-- Sign-in popup -->
+<!-- Name popup -->
 <div id="signin-popup">
   <button id="signin-popup-close">✕</button>
-  <div class="popup-signin-title">Sign in to chat with the community</div>
-  <div class="popup-signin-sub"><a href="index.html">sign in</a></div>
+  <div class="popup-signin-title">Join the chat</div>
+  <form id="name-form">
+    <input id="input-firstname" type="text" placeholder="First name" autocomplete="off" required>
+    <input id="input-lastname"  type="text" placeholder="Last name"  autocomplete="off" required>
+    <button type="submit">Enter →</button>
+  </form>
 </div>
 
 <script>
@@ -519,7 +585,7 @@ html, body {
     {
       author: 'Francesca Caneva',
       time: '3d ago',
-      text: 'Posted a few fabric swatches in the studio — leftover from my collection work, great for experimenting. Help yourself!',
+      text: 'Posted a few fabric swatches in the studio, leftover from my collection work, great for experimenting. Help yourself!',
       img: null
     },
     {
@@ -531,13 +597,13 @@ html, body {
     {
       author: 'Agnese Prandi',
       time: '1d ago',
-      text: 'Just finished a small capsule of upcycled pieces. Available to borrow for shoots or study — reach out!',
+      text: 'Just finished a small capsule of upcycled pieces. Available to borrow for shoots or study, reach out!',
       img: '__placeholder__'
     },
     {
       author: 'Flora Conticello',
       time: '5h ago',
-      text: 'Sharing my editorial from last semester — if anyone is interested in shooting together for the next one, let me know.',
+      text: 'Sharing my editorial from last semester, if anyone is interested in shooting together for the next one, let me know.',
       img: null
     },
     {
@@ -557,16 +623,10 @@ html, body {
     return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 
-  const PLACEHOLDER_SVG = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.4"/>
-    <circle cx="8" cy="9" r="2" fill="currentColor"/>
-    <path d="M2 17l5-5 4 4 3-3 6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>`;
-
   function imgBlock(img) {
     if (!img) return '';
     if (img === '__placeholder__') {
-      return `<div class="post-img-placeholder">${PLACEHOLDER_SVG}<span>image</span></div>`;
+      return `<div class="post-img-placeholder"></div>`;
     }
     return `<img class="post-image" src="${img}" alt="">`;
   }
@@ -579,6 +639,7 @@ html, body {
         <div class="post-avatar">${initials(post.author)}</div>
         <span class="post-author">${esc(post.author)}</span>
         <span class="post-time">${esc(post.time)}</span>
+        <button class="post-delete-btn" data-id="${post.id || ''}">×</button>
       </div>
       <div class="post-body">
         ${imgBlock(post.img)}
@@ -601,6 +662,7 @@ html, body {
     catch { return []; }
   }
   function addSaved(post) {
+    post.id = Date.now() + '-' + Math.random().toString(36).slice(2, 7);
     const saved = loadSaved();
     saved.unshift(post);
     localStorage.setItem('imac_share_v2', JSON.stringify(saved.slice(0, 100)));
@@ -611,26 +673,116 @@ html, body {
   loadSaved().forEach(p => renderPost(p, false));
   feed.scrollTop = feed.scrollHeight;
 
-  // ── Sign-in popup ─────────────────────────────────────────────────
-  const popup   = document.getElementById('signin-popup');
+  // ── Name gate ─────────────────────────────────────────────────────
+  let currentUser = localStorage.getItem('imac_user_name') || null;
+
+  const popup    = document.getElementById('signin-popup');
   const inputBar = document.getElementById('input-bar');
+  const overlay  = document.getElementById('input-bar-overlay');
+  const inputRow = document.getElementById('input-row');
+  const hint     = document.querySelector('.input-hint');
+
+  function unlockBar() {
+    overlay.style.display = 'none';
+    inputRow.style.opacity = '1';
+    inputRow.style.pointerEvents = 'auto';
+    inputRow.style.userSelect = 'auto';
+    if (hint) hint.textContent = '';
+    const userRow   = document.getElementById('user-row');
+    const userLabel = document.getElementById('user-label');
+    if (userRow && userLabel) {
+      userLabel.textContent = currentUser;
+      userRow.classList.add('visible');
+    }
+  }
+
+  if (currentUser) unlockBar();
 
   function showPopup() {
     const barRect = inputBar.getBoundingClientRect();
     popup.style.bottom = (window.innerHeight - barRect.top + 14) + 'px';
+    // pre-riempie i campi se il nome esiste già
+    if (currentUser) {
+      const parts = currentUser.split(' ');
+      document.getElementById('input-firstname').value = parts[0] || '';
+      document.getElementById('input-lastname').value  = parts.slice(1).join(' ') || '';
+    }
     popup.classList.add('visible');
+    document.getElementById('input-firstname').focus();
   }
 
-  document.getElementById('input-bar-overlay').addEventListener('click', showPopup);
+  overlay.addEventListener('click', showPopup);
+  document.getElementById('change-name-btn').addEventListener('click', function (e) {
+    e.stopPropagation();
+    showPopup();
+  });
 
   document.getElementById('signin-popup-close').addEventListener('click', e => {
     e.stopPropagation();
     popup.classList.remove('visible');
   });
 
+  document.getElementById('name-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const first = document.getElementById('input-firstname').value.trim();
+    const last  = document.getElementById('input-lastname').value.trim();
+    if (!first || !last) return;
+    currentUser = first + ' ' + last;
+    localStorage.setItem('imac_user_name', currentUser);
+    popup.classList.remove('visible');
+    unlockBar();
+    document.getElementById('input-text').focus();
+  });
+
   document.addEventListener('click', e => {
     if (!popup.contains(e.target) && e.target.id !== 'input-bar-overlay') {
       popup.classList.remove('visible');
+    }
+  });
+
+  // ── Send ──────────────────────────────────────────────────────────
+  const textarea = document.getElementById('input-text');
+  const sendBtn  = document.getElementById('send-btn');
+  const imgInput = document.getElementById('img-input');
+  const imgBtn   = document.getElementById('img-btn');
+  let pendingImage = null;
+
+  imgBtn.addEventListener('click', () => imgInput.click());
+  imgInput.addEventListener('change', () => {
+    const file = imgInput.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => { pendingImage = ev.target.result; };
+    reader.readAsDataURL(file);
+  });
+
+  sendBtn.addEventListener('click', () => {
+    if (!currentUser) return;
+    const text = textarea.value.trim();
+    if (!text && !pendingImage) return;
+    const post = { author: currentUser, time: 'just now', text, img: pendingImage || null };
+    addSaved(post);
+    renderPost(post, true);
+    textarea.value = '';
+    pendingImage = null;
+    imgInput.value = '';
+    document.getElementById('scroll-area').scrollTop = 0;
+  });
+
+  textarea.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendBtn.click(); }
+  });
+
+  // ── Delete ────────────────────────────────────────────────────────
+  feed.addEventListener('click', e => {
+    const btn = e.target.closest('.post-delete-btn');
+    if (!btn) return;
+    const postEl = btn.closest('.post');
+    const id = btn.dataset.id;
+    postEl.remove();
+    if (id) {
+      const saved = loadSaved();
+      localStorage.setItem('imac_share_v2', JSON.stringify(saved.filter(p => p.id !== id)));
     }
   });
 

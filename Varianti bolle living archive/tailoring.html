@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tailoring: Living Archive: IMAC</title>
+<style>*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --blue: rgb(1, 0, 226); --yellow: rgb(255, 244, 182); }
+html, body { width: 100%; min-height: 100%; background: #ffffff; font-family: 'LFT Etica Mono', 'Courier New', monospace; color: var(--blue); }
+#menu-box { position: fixed; top: 0; left: 0; bottom: 0; width: 240px; padding: 48px 24px; border-right: 1px solid var(--blue); z-index: 10; background: #ffffff; }
+#menu-box nav { display: flex; flex-direction: column; gap: 4px; }
+#menu-box nav a { color: var(--blue); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; font-size: 18px; font-weight: 700; letter-spacing: 0.03em; line-height: 1.8; }
+#menu-box nav a:hover { text-decoration: none; }
+.content { margin-left: 240px; padding: 28px 48px 80px 32px; }
+.header { margin-bottom: 28px; }
+.header h1 { font-family: 'LFT Etica Light', 'LFT Etica', sans-serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.2rem); color: var(--blue); margin-bottom: 18px; line-height: 1; }
+.header-inner-divider { height: 1px; background: var(--blue); margin-left: -32px; margin-bottom: 18px; }
+.header-desc { font-family: 'LFT Etica Light', 'LFT Etica', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.8; color: var(--blue); max-width: 520px; text-align: justify; }
+.header-desc mark { background: var(--yellow); color: var(--blue); padding: 0 2px; }
+.divider { height: 1px; background: var(--blue); margin-bottom: 0; margin-left: -32px; }
+.grid-section { background: var(--blue); margin-left: -32px; margin-right: -48px; padding: 28px 48px 48px 32px; }
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.grid-item { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.grid-item .img-wrap { width: 100%; aspect-ratio: 3 / 4; background: rgba(255,255,255,0.1); overflow: hidden; position: relative; z-index: 0; transition: opacity 0.25s ease; }
+.grid-item:hover .img-wrap { opacity: 0.5; }
+.grid-item .img-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94); transform-origin: center center; }
+.grid-item .img-wrap:hover { z-index: 10; opacity: 1 !important; }
+.grid-item .img-wrap:hover img { transform: scale(1.22); }
+.student-name { font-family: 'LFT Etica Mono', 'Courier New', monospace; font-size: 15px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--blue); background: var(--yellow); padding: 0 3px; display: inline; text-decoration: none; }
+.project-title { font-family: 'LFT Etica Light', 'LFT Etica', sans-serif; font-weight: 300; font-size: 14px; letter-spacing: 0.03em; color: var(--blue); background: var(--yellow); padding: 0 3px; display: inline; }
+.grid-item:hover .student-name { background: var(--blue); color: var(--yellow); outline: 1px solid var(--yellow); }
+.grid-item:hover .project-title { background: var(--blue); color: var(--yellow); outline: 1px solid var(--yellow); }
+a.student-name { text-decoration: none; }</style>
+</head>
+<body>
+<div id="menu-box"><nav>
+  <a href="../index.html">home</a>
+  <a href="../about-us.html">about us</a>
+  <a href="../living-archive.html">living archive</a>
+  <a href="../lets-network.html">let's network</a>
+  <a href="../lets-share.html">let's share</a>
+</nav></div>
+<div class="content">
+  <div class="header">
+    <h1>tailoring</h1>
+    <div class="header-inner-divider"></div>
+    <p class="header-desc">This section collects projects where construction, craft, and garment architecture take centre stage. From <mark>pattern-making to fitting techniques</mark>, each work explores tailoring as both a technical discipline and an expressive language, negotiating between tradition and contemporary practice.</p>
+  </div>
+  <div class="divider"></div>
+  <div class="grid-section"><div class="grid"><div class="grid-item">
+      <a href="../Profili studenti/andrea-ceccarelli.html" style="display:block;width:100%;"><div class="img-wrap"><img src="../Progetti studenti/Andrea Ceccarelli/COPERTINA.jpg" alt="Andrea Ceccarelli"></div></a>
+      <a href="../Profili studenti/andrea-ceccarelli.html" class="student-name">Andrea Ceccarelli</a>
+      <span class="project-title">La sedia</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/anna-marani.html" style="display:block;width:100%;"><div class="img-wrap"><img style="object-fit:cover;" src="../Progetti studenti/Anna Marani/COPERTINA.png" alt="Anna Marani"></div></a>
+      <a href="../Profili studenti/anna-marani.html" class="student-name">Anna Marani</a>
+      <span class="project-title">Favaskin</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/anna-de-pascalis.html" style="display:block;width:100%;"><div class="img-wrap" style="padding:8%;"><img src="../Progetti studenti/Anna de Pascalis/COPERTINA (3).png" alt="Anna de Pascalis"></div></a>
+      <a href="../Profili studenti/anna-de-pascalis.html" class="student-name">Anna de Pascalis</a>
+      <span class="project-title">Les miserables</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/camilla-merati.html" style="display:block;width:100%;"><div class="img-wrap"><img src="../Progetti studenti/Camilla Merati/COPERTINA.png" alt="Camilla Merati"></div></a>
+      <a href="../Profili studenti/camilla-merati.html" class="student-name">Camilla Merati</a>
+      <span class="project-title">Signorina</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/chiara-tondi.html" style="display:block;width:100%;"><div class="img-wrap"><img src="../Progetti studenti/Chiara Tondi/COPERTINA.png" alt="Chiara Tondi"></div></a>
+      <a href="../Profili studenti/chiara-tondi.html" class="student-name">Chiara Tondi</a>
+      <span class="project-title">Andar Ocando</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/gabriele-veccari.html" style="display:block;width:100%;"><div class="img-wrap"><img style="object-fit:cover;" src="../Progetti studenti/Gabriele Veccari/COPERTINA.jpg.jpeg" alt="Gabriele Veccari"></div></a>
+      <a href="../Profili studenti/gabriele-veccari.html" class="student-name">Gabriele Veccari</a>
+      <span class="project-title">Brodstation</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/giovanni-dancelli.html" style="display:block;width:100%;"><div class="img-wrap"><img style="object-fit:contain;" src="../Progetti studenti/Giovanni Dancelli/COPERTINA.png" alt="Giovanni Dancelli"></div></a>
+      <a href="../Profili studenti/giovanni-dancelli.html" class="student-name">Giovanni Dancelli</a>
+      <span class="project-title">Il mio completo</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/jessica-selvi.html" style="display:block;width:100%;"><div class="img-wrap"><img src="../Progetti studenti/Jessica Selvi/COPERTINA.png" alt="Jessica Selvi"></div></a>
+      <a href="../Profili studenti/jessica-selvi.html" class="student-name">Jessica Selvi</a>
+      <span class="project-title">devi cucirla se non la vuoi perdere di nuovo</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/lola-kyra-terie.html" style="display:block;width:100%;"><div class="img-wrap"><img style="object-fit:cover;" src="../Progetti studenti/Lola Kyra Terie/LolaKyra_Terie_proj - LOLA KYRA TERIE_Pagina_1.jpg" alt="Lola Kyra Terie"></div></a>
+      <a href="../Profili studenti/lola-kyra-terie.html" class="student-name">Lola Kyra Terie</a>
+      <span class="project-title">Arabesque</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/maria-cristina-cerulli.html" style="display:block;width:100%;"><div class="img-wrap"><img style="object-fit:cover;" src="../Progetti studenti/Maria Cristina Cerulli/COPERTINA.png" alt="Maria Cristina Cerulli"></div></a>
+      <a href="../Profili studenti/maria-cristina-cerulli.html" class="student-name">Maria Cristina Cerulli</a>
+      <span class="project-title">cirrocumuli</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/riccardo-ventanni.html" style="display:block;width:100%;"><div class="img-wrap"><img src="../Progetti studenti/Riccardo Ventanni/COPERTINA.png" alt="Riccardo Ventanni"></div></a>
+      <a href="../Profili studenti/riccardo-ventanni.html" class="student-name">Riccardo Ventanni</a>
+      <span class="project-title">Tradizione e sviluppo: la sciura come congiunzione</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/sofia-candalice.html" style="display:block;width:100%;"><div class="img-wrap"><img src="../Progetti studenti/Sofia Candalice/COPERTINA (1).png" alt="Sofia Candalice"></div></a>
+      <a href="../Profili studenti/sofia-candalice.html" class="student-name">Sofia Candalice</a>
+      <span class="project-title">Istruzione di strada</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/tamara-momcilovic.html" style="display:block;width:100%;"><div class="img-wrap"><img style="object-fit:cover;" src="../Progetti studenti/Tamara Momcilovic/COPERTINA.png" alt="Tamara Momcilovic"></div></a>
+      <a href="../Profili studenti/tamara-momcilovic.html" class="student-name">Tamara Momcilovic</a>
+      <span class="project-title">Stvar</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/teresa-bracaloni.html" style="display:block;width:100%;"><div class="img-wrap"><img src="../Progetti studenti/Teresa Bracaloni/COPERTINA.png" alt="Teresa Bracaloni"></div></a>
+      <a href="../Profili studenti/teresa-bracaloni.html" class="student-name">Teresa Bracaloni</a>
+      <span class="project-title">Pantarei</span>
+    </div><div class="grid-item">
+      <a href="../Profili studenti/valentina-maregotto.html" style="display:block;width:100%;"><div class="img-wrap"><img style="object-fit:cover;" src="../Progetti studenti/Anna Marani/COPERTINA.png" alt="Valentina Maregotto"></div></a>
+      <a href="../Profili studenti/valentina-maregotto.html" class="student-name">Valentina Maregotto</a>
+      <span class="project-title">Favaskin</span>
+    </div>
+  </div></div>
+</div>
+<script>document.querySelectorAll('.grid-item .img-wrap').forEach(wrap=>{
+  const img=wrap.querySelector('img');if(!img)return;
+  wrap.addEventListener('mouseenter',()=>{img.style.transform='scale(1.22)';});
+  wrap.addEventListener('mousemove',e=>{const r=wrap.getBoundingClientRect();img.style.transformOrigin=((e.clientX-r.left)/r.width*100).toFixed(1)+'% '+((e.clientY-r.top)/r.height*100).toFixed(1)+'%';});
+  wrap.addEventListener('mouseleave',()=>{img.style.transform='scale(1)';setTimeout(()=>{img.style.transformOrigin='center center';},350);});
+});</script>
+<script src="../search.js" data-root="../"></script>
+</body></html>

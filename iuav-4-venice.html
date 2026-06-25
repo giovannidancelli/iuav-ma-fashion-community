@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Iuav 4 Venice — IMAC</title>
+<title>Iuav 4 Venice: IMAC</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -21,7 +21,7 @@ html, body {
   color: var(--blue);
 }
 
-/* ── Menu ── */
+/* Menu */
 #menu-box {
   position: fixed;
   top: 0; left: 0; bottom: 0;
@@ -51,7 +51,7 @@ html, body {
 
 #menu-box nav a:hover { text-decoration: none; }
 
-/* ── Layout ── */
+/* Layout */
 .content {
   position: fixed;
   left: 240px; right: 0; top: 0; bottom: 0;
@@ -59,7 +59,7 @@ html, body {
   flex-direction: column;
 }
 
-/* ── Header ── */
+/* Header */
 .page-header {
   padding: 28px 48px 18px 32px;
   flex-shrink: 0;
@@ -104,7 +104,7 @@ html, body {
   flex-shrink: 0;
 }
 
-/* ── Filtri ── */
+/* Filtri */
 .filters {
   display: flex;
   gap: 8px;
@@ -136,14 +136,14 @@ html, body {
   color: var(--yellow);
 }
 
-/* ── Mappa ── */
+/* Mappa */
 #map {
   flex: 1;
   min-height: 0;
   z-index: 0;
 }
 
-/* ── Zoom control ── */
+/* Zoom control */
 .leaflet-control-zoom {
   border: 1px solid var(--blue) !important;
   border-radius: 0 !important;
@@ -172,7 +172,7 @@ html, body {
   border-bottom: none !important;
 }
 
-/* ── Attribution ── */
+/* Attribution */
 .leaflet-control-attribution {
   font-family: 'LFT Etica Mono', monospace !important;
   font-size: 9px !important;
@@ -182,7 +182,7 @@ html, body {
 
 .leaflet-control-attribution a { color: var(--blue) !important; }
 
-/* ── Marker pin ── */
+/* Marker pin */
 .map-pin {
   background: var(--blue);
   color: var(--yellow);
@@ -217,7 +217,11 @@ html, body {
   border-top: 5px solid var(--blue);
 }
 
-/* ── Popup ── */
+.map-pin:hover::after {
+  border-top-color: var(--blue);
+}
+
+/* Popup */
 .leaflet-popup-content-wrapper {
   background: var(--blue) !important;
   border-radius: 0 !important;
@@ -253,7 +257,7 @@ html, body {
   font-weight: 300;
   font-size: 12px;
   color: rgba(255, 244, 182, 0.75);
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 
 .popup-address {
@@ -261,6 +265,24 @@ html, body {
   font-weight: 300;
   font-size: 11px;
   color: rgba(255, 244, 182, 0.6);
+  margin-bottom: 0;
+}
+
+.popup-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 244, 182, 0.35);
+  transition: border-color 0.15s;
+}
+
+.popup-link:hover {
+  border-bottom-color: var(--yellow);
 }
 </style>
 </head>
@@ -271,7 +293,6 @@ html, body {
   <nav>
     <a href="index.html">home</a>
     <a href="about-us.html">about us</a>
-    <a href="index.html">sign in</a>
     <a href="living-archive.html">living archive</a>
     <a href="lets-network.html">let's network</a>
     <a href="lets-share.html">let's share</a>
@@ -283,10 +304,17 @@ html, body {
   <div class="page-header">
     <h1>Iuav 4 Venice</h1>
     <div class="header-inner-divider"></div>
-    <p class="header-desc">This section maps across Venice Island, Venezia Mestre and Veneto all the <mark>companies, points of sale and external realities</mark> that can be useful to students — from production and fabric suppliers to studios, cultural institutions and professional services connected to the fashion community.</p>
+    <p class="header-desc">This section maps across Venice Island, Venezia Mestre and the Veneto region all the <mark>companies, studios, artisans and professional services</mark> that can be useful to students. From production and fabric suppliers to cultural institutions, casting agencies and fashion professionals.</p>
   </div>
 
   <div class="h-line"></div>
+
+  <div class="filters">
+    <button class="filter-btn active" data-cat="all">All</button>
+    <button class="filter-btn" data-cat="artisan">Artisan network</button>
+    <button class="filter-btn" data-cat="casting">Casting</button>
+    <button class="filter-btn" data-cat="industry">Industry</button>
+  </div>
 
   <div id="map"></div>
 
@@ -297,137 +325,78 @@ html, body {
 (function () {
 
   const map = L.map('map', {
-    center: [45.452, 12.268],
-    zoom: 12,
+    center: [45.52, 12.0],
+    zoom: 9,
     zoomControl: false
   });
 
-  // Zoom control bottom-right
   L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-  // CartoDB Positron — pulito e minimale
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
     subdomains: 'abcd',
     maxZoom: 19
   }).addTo(map);
 
-  // ── Luoghi ──────────────────────────────────────────────────────────
-  // Aggiungi nuove voci in questo array per espandere la mappa.
-  // cat: education | industry | fabric | studio | culture | services
   const places = [
-    {
-      name: 'IUAV — Tolentini',
-      cat: 'education',
-      type: 'University Campus',
-      address: 'Santa Croce 191, Venezia',
-      lat: 45.4378, lng: 12.3209
-    },
-    {
-      name: 'IUAV — Cotonificio',
-      cat: 'education',
-      type: 'University Campus',
-      address: 'Dorsoduro 2196, Venezia',
-      lat: 45.4295, lng: 12.3192
-    },
-    {
-      name: 'Fondaco dei Tedeschi',
-      cat: 'culture',
-      type: 'Department Store — Fashion & Design',
-      address: 'Calle del Fontego dei Tedeschi, Venezia',
-      lat: 45.4399, lng: 12.3373
-    },
-    {
-      name: 'Museo del Merletto',
-      cat: 'culture',
-      type: 'Lace Museum',
-      address: 'Piazza Galuppi 187, Burano',
-      lat: 45.4852, lng: 12.4167
-    },
-    {
-      name: 'Museo del Vetro',
-      cat: 'culture',
-      type: 'Glass Museum',
-      address: 'Fondamenta Marco Giustinian 8, Murano',
-      lat: 45.4565, lng: 12.3534
-    },
-    {
-      name: 'Palais Venezia',
-      cat: 'studio',
-      type: 'Fashion Studio',
-      address: 'Venezia',
-      lat: 45.4360, lng: 12.3330
-    },
-    {
-      name: 'Venezia Unica',
-      cat: 'services',
-      type: 'City Services & Transport',
-      address: 'Piazzale Roma, Venezia',
-      lat: 45.4406, lng: 12.3211
-    },
-    {
-      name: 'Mercato di Rialto',
-      cat: 'fabric',
-      type: 'Materials & Crafts Market',
-      address: 'Campo della Pescaria, Venezia',
-      lat: 45.4393, lng: 12.3355
-    },
-    {
-      name: 'Porto Marghera',
-      cat: 'industry',
-      type: 'Industrial Zone',
-      address: 'Via Fratelli Bandiera, Marghera',
-      lat: 45.4622, lng: 12.2372
-    },
-    {
-      name: 'Centro Commerciale Nave de Vero',
-      cat: 'services',
-      type: 'Shopping & Services',
-      address: 'Via Ca\' Rossa 44, Marghera',
-      lat: 45.4700, lng: 12.2215
-    },
-    {
-      name: 'Stazione di Mestre',
-      cat: 'services',
-      type: 'Train Station',
-      address: 'Piazza Stazione, Mestre',
-      lat: 45.4934, lng: 12.2373
-    },
-    {
-      name: 'Piazza Ferretto',
-      cat: 'culture',
-      type: 'City Centre Mestre',
-      address: 'Piazza Ferretto, Mestre',
-      lat: 45.4966, lng: 12.2415
-    },
+    // ARTISAN NETWORK
+    { name: 'Bio Pulisecco Ever Clean', cat: 'artisan', type: 'Eco dry cleaning',       address: 'Calle dei Botteri 1535, 30122 Venezia',              lat: 45.4393, lng: 12.3332, href: 'Varianti%20artisan%20network/bio-pulisecco.html' },
+    { name: 'Calzolaio Gastone',        cat: 'artisan', type: 'Artisan cobbler',        address: 'Calle Fianco de la Scuola 3799B, 30123 Venezia',      lat: 45.4380, lng: 12.3215, href: 'Varianti%20artisan%20network/calzolaio-gastone.html' },
+    { name: 'Emibio Lab',               cat: 'artisan', type: 'Research laboratory',    address: 'Venezia',                                             lat: 45.4362, lng: 12.3345, href: 'Varianti%20artisan%20network/emibio-lab.html' },
+    { name: 'Officina Marghera',        cat: 'artisan', type: 'Materials space',        address: "Via dell'Elettricità 26, Marghera (VE)",              lat: 45.4555, lng: 12.2450, href: 'Varianti%20artisan%20network/officina-marghera.html' },
+    { name: 'Ongaro Lab',               cat: 'artisan', type: 'Creative laboratory',    address: 'Via Antonio Pacinotti 11, 31020 Lancenigo (TV)',       lat: 45.6868, lng: 12.2645, href: 'Varianti%20artisan%20network/ongaro-lab.html' },
+    { name: 'Sartoria Doña Flor',       cat: 'artisan', type: 'Bespoke tailoring',      address: 'Via Andrea Costa 25A, 30172 Venezia (Mestre)',         lat: 45.4937, lng: 12.2388, href: 'Varianti%20artisan%20network/sartoria-dona-flor.html' },
+    { name: 'Sartoria Futura',          cat: 'artisan', type: 'Tailoring & alterations',address: 'Corso del Popolo 84c, 30172 Venezia (Mestre)',         lat: 45.4950, lng: 12.2361, href: 'Varianti%20artisan%20network/sartoria-futura.html' },
+    { name: 'Sartoria Luana',           cat: 'artisan', type: 'Venetian tailoring',     address: 'Calle del Piombo 5897B, 30122 Venezia',                lat: 45.4346, lng: 12.3490, href: 'Varianti%20artisan%20network/sartoria-luana.html' },
+    { name: 'Sartoria Nina',            cat: 'artisan', type: 'Venetian tailoring',     address: 'Salizada del Pignater 3546, 30122 Venezia',             lat: 45.4366, lng: 12.3405, href: 'Varianti%20artisan%20network/sartoria-nina.html' },
+
+    // CASTING & SCOUTING (Venice)
+    { name: 'Come Nuova Venezia', cat: 'casting', type: 'Creative collective',     address: 'Venezia',          lat: 45.4408, lng: 12.3308, href: 'Varianti%20casting%20scouting/come-nuova.html' },
+    { name: 'Combo Venezia',      cat: 'casting', type: 'Creative hub',            address: 'Venezia',          lat: 45.4398, lng: 12.3278, href: 'Varianti%20casting%20scouting/combo-venezia.html' },
+    { name: 'VBRA Venezia',       cat: 'casting', type: 'Independent platform',    address: 'Venezia',          lat: 45.4388, lng: 12.3353, href: 'Varianti%20casting%20scouting/vbra-venezia.html' },
+    { name: 'Spazio Punch',       cat: 'casting', type: 'Cultural space',          address: 'Giudecca, Venezia',lat: 45.4270, lng: 12.3240, href: 'Varianti%20casting%20scouting/spazio-punch.html' },
+
+    // INDUSTRY (Veneto)
+    { name: 'Berto Industria Tessile', cat: 'industry', type: 'Textile industry',    address: 'Via Mazzini 11, 35024 Bovolenta (PD)',              lat: 45.2730, lng: 11.9570, href: 'Varianti%20industries/berto-industria-tessile.html' },
+    { name: 'Bonotto Labels',          cat: 'industry', type: 'Textile labels',      address: 'Via Louvigny 39/a, 36064 Colceresa (VI)',           lat: 45.6672, lng: 11.5390, href: 'Varianti%20industries/bonotto-labels.html' },
+    { name: 'Bottonificio Padano',     cat: 'industry', type: 'Button manufacturer', address: 'Via Scapacchiò 23, 35030 Saccolongo (PD)',          lat: 45.3780, lng: 11.8280, href: 'Varianti%20industries/bottonificio-padano.html' },
+    { name: 'Eurocom',                 cat: 'industry', type: 'Textile industry',    address: 'Via Oltre Brenta 4, 35027 Noventa Padovana (PD)',   lat: 45.3700, lng: 11.9350, href: 'Varianti%20industries/eurocom.html' },
+    { name: 'Lanificio Bottoli',       cat: 'industry', type: 'Wool mill',           address: 'Via della Caserma 1, 31029 Vittorio Veneto (TV)',   lat: 45.9835, lng: 12.2990, href: 'Varianti%20industries/lanificio-bottoli.html' },
+    { name: 'Maeba International',     cat: 'industry', type: 'Textile industry',    address: 'Via Manzoni 14, 31050 Vedelago (TV)',               lat: 45.6870, lng: 12.0190, href: 'Varianti%20industries/maeba-international.html' },
+    { name: 'Marzotto',                cat: 'industry', type: 'Textile group',       address: 'Largo Santa Margherita 1, 36078 Valdagno (VI)',     lat: 45.6540, lng: 11.2990, href: 'Varianti%20industries/marzotto.html' },
+    { name: "Spring'85",               cat: 'industry', type: 'Textile industry',    address: 'Via Enrico Mattei 2, 35020 Maserà di Padova (PD)', lat: 45.3300, lng: 11.9290, href: 'Varianti%20industries/spring85.html' },
+    { name: 'Tessitura Monti',         cat: 'industry', type: 'Textile mill',        address: 'Via Saltore 10, 31052 Maserada sul Piave (TV)',     lat: 45.7730, lng: 12.3660, href: 'Varianti%20industries/tessitura-monti.html' },
+    { name: 'Tonello',                 cat: 'industry', type: 'Textile technologies',address: 'Via della Fisica 1/3, 36030 Sarcedo (VI)',          lat: 45.7040, lng: 11.5760, href: 'Varianti%20industries/tonello.html' },
+    { name: 'Tricot Café',             cat: 'industry', type: 'Knitwear',            address: 'Via Enrico Mattei 16, 35030 Saccolongo (PD)',       lat: 45.3770, lng: 11.8300, href: 'Varianti%20industries/tricot-cafe.html' },
   ];
 
-  // ── Crea marker ───────────────────────────────────────────────────
-  const layerGroups = {};
-  const allLayers   = L.layerGroup().addTo(map);
-
-  places.forEach(p => {
+  function makeMarker(p) {
     const icon = L.divIcon({
       className: '',
       html: `<div class="map-pin">${p.name}</div>`,
       iconAnchor: [0, 28]
     });
-
     const popupHtml = `
       <div class="popup-name">${p.name}</div>
       <div class="popup-type">${p.type}</div>
       <div class="popup-address">${p.address}</div>
+      ${p.href ? `<a href="${p.href}" class="popup-link">view profile &#8599;</a>` : ''}
     `;
+    return L.marker([p.lat, p.lng], { icon }).bindPopup(popupHtml, { maxWidth: 280 });
+  }
 
-    const marker = L.marker([p.lat, p.lng], { icon })
-      .bindPopup(popupHtml, { maxWidth: 260 });
+  const layerGroups = {};
+  const allLayers   = L.featureGroup().addTo(map);
 
+  places.forEach(p => {
+    const marker = makeMarker(p);
     if (!layerGroups[p.cat]) layerGroups[p.cat] = [];
     layerGroups[p.cat].push(marker);
     allLayers.addLayer(marker);
   });
 
-  // ── Filtri ────────────────────────────────────────────────────────
+  map.fitBounds(allLayers.getBounds(), { padding: [40, 40], maxZoom: 12 });
+
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -437,22 +406,15 @@ html, body {
       allLayers.clearLayers();
 
       if (cat === 'all') {
-        places.forEach((p, i) => {
-          const icon = L.divIcon({
-            className: '',
-            html: `<div class="map-pin">${p.name}</div>`,
-            iconAnchor: [0, 28]
-          });
-          L.marker([p.lat, p.lng], { icon })
-            .bindPopup(`
-              <div class="popup-name">${p.name}</div>
-              <div class="popup-type">${p.type}</div>
-              <div class="popup-address">${p.address}</div>
-            `, { maxWidth: 260 })
-            .addTo(allLayers);
-        });
+        places.forEach(p => allLayers.addLayer(makeMarker(p)));
+        map.fitBounds(allLayers.getBounds(), { padding: [40, 40], maxZoom: 12 });
       } else {
-        (layerGroups[cat] || []).forEach(m => allLayers.addLayer(m));
+        const filtered = (layerGroups[cat] || []);
+        filtered.forEach(m => allLayers.addLayer(m));
+        if (filtered.length) {
+          const group = L.featureGroup(filtered);
+          map.fitBounds(group.getBounds(), { padding: [60, 60], maxZoom: 14 });
+        }
       }
     });
   });

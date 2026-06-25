@@ -7,59 +7,101 @@
   // ── Indice di ricerca ─────────────────────────────────────────────
   const INDEX = [
     // Pagine principali
-    { title: 'About Us',        desc: 'About the Iuav Master Fashion Community',       href: 'about-us.html',        tags: ['about','imac','iuav','community','fashion'] },
-    { title: 'Living Archive',  desc: 'Archive of fashion research themes',             href: 'living-archive.html',  tags: ['archive','living','research','temi'] },
-    { title: "Let's Network",   desc: 'Fashion industry connections and studios',       href: 'lets-network.html',    tags: ['network','industry','connect','aziende'] },
-    { title: "Let's Share",     desc: 'Share projects with the community',              href: 'lets-share.html',      tags: ['share','blog','community','condividi'] },
-    { title: 'Iuav 4 Venice',   desc: 'Map of Venice and Veneto fashion locations',    href: 'iuav-4-venice.html',   tags: ['map','venice','veneto','mappa','mestre'] },
+    { title: 'About Us',        desc: 'About the Iuav Master Fashion Community',    href: 'about-us.html',        tags: ['about','imac','iuav','community','fashion'] },
+    { title: 'Living Archive',  desc: 'Archive of fashion research themes',          href: 'living-archive.html',  tags: ['archive','living','research','temi'] },
+    { title: "Let's Network",   desc: 'Fashion industry connections and studios',    href: 'lets-network.html',    tags: ['network','industry','connect','aziende'] },
+    { title: "Let's Share",     desc: 'Share projects with the community',           href: 'lets-share.html',      tags: ['share','blog','community','condividi'] },
+    { title: 'Iuav 4 Venice',   desc: 'Map of Venice and Veneto fashion locations', href: 'iuav-4-venice.html',   tags: ['map','venice','veneto','mappa','mestre'] },
 
     // Living Archive — temi
-    { title: 'Heritage',        desc: 'Living Archive',  href: 'living-archive.html',  tags: ['heritage','storia','patrimonio'] },
-    { title: 'Memory',          desc: 'Living Archive',  href: 'living-archive.html',  tags: ['memory','memoria'] },
-    { title: 'Decoloniality',   desc: 'Living Archive',  href: 'living-archive.html',  tags: ['decoloniality','decoloniale'] },
-    { title: 'Tailoring',       desc: 'Living Archive',  href: 'living-archive.html',  tags: ['tailoring','sartoria','craft'] },
-    { title: 'Ecology',         desc: 'Living Archive',  href: 'living-archive.html',  tags: ['ecology','ecologia'] },
-    { title: 'Gender',          desc: 'Living Archive',  href: 'living-archive.html',  tags: ['gender','genere'] },
-    { title: 'Literature',      desc: 'Living Archive',  href: 'living-archive.html',  tags: ['literature','letteratura'] },
-    { title: 'Communication',   desc: 'Living Archive',  href: 'living-archive.html',  tags: ['communication','comunicazione'] },
-    { title: 'Sustainability',  desc: 'Living Archive',  href: 'living-archive.html',  tags: ['sustainability','sostenibilità'] },
-    { title: 'Politics',        desc: 'Living Archive',  href: 'living-archive.html',  tags: ['politics','politica'] },
-    { title: 'Emotions',        desc: 'Living Archive',  href: 'living-archive.html',  tags: ['emotions','emozioni'] },
-    { title: 'Nature',          desc: 'Living Archive',  href: 'living-archive.html',  tags: ['nature','natura'] },
-    { title: 'Speculative',     desc: 'Living Archive',  href: 'living-archive.html',  tags: ['speculative','speculativo'] },
-    { title: 'Body',            desc: 'Living Archive',  href: 'living-archive.html',  tags: ['body','corpo'] },
+    { title: 'Heritage',       desc: 'Living Archive', href: 'living-archive.html', tags: ['heritage','storia','patrimonio'] },
+    { title: 'Memory',         desc: 'Living Archive', href: 'living-archive.html', tags: ['memory','memoria'] },
+    { title: 'Decoloniality',  desc: 'Living Archive', href: 'living-archive.html', tags: ['decoloniality','decoloniale'] },
+    { title: 'Tailoring',      desc: 'Living Archive', href: 'living-archive.html', tags: ['tailoring','sartoria','craft'] },
+    { title: 'Ecology',        desc: 'Living Archive', href: 'living-archive.html', tags: ['ecology','ecologia'] },
+    { title: 'Gender',         desc: 'Living Archive', href: 'living-archive.html', tags: ['gender','genere'] },
+    { title: 'Literature',     desc: 'Living Archive', href: 'living-archive.html', tags: ['literature','letteratura'] },
+    { title: 'Communication',  desc: 'Living Archive', href: 'living-archive.html', tags: ['communication','comunicazione'] },
+    { title: 'Sustainability', desc: 'Living Archive', href: 'living-archive.html', tags: ['sustainability','sostenibilità'] },
+    { title: 'Politics',       desc: 'Living Archive', href: 'living-archive.html', tags: ['politics','politica'] },
+    { title: 'Emotions',       desc: 'Living Archive', href: 'living-archive.html', tags: ['emotions','emozioni'] },
+    { title: 'Nature',         desc: 'Living Archive', href: 'living-archive.html', tags: ['nature','natura'] },
+    { title: 'Speculative',    desc: 'Living Archive', href: 'living-archive.html', tags: ['speculative','speculativo'] },
+    { title: 'Body',           desc: 'Living Archive', href: 'living-archive.html', tags: ['body','corpo'] },
 
-    // Let's Network — categorie
-    { title: 'Industries',          desc: "Let's Network",  href: 'lets-network.html',  tags: ['industries','industria','produzione'] },
-    { title: 'Image Makers',        desc: "Let's Network",  href: 'lets-network.html',  tags: ['image','makers','fotografia','photography'] },
-    { title: 'Styling Practises',   desc: "Let's Network",  href: 'lets-network.html',  tags: ['styling','practises','stile'] },
-    { title: 'Studios',             desc: "Let's Network",  href: 'lets-network.html',  tags: ['studios','atelier','studio'] },
-    { title: 'Casting & Scouting',  desc: "Let's Network",  href: 'lets-network.html',  tags: ['casting','scouting','modelli'] },
-    { title: 'Specialized Services',desc: "Let's Network",  href: 'lets-network.html',  tags: ['services','servizi','specialized'] },
-    { title: 'Artisan Network',     desc: "Let's Network",  href: 'lets-network.html',  tags: ['artisan','artigiano','craft','network'] },
+    // Let's Network — categorie (bolle)
+    { title: 'Industries',           desc: "Let's Network", href: 'Varianti lets connect/industries.html', tags: ['industries','industria','produzione'] },
+    { title: 'Image Makers',         desc: "Let's Network", href: 'lets-network.html', tags: ['image','makers','fotografia','photography'] },
+    { title: 'Styling Practises',    desc: "Let's Network", href: 'lets-network.html', tags: ['styling','practises','stile'] },
+    { title: 'Studios',              desc: "Let's Network", href: 'lets-network.html', tags: ['studios','atelier','studio'] },
+    { title: 'Casting & Scouting',   desc: "Let's Network", href: 'lets-network.html', tags: ['casting','scouting','modelli'] },
+    { title: 'Specialized Services', desc: "Let's Network", href: 'lets-network.html', tags: ['services','servizi','specialized'] },
+    { title: 'Artisan Network',      desc: "Let's Network", href: 'lets-network.html', tags: ['artisan','artigiano','craft','network'] },
 
-    // Studenti
-    { title: 'Riccardo Cappello',   desc: 'Heritage — Corpus Terrae',  href: 'Profili studenti/riccardo-cappello.html',  tags: ['riccardo','cappello','studente','student','heritage','corpus','terrae','maglia','sweater'] },
-    { title: 'Francesca Caneva',    desc: 'Student — Iuav MA Fashion', href: 'lets-share.html',  tags: ['francesca','caneva','studente','student'] },
-    { title: 'Flora Conticello',    desc: 'Student — Iuav MA Fashion', href: 'lets-share.html',  tags: ['flora','conticello','studente','student'] },
-    { title: 'Giovanni Dancelli',   desc: 'Student — Iuav MA Fashion', href: 'lets-share.html',  tags: ['giovanni','dancelli','studente','student'] },
-    { title: 'Annamaria Pieretti',  desc: 'Student — Iuav MA Fashion', href: 'lets-share.html',  tags: ['annamaria','pieretti','studente','student'] },
-    { title: 'Agnese Prandi',       desc: 'Student — Iuav MA Fashion', href: 'lets-share.html',  tags: ['agnese','prandi','studente','student'] },
-    { title: 'Alice Schiappacasse', desc: 'Student — Iuav MA Fashion', href: 'lets-share.html',  tags: ['alice','schiappacasse','studente','student'] },
+    // Let's Network — Industries: aziende
+    { title: 'Berto Industria Tessile', desc: "Industries — denim production",  href: 'Varianti industries/berto-industria-tessile.html', tags: ['berto','industria','tessile','denim','fabric','produzione','bovolenta'] },
+    { title: 'Tricot Cafè',             desc: "Industries — fabric shop",        href: 'Varianti lets connect/industries.html', tags: ['tricot','cafe','cafè','tessuto','fabric','shop','lana','knit'] },
+    { title: 'EUROCOM s.r.l.',          desc: "Industries — leather production", href: 'Varianti lets connect/industries.html', tags: ['eurocom','leather','pelle','produzione','srl'] },
 
-    // Progetti
-    { title: 'Corpus Terrae',  desc: 'Progetto di Riccardo Cappello — Heritage',  href: 'Profili studenti/riccardo-cappello.html',  tags: ['corpus','terrae','progetto','project','heritage','riccardo','cappello'] },
+    // Studenti — profili completi
+    { title: 'Agnese Prandi',          desc: 'Compressione',                                  href: 'Profili studenti/agnese-prandi.html',          tags: ['agnese','prandi','studente','student','compressione'] },
+    { title: 'Alessia Gjini',          desc: 'Laboratorio Serica',                            href: 'Profili studenti/alessia-gjini.html',          tags: ['alessia','gjini','studente','student','laboratorio','serica','seta'] },
+    { title: 'Alice Schiappacasse',    desc: 'Tra sogno e realtà',                           href: 'Profili studenti/alice-schiappacasse.html',    tags: ['alice','schiappacasse','studente','student','sogno','realta'] },
+    { title: 'Allegra Gabriele',       desc: 'Sick Soundtrack',                               href: 'Profili studenti/allegra-gabriele.html',       tags: ['allegra','gabriele','studente','student','sick','soundtrack'] },
+    { title: 'Andrea Ceccarelli',      desc: 'La sedia',                                      href: 'Profili studenti/andrea-ceccarelli.html',      tags: ['andrea','ceccarelli','studente','student','sedia'] },
+    { title: 'Anna de Pascalis',       desc: 'Les miserables',                                href: 'Profili studenti/anna-de-pascalis.html',       tags: ['anna','de','pascalis','studente','student','miserables'] },
+    { title: 'Anna Marani',            desc: 'Favaskin',                                      href: 'Profili studenti/anna-marani.html',            tags: ['anna','marani','studente','student','favaskin'] },
+    { title: 'Annalisa Zoldan',        desc: 'Cactiform',                                     href: 'Profili studenti/annalisa-zoldan.html',        tags: ['annalisa','zoldan','studente','student','cactiform'] },
+    { title: 'Annamaria Pieretti',     desc: 'Spazio Attivo',                                 href: 'Profili studenti/annamaria-pieretti.html',     tags: ['annamaria','pieretti','studente','student','spazio','attivo'] },
+    { title: 'Aria Princigalli',       desc: 'Laboratorio Serica',                            href: 'Profili studenti/aria-princigalli.html',       tags: ['aria','princigalli','studente','student','laboratorio','serica','seta'] },
+    { title: 'Camilla Merati',         desc: 'Signorina',                                     href: 'Profili studenti/camilla-merati.html',         tags: ['camilla','merati','studente','student','signorina'] },
+    { title: 'Chiara Tondi',           desc: 'Andar Ocando',                                  href: 'Profili studenti/chiara-tondi.html',           tags: ['chiara','tondi','studente','student','andar','ocando'] },
+    { title: 'Christian Garau',        desc: 'Fashion for Fragile Ecosystem',                 href: 'Profili studenti/christian-garau.html',        tags: ['christian','garau','studente','student','fragile','ecosystem','ecologia'] },
+    { title: 'Fabrizio Iacobone',      desc: 'Locus amoenus',                                 href: 'Profili studenti/fabrizio-iacobone.html',      tags: ['fabrizio','iacobone','studente','student','locus','amoenus'] },
+    { title: 'Fabrizio Miller',        desc: 'Chianciti! Chianciti!',                         href: 'Profili studenti/fabrizio-miller.html',        tags: ['fabrizio','miller','studente','student','chianciti'] },
+    { title: 'Filippo Solini',         desc: 'Turno di notte',                                href: 'Profili studenti/filippo-solini.html',         tags: ['filippo','solini','studente','student','turno','notte'] },
+    { title: 'Flora Conticello',       desc: 'Fili di Laguna',                                href: 'Profili studenti/flora-conticello.html',       tags: ['flora','conticello','studente','student','fili','laguna'] },
+    { title: 'Francesca Caneva',       desc: 'Tessence',                                      href: 'Profili studenti/francesca-caneva.html',       tags: ['francesca','caneva','studente','student','tessence'] },
+    { title: 'Gabriele Veccari',       desc: 'Brodstation',                                   href: 'Profili studenti/gabriele-veccari.html',       tags: ['gabriele','veccari','studente','student','brodstation'] },
+    { title: 'Gaia Buono',             desc: 'Fashion materials design project',              href: 'Profili studenti/gaia-buono.html',             tags: ['gaia','buono','studente','student','materials','design'] },
+    { title: 'Gilberto Sborea',        desc: 'Rats',                                          href: 'Profili studenti/gilberto-sborea.html',        tags: ['gilberto','sborea','studente','student','rats'] },
+    { title: "Giovanna D'Antuono",     desc: 'Cactiform',                                     href: 'Profili studenti/giovanna-dantuono.html',      tags: ['giovanna','dantuono','d\'antuono','studente','student','cactiform'] },
+    { title: 'Giovanni Dancelli',      desc: 'Il mio completo',                               href: 'Profili studenti/giovanni-dancelli.html',      tags: ['giovanni','dancelli','studente','student','completo'] },
+    { title: 'Giulia Colavito',        desc: 'Fashion materials design project',              href: 'Profili studenti/giulia-colavito.html',        tags: ['giulia','colavito','studente','student','materials','design'] },
+    { title: 'Giulia Malatesta',       desc: 'Laboratorio Serica',                            href: 'Profili studenti/giulia-malatesta.html',       tags: ['giulia','malatesta','studente','student','laboratorio','serica','seta'] },
+    { title: 'Jessica Selvi',          desc: 'devi cucirla se non la vuoi perdere di nuovo', href: 'Profili studenti/jessica-selvi.html',          tags: ['jessica','selvi','studente','student','cucirla','perdere'] },
+    { title: 'Lindu Gozzo',            desc: 'Baby on drugs',                                 href: 'Profili studenti/lindu-gozzo.html',            tags: ['lindu','gozzo','studente','student','baby','drugs'] },
+    { title: 'Lola Kyra Terie',        desc: 'Arabesque',                                     href: 'Profili studenti/lola-kyra-terie.html',        tags: ['lola','kyra','terie','studente','student','arabesque'] },
+    { title: 'Lorenzo Ingollingo',     desc: 'Memorare',                                      href: 'Profili studenti/lorenzo-ingollingo.html',     tags: ['lorenzo','ingollingo','studente','student','memorare'] },
+    { title: 'Maria Cristina Cerulli', desc: 'cirrocumuli',                                   href: 'Profili studenti/maria-cristina-cerulli.html', tags: ['maria','cristina','cerulli','studente','student','cirrocumuli'] },
+    { title: 'Marianna Alessandri',    desc: 'Cactiform',                                     href: 'Profili studenti/marianna-alessandri.html',    tags: ['marianna','alessandri','studente','student','cactiform'] },
+    { title: 'Matteo Barp',            desc: 'Pratiche fertili',                              href: 'Profili studenti/matteo-barp.html',            tags: ['matteo','barp','studente','student','pratiche','fertili'] },
+    { title: 'Michele Morando',        desc: 'Laboratorio Serica',                            href: 'Profili studenti/michele-morando.html',        tags: ['michele','morando','studente','student','laboratorio','serica','seta'] },
+    { title: 'Rahime Coskun',          desc: "Medusa's Tragedy",                              href: 'Profili studenti/rahime-coskun.html',          tags: ['rahime','coskun','studente','student','medusa','tragedy'] },
+    { title: 'Rebecca Costa',          desc: 'Laboratorio Serica',                            href: 'Profili studenti/rebecca-costa.html',          tags: ['rebecca','costa','studente','student','laboratorio','serica','seta'] },
+    { title: 'Riccardo Cappello',      desc: 'Corpus Terrae — Heritage',                      href: 'Profili studenti/riccardo-cappello.html',      tags: ['riccardo','cappello','studente','student','corpus','terrae','heritage','maglia','sweater'] },
+    { title: 'Riccardo Ventanni',      desc: 'Tradizione e sviluppo: la sciura',             href: 'Profili studenti/riccardo-ventanni.html',      tags: ['riccardo','ventanni','studente','student','tradizione','sciura','sviluppo'] },
+    { title: 'Roberta Platì',          desc: 'Fashion materials design project',              href: 'Profili studenti/roberta-plati.html',          tags: ['roberta','plati','platì','studente','student','materials','design'] },
+    { title: 'Sara Cruz Carraro',      desc: 'Deseo Local',                                   href: 'Profili studenti/sara-cruz-carraro.html',      tags: ['sara','cruz','carraro','studente','student','deseo','local'] },
+    { title: 'Sara Montali',           desc: 'Heirloom Romance',                              href: 'Profili studenti/sara-montali.html',           tags: ['sara','montali','studente','student','heirloom','romance'] },
+    { title: 'Sofia Candalice',        desc: 'Istruzione di strada',                          href: 'Profili studenti/sofia-candalice.html',        tags: ['sofia','candalice','studente','student','istruzione','strada'] },
+    { title: 'Tamara Momcilovic',      desc: 'Stvar',                                         href: 'Profili studenti/tamara-momcilovic.html',      tags: ['tamara','momcilovic','studente','student','stvar'] },
+    { title: 'Teresa Bracaloni',       desc: 'Pantarei',                                      href: 'Profili studenti/teresa-bracaloni.html',       tags: ['teresa','bracaloni','studente','student','pantarei'] },
+    { title: 'Tia Quaglia',            desc: 'Laboratorio Serica',                            href: 'Profili studenti/tia-quaglia.html',            tags: ['tia','quaglia','studente','student','laboratorio','serica','seta'] },
+    { title: 'Valentina Maregotto',    desc: 'Favaskin',                                      href: 'Profili studenti/valentina-maregotto.html',    tags: ['valentina','maregotto','studente','student','favaskin'] },
+    { title: 'Virgilia Mondelli',      desc: 'Silenziosa nostalgia',                          href: 'Profili studenti/virgilia-mondelli.html',      tags: ['virgilia','mondelli','studente','student','silenziosa','nostalgia'] },
+    { title: 'Yujie Ding',             desc: 'Sono nata per copiare',                         href: 'Profili studenti/yujie-ding.html',             tags: ['yujie','ding','studente','student','copiare'] },
 
     // Mappa — luoghi
-    { title: 'IUAV — Tolentini',             desc: 'Iuav 4 Venice — University Campus',    href: 'iuav-4-venice.html',  tags: ['iuav','tolentini','university','venezia'] },
-    { title: 'IUAV — Cotonificio',           desc: 'Iuav 4 Venice — University Campus',    href: 'iuav-4-venice.html',  tags: ['iuav','cotonificio','university','dorsoduro'] },
-    { title: 'Fondaco dei Tedeschi',         desc: 'Iuav 4 Venice — Fashion & Design',     href: 'iuav-4-venice.html',  tags: ['fondaco','tedeschi','venezia','fashion'] },
-    { title: 'Museo del Merletto',           desc: 'Iuav 4 Venice — Lace Museum, Burano',  href: 'iuav-4-venice.html',  tags: ['merletto','lace','burano','museo'] },
-    { title: 'Museo del Vetro',              desc: 'Iuav 4 Venice — Glass Museum, Murano', href: 'iuav-4-venice.html',  tags: ['vetro','glass','murano','museo'] },
-    { title: 'Mercato di Rialto',            desc: 'Iuav 4 Venice — Materials & Crafts',   href: 'iuav-4-venice.html',  tags: ['rialto','mercato','market','tessuti','fabric'] },
-    { title: 'Porto Marghera',               desc: 'Iuav 4 Venice — Industrial Zone',      href: 'iuav-4-venice.html',  tags: ['marghera','porto','industrial','industria'] },
-    { title: 'Piazza Ferretto',              desc: 'Iuav 4 Venice — City Centre Mestre',   href: 'iuav-4-venice.html',  tags: ['ferretto','mestre','piazza'] },
-    { title: 'Berto Industria Tessile',      desc: 'Iuav 4 Venice — Fabric Industry',      href: 'iuav-4-venice.html',  tags: ['berto','tessile','denim','fabric','industria'] },
+    { title: 'IUAV — Tolentini',        desc: 'Iuav 4 Venice — University Campus',    href: 'iuav-4-venice.html', tags: ['iuav','tolentini','university','venezia'] },
+    { title: 'IUAV — Cotonificio',      desc: 'Iuav 4 Venice — University Campus',    href: 'iuav-4-venice.html', tags: ['iuav','cotonificio','university','dorsoduro'] },
+    { title: 'Fondaco dei Tedeschi',    desc: 'Iuav 4 Venice — Fashion & Design',     href: 'iuav-4-venice.html', tags: ['fondaco','tedeschi','venezia','fashion'] },
+    { title: 'Museo del Merletto',      desc: 'Iuav 4 Venice — Lace Museum, Burano',  href: 'iuav-4-venice.html', tags: ['merletto','lace','burano','museo'] },
+    { title: 'Museo del Vetro',         desc: 'Iuav 4 Venice — Glass Museum, Murano', href: 'iuav-4-venice.html', tags: ['vetro','glass','murano','museo'] },
+    { title: 'Mercato di Rialto',       desc: 'Iuav 4 Venice — Materials & Crafts',   href: 'iuav-4-venice.html', tags: ['rialto','mercato','market','tessuti','fabric'] },
+    { title: 'Porto Marghera',          desc: 'Iuav 4 Venice — Industrial Zone',      href: 'iuav-4-venice.html', tags: ['marghera','porto','industrial','industria'] },
+    { title: 'Piazza Ferretto',         desc: 'Iuav 4 Venice — City Centre Mestre',   href: 'iuav-4-venice.html', tags: ['ferretto','mestre','piazza'] },
+    { title: 'Berto Industria Tessile', desc: 'Iuav 4 Venice — Fabric Industry',      href: 'iuav-4-venice.html', tags: ['berto','tessile','denim','fabric','industria'] },
   ];
 
   // ── CSS ───────────────────────────────────────────────────────────
@@ -218,7 +260,7 @@
       item.title.toLowerCase().includes(lq) ||
       item.desc.toLowerCase().includes(lq)  ||
       item.tags.some(t => t.includes(lq))
-    ).slice(0, 9);
+    ).slice(0, 12);
   }
 
   function renderResults(q) {
@@ -248,6 +290,11 @@
     document.getElementById('search-results').innerHTML = '';
   }
 
+  // ── Sposta lente a sinistra solo se c'è il logo (home) ───────────
+  if (document.getElementById('site-logo')) {
+    btn.style.right = '175px';
+  }
+
   // ── Allinea lente alla prima voce del menu ────────────────────────
   function alignBtn() {
     const firstItem = document.querySelector('#menu-box nav a, #menu-box nav button');
@@ -259,8 +306,24 @@
   }
   window.addEventListener('load', alignBtn);
   window.addEventListener('resize', alignBtn);
-  // Fallback immediato dopo il rendering
+  window.addEventListener('scroll', alignBtn, true);
   requestAnimationFrame(alignBtn);
+
+  // ── Fade lente sincronizzato con header — funziona su qualsiasi pagina ──
+  (function () {
+    function update() {
+      const header = document.querySelector('.front-header, .page-header, h1, header');
+      if (!header) return;
+      const rect  = header.getBoundingClientRect();
+      const h     = header.offsetHeight || rect.height || 60;
+      const ratio = Math.max(0, Math.min(1, rect.bottom / h));
+      btn.style.opacity       = String(ratio);
+      btn.style.pointerEvents = ratio <= 0 ? 'none' : '';
+    }
+
+    document.addEventListener('scroll', update, { passive: true, capture: true });
+    window.addEventListener('load', update);
+  })();
 
   btn.addEventListener('click', openSearch);
   document.getElementById('search-close').addEventListener('click', closeSearch);
