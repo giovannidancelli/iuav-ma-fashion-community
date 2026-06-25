@@ -300,7 +300,7 @@ window.addEventListener('mouseup', e => {
   const b = draggingBubble; if (!b) return;
   const moved = Math.abs(e.clientX - b.downX) + Math.abs(e.clientY - b.downY) > 6;
   b.dragging = false; draggingBubble = null;
-  if (!moved && b.href) { window.open(b.href, '_blank'); return; }
+  if (!moved && b.href) { window.location.href = b.href; return; }
   b.vx = b.velX * 0.8; b.vy = b.velY * 0.8;
   const spd = Math.sqrt(b.vx*b.vx + b.vy*b.vy);
   const cap = spd > b.SPEED_AFTER ? b.SPEED_AFTER/spd : 1;
