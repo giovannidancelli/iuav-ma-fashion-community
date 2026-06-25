@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fashion Communities: Let's Connect: IMAC</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root { --blue: rgb(1, 0, 226); }
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background: #ffffff;
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  color: var(--blue);
+}
+
+/* ── Menu ── */
+#menu-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 240px;
+  padding: 48px 24px 48px 24px;
+  border-right: 1px solid var(--blue);
+  z-index: 10;
+  background: #ffffff;
+}
+
+#menu-box nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#menu-box nav a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.8;
+}
+
+#menu-box nav a:hover { text-decoration: none; }
+
+/* ── Contenuto principale ── */
+.content {
+  margin-left: 240px;
+  padding: 28px 48px 80px 32px;
+}
+
+/* Header: titolo + testo */
+.header {
+  margin-bottom: 28px;
+}
+
+.header h1 {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  color: var(--blue);
+  margin-bottom: 18px;
+  line-height: 1;
+}
+
+.header-inner-divider {
+  height: 1px;
+  background: var(--blue);
+  margin-left: -32px;
+  margin-bottom: 18px;
+}
+
+.header-desc {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--blue);
+  max-width: 520px;
+  text-align: justify;
+}
+
+.header-desc mark {
+  background: rgb(255, 244, 182);
+  color: var(--blue);
+  padding: 0 2px;
+}
+
+/* Linea divisoria */
+.divider {
+  height: 1px;
+  background: var(--blue);
+  margin-bottom: 0;
+  margin-left: -32px;
+}
+
+/* Sezione griglia con sfondo blu */
+.grid-section {
+  background: var(--blue);
+  margin-left: -32px;
+  margin-right: -48px;
+  padding: 28px 48px 48px 32px;
+}
+
+/* Griglia */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.grid-item .img-wrap {
+  width: 100%;
+  align-self: stretch;
+  aspect-ratio: 3 / 4;
+  background: #e0e0e0;
+  overflow: hidden;
+}
+
+.grid-item .img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+a.company-name { text-decoration: none; }
+a.grid-item { text-decoration: none; }
+
+.grid-item:hover .img-wrap {
+  opacity: 0.5;
+  transition: opacity 0.25s ease;
+}
+
+.grid-item .img-wrap {
+  transition: opacity 0.25s ease;
+}
+
+.grid-item:hover .company-name {
+  background: var(--blue);
+  color: rgb(255, 244, 182);
+  outline: 1px solid rgb(255, 244, 182);
+}
+
+.grid-item:hover .company-type {
+  background: var(--blue);
+  color: rgb(255, 244, 182);
+  outline: 1px solid rgb(255, 244, 182);
+}
+
+.grid-item .company-name {
+  font-family: 'LFT Etica Mono', 'Courier New', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: rgb(255, 244, 182);
+  padding: 0 3px;
+  display: inline;
+}
+
+.grid-item .company-type {
+  font-family: 'LFT Etica Light', 'LFT Etica', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  color: var(--blue);
+  background: rgb(255, 244, 182);
+  padding: 0 3px;
+  display: inline;
+}
+
+@media (max-width: 768px) {
+  #menu-box {
+    position: fixed; top: 0; left: 0; right: 0; bottom: auto;
+    width: 100%; height: auto; padding: 10px 14px;
+    border-right: none; border-bottom: 1px solid var(--blue);
+    z-index: 100; background: #ffffff;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+  }
+  #menu-box nav { flex-direction: row; flex-wrap: nowrap; gap: 0 14px; overflow-x: auto; }
+  #menu-box nav a { font-size: 13px; white-space: nowrap; line-height: 2.4; letter-spacing: 0.03em; }
+  .content { margin-left: 0 !important; padding-top: 54px !important; padding-left: 14px !important; padding-right: 14px !important; }
+  .header h1 { font-size: clamp(1.4rem, 6vw, 2rem); }
+  .divider, .header-inner-divider { margin-left: -14px; }
+  .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+  .grid-section { margin-left: -14px !important; margin-right: -14px !important; padding-left: 14px !important; padding-right: 14px !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Menu -->
+<div id="menu-box">
+  <nav>
+    <a href="../index.html">home</a>
+    <a href="../about-us.html">about us</a>
+    <a href="../living-archive.html">living archive</a>
+    <a href="../lets-network.html">let's network</a>
+    <a href="../lets-share.html">let's share</a>
+  </nav>
+</div>
+
+<div class="content">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>fashion communities</h1>
+    <div class="header-inner-divider"></div>
+    <p class="header-desc">This section maps fashion communities driven by <mark>social, cultural and ecological values</mark>: independent collectives, grassroots movements and advocacy networks that are reshaping the meaning of fashion as a shared and responsible practice. Each entry represents a space of exchange, education and collective action at the intersection of creativity and conscience.</p>
+  </div>
+
+  <!-- Divider -->
+  <div class="divider"></div>
+
+  <!-- Griglia -->
+  <div class="grid-section">
+  <div class="grid">
+
+    <a class="grid-item" href="../Varianti%20fashion%20communities/afro-fashion-association.html">
+      <div class="img-wrap"><img src="../Varianti%20fashion%20communities/Immagini/afro-fashion-association.jpg" alt="Afro Fashion Association"></div>
+      <span class="company-name">Afro Fashion Association</span>
+      <span class="company-type">cultural network</span>
+    </a>
+
+    <a class="grid-item" href="../Varianti%20fashion%20communities/bw-migrant-trend.html">
+      <div class="img-wrap"><img src="../Varianti%20fashion%20communities/Immagini/bw-migrant-trend.jpg" alt="B&amp;W"></div>
+      <span class="company-name">B&W</span>
+      <span class="company-type">migrant fashion movement</span>
+    </a>
+
+    <a class="grid-item" href="../Varianti%20fashion%20communities/cartiera.html">
+      <div class="img-wrap"><img src="../Varianti%20fashion%20communities/Immagini/cartiera.jpg" alt="Cartiera"></div>
+      <span class="company-name">Cartiera</span>
+      <span class="company-type">creative hub · Bologna</span>
+    </a>
+
+    <a class="grid-item" href="../Varianti%20fashion%20communities/cooperativa-alice.html">
+      <div class="img-wrap"><img src="../Varianti%20fashion%20communities/Immagini/cooperativa-alice.jpg" alt="Cooperativa Alice"></div>
+      <span class="company-name">Cooperativa Alice</span>
+      <span class="company-type">social cooperative</span>
+    </a>
+
+    <a class="grid-item" href="../Varianti%20fashion%20communities/drittofilo-metalier.html">
+      <div class="img-wrap"><img src="../Varianti%20fashion%20communities/Immagini/drittofilo-metatelier.webp" alt="Drittofilo Metatelier"></div>
+      <span class="company-name">Drittofilo Metatelier</span>
+      <span class="company-type">artisan collective</span>
+    </a>
+
+    <a class="grid-item" href="../Varianti%20fashion%20communities/fashion-act-now.html">
+      <div class="img-wrap"><img src="../Varianti%20fashion%20communities/Immagini/fashion-act-now.jpg" alt="Fashion Act Now"></div>
+      <span class="company-name">Fashion Act Now</span>
+      <span class="company-type">climate action</span>
+    </a>
+
+    <a class="grid-item" href="../Varianti%20fashion%20communities/fashion-best.html">
+      <div class="img-wrap"><img src="../Varianti%20fashion%20communities/Immagini/fashion-best.jpg" alt="Fashion BEST"></div>
+      <span class="company-name">Fashion BEST</span>
+      <span class="company-type">Fondazione Pistoletto</span>
+    </a>
+
+    <a class="grid-item" href="../Varianti%20fashion%20communities/fashion-revolution.html">
+      <div class="img-wrap"><img src="../Varianti%20fashion%20communities/Immagini/fashion-revolution.jpg" alt="Fashion Revolution"></div>
+      <span class="company-name">Fashion Revolution</span>
+      <span class="company-type">transparency advocacy</span>
+    </a>
+
+    <a class="grid-item" href="../Varianti%20fashion%20communities/fondazione-sozzani.html">
+      <div class="img-wrap"><img src="../Varianti%20fashion%20communities/Immagini/fondazione-sozzani.jpg" alt="Fondazione Sozzani"></div>
+      <span class="company-name">Fondazione Sozzani</span>
+      <span class="company-type">cultural foundation</span>
+    </a>
+
+    <a class="grid-item" href="../Varianti%20fashion%20communities/good-on-you.html">
+      <div class="img-wrap"><img src="../Varianti%20fashion%20communities/Immagini/good-on-you.jpg" alt="Good On You"></div>
+      <span class="company-name">Good On You</span>
+      <span class="company-type">ethical rating</span>
+    </a>
+
+    <a class="grid-item" href="../Varianti%20fashion%20communities/lottozero.html">
+      <div class="img-wrap"><img src="../Varianti%20fashion%20communities/Immagini/lottozero.jpg" alt="Lottozero"></div>
+      <span class="company-name">Lottozero</span>
+      <span class="company-type">textile research</span>
+    </a>
+
+    <a class="grid-item" href="../Varianti%20fashion%20communities/progetto-quid.html">
+      <div class="img-wrap"><img src="../Varianti%20fashion%20communities/Immagini/progetto-quid.webp" alt="Progetto Quid"></div>
+      <span class="company-name">Progetto Quid</span>
+      <span class="company-type">social enterprise</span>
+    </a>
+
+    <a class="grid-item" href="../Varianti%20fashion%20communities/redress.html">
+      <div class="img-wrap"><img src="../Varianti%20fashion%20communities/Immagini/redress.png" alt="Redress"></div>
+      <span class="company-name">Redress</span>
+      <span class="company-type">circular fashion</span>
+    </a>
+
+    <a class="grid-item" href="../Varianti%20fashion%20communities/remake.html">
+      <div class="img-wrap"><img src="../Varianti%20fashion%20communities/Immagini/remake.jpg" alt="Remake"></div>
+      <span class="company-name">Remake</span>
+      <span class="company-type">workers' rights</span>
+    </a>
+
+    <a class="grid-item" href="../Varianti%20fashion%20communities/serpica-naro.html">
+      <div class="img-wrap"><img src="../Varianti%20fashion%20communities/Immagini/serpica-naro.jpg" alt="Serpica Naro"></div>
+      <span class="company-name">Serpica Naro</span>
+      <span class="company-type">activist collective</span>
+    </a>
+
+    <a class="grid-item" href="../Varianti%20fashion%20communities/tramaplaza.html">
+      <div class="img-wrap"><img src="../Varianti%20fashion%20communities/Immagini/tramaplaza.jpg" alt="Tramaplaza"></div>
+      <span class="company-name">Tramaplaza</span>
+      <span class="company-type">fashion community</span>
+    </a>
+
+    <a class="grid-item" href="../Varianti%20fashion%20communities/vbra.html">
+      <div class="img-wrap"><img src="../Varianti%20fashion%20communities/Immagini/vbra.jpg" alt="Vbra"></div>
+      <span class="company-name">Vbra</span>
+      <span class="company-type">fashion community</span>
+    </a>
+
+
+  </div>
+  </div>
+</div>
+
+<script src="../search.js" data-root="../"></script>
+</body>
+</html>
