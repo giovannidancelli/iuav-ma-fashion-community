@@ -1,0 +1,199 @@
+/* ──────────────────────────────────────────────────────
+   IMAC Mobile Responsive Styles
+   Breakpoint: 768px
+────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+
+  /* ── Floating nav (index, about-us, living-archive, lets-network, iuav-4-venice) ── */
+  #menu-box:not(.sidebar) {
+    top: 12px;
+    left: 12px;
+  }
+
+  #menu-box:not(.sidebar) nav a {
+    font-size: 16px;
+    line-height: 1.6;
+    gap: 4px;
+  }
+
+  /* ── Sidebar nav → horizontal top bar ── */
+  #menu-box.sidebar,
+  body:has(.content) #menu-box,
+  body:has(.flip-container) #menu-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    width: 100%;
+    height: auto;
+    padding: 10px 14px;
+    border-right: none;
+    border-bottom: 1px solid var(--blue);
+    z-index: 100;
+    background: #ffffff;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body:has(.content) #menu-box nav,
+  body:has(.flip-container) #menu-box nav {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 0 14px;
+    overflow-x: auto;
+  }
+
+  body:has(.content) #menu-box nav a,
+  body:has(.flip-container) #menu-box nav a {
+    font-size: 13px;
+    white-space: nowrap;
+    line-height: 2.2;
+  }
+
+  /* ── Logo ── */
+  #site-logo {
+    height: 80px;
+    top: 52px;
+    right: 12px;
+  }
+
+  /* ── Content areas (category pages, company pages) ── */
+  .content {
+    margin-left: 0 !important;
+    padding-top: 54px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .content .header h1 {
+    font-size: clamp(1.4rem, 6vw, 2rem);
+  }
+
+  /* ── Grid: 4col → 2col ── */
+  .grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .grid-section {
+    margin-left: -16px !important;
+    margin-right: -16px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* ── Profile flip cards ── */
+  .flip-container {
+    left: 0 !important;
+    top: 52px !important;
+  }
+
+  .front-content,
+  .back-content {
+    padding: 14px 14px 0 14px !important;
+  }
+
+  .front-header h1,
+  .back-header h1 {
+    font-size: clamp(1.3rem, 5vw, 2rem) !important;
+  }
+
+  .project-section {
+    grid-template-columns: 1fr !important;
+    margin-left: -14px !important;
+    margin-right: -14px !important;
+    padding: 20px 14px !important;
+    gap: 20px !important;
+    min-height: auto !important;
+  }
+
+  .project-image-wrap {
+    aspect-ratio: 16 / 9 !important;
+  }
+
+  .gallery-sep,
+  .gallery-section {
+    margin-left: -14px !important;
+    margin-right: -14px !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  .g-row {
+    flex-direction: column !important;
+  }
+
+  .profile-section {
+    grid-template-columns: 1fr !important;
+    margin-left: -14px !important;
+    margin-right: -14px !important;
+    padding: 20px 14px !important;
+    gap: 20px !important;
+    min-height: auto !important;
+  }
+
+  .photo-wrap {
+    max-height: 220px !important;
+    aspect-ratio: 3 / 2 !important;
+  }
+
+  .proj-marquee {
+    margin: 0 -14px !important;
+    height: 120px !important;
+  }
+
+  /* ── Let's Share sidebar ── */
+  #chat-wrap {
+    left: 0 !important;
+    top: 52px !important;
+  }
+
+  /* ── Search bar ── */
+  #search-wrap {
+    right: 12px;
+    top: 52px;
+  }
+
+  /* ── About Us ── */
+  main {
+    padding-top: 68px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* ── Iuav-4-Venice map ── */
+  #map {
+    top: 52px !important;
+    left: 0 !important;
+  }
+
+  /* ── Company profile pages ── */
+  .profile-section.company,
+  .company-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── Dividers ── */
+  .divider,
+  .header-inner-divider,
+  .front-divider,
+  .back-divider {
+    margin-left: -14px !important;
+  }
+
+  /* ── Canvas bubble pages: add top padding so bubbles don't hide under nav ── */
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+}
+
+/* ── Touch support for canvas bubbles ── */
+@media (hover: none) and (pointer: coarse) {
+  #menu-box nav a {
+    padding: 4px 0;
+  }
+}

@@ -123,6 +123,9 @@
       transition: opacity 0.15s;
       transform: translateY(-50%);
     }
+    @media (max-width: 768px) {
+      #search-btn { top: 12px; right: 12px; transform: none; }
+    }
     #search-btn:hover { opacity: 0.55; }
 
     #search-overlay {

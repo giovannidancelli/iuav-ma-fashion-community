@@ -496,6 +496,25 @@ html, body {
 
 #name-form button[type="submit"]:hover { opacity: 0.85; }
 
+
+@media (max-width: 768px) {
+
+  /* let's share */
+  #menu-box {
+    position: fixed; top: 0; left: 0; right: 0; bottom: auto;
+    width: 100%; height: auto; padding: 8px 12px;
+    border-right: none; border-bottom: 1px solid var(--blue);
+    z-index: 100; background: #ffffff;
+    overflow-x: auto;
+  }
+  #menu-box nav { flex-direction: row; flex-wrap: nowrap; gap: 0 12px; overflow-x: auto; }
+  #menu-box nav a { font-size: 13px; white-space: nowrap; line-height: 2.4; }
+  .content { position: fixed; left: 0 !important; top: 52px !important; right: 0; bottom: 0; }
+  .page-header { padding: 14px 0 0 14px; }
+  #messages { padding: 0 14px 14px; }
+  #input-bar { left: 0; }
+  #input-bar-overlay { left: 0; }
+}
 </style>
 </head>
 <body>

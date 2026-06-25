@@ -52,6 +52,16 @@ canvas {
 #menu-box nav a span {
   text-decoration: none;
 }
+
+@media (max-width: 768px) {
+
+  /* floating nav stays but shrinks */
+  #menu-box { top: 10px; left: 12px; }
+  #menu-box nav { gap: 3px; }
+  #menu-box nav a { font-size: 16px; line-height: 1.6; }
+  #menu-box nav a span { }
+  #site-logo { height: 70px; top: auto; bottom: 16px; right: 12px; }
+}
 </style>
 </head>
 <body>

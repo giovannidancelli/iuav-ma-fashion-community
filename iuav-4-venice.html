@@ -284,6 +284,23 @@ html, body {
 .popup-link:hover {
   border-bottom-color: var(--yellow);
 }
+
+@media (max-width: 768px) {
+
+  /* sidebar → horizontal top bar */
+  #menu-box {
+    position: fixed; top: 0; left: 0; right: 0; bottom: auto;
+    width: 100%; height: auto; padding: 10px 14px;
+    border-right: none; border-bottom: 1px solid var(--blue);
+    z-index: 100; background: #ffffff;
+    overflow-x: auto;
+  }
+  #menu-box nav { flex-direction: row; flex-wrap: nowrap; gap: 0 14px; overflow-x: auto; }
+  #menu-box nav a { font-size: 13px; white-space: nowrap; line-height: 2.4; }
+
+  /* map content area */
+  .content { left: 0 !important; top: 52px !important; }
+}
 </style>
 </head>
 <body>

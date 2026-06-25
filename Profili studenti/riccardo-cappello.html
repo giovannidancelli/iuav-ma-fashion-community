@@ -795,6 +795,37 @@ html, body {
   transform: scale(1);
   opacity: 1;
 }
+
+@media (max-width: 768px) {
+
+  /* sidebar → horizontal top bar */
+  #menu-box {
+    position: fixed; top: 0; left: 0; right: 0; bottom: auto;
+    width: 100%; height: auto; padding: 10px 14px;
+    border-right: none; border-bottom: 1px solid var(--blue);
+    z-index: 100; background: #ffffff;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+  }
+  #menu-box nav { flex-direction: row; flex-wrap: nowrap; gap: 0 14px; overflow-x: auto; }
+  #menu-box nav a { font-size: 13px; white-space: nowrap; line-height: 2.4; letter-spacing: 0.03em; }
+  #site-logo { height: 70px; top: 8px; right: 12px; }
+
+  /* profile flip cards */
+  .flip-container { left: 0 !important; top: 52px !important; }
+  .front-content, .back-content { padding: 14px 14px 0 14px !important; }
+  .front-header h1, .back-header h1 { font-size: clamp(1.3rem, 5vw, 2rem) !important; }
+  .front-divider, .back-divider { margin-left: -14px !important; }
+  .project-section { grid-template-columns: 1fr !important; margin-left: -14px !important; margin-right: -14px !important; padding: 18px 14px !important; gap: 16px !important; min-height: auto !important; }
+  .project-image-wrap { aspect-ratio: 16 / 9 !important; }
+  .project-desc p { font-size: 13px !important; }
+  .gallery-sep, .gallery-section { margin-left: -14px !important; margin-right: -14px !important; padding-left: 14px !important; padding-right: 14px !important; }
+  .g-row { flex-wrap: wrap !important; }
+  .gallery-item { min-width: calc(50% - 7px); }
+  .profile-section { grid-template-columns: 1fr !important; margin-left: -14px !important; margin-right: -14px !important; padding: 18px 14px !important; gap: 16px !important; min-height: auto !important; }
+  .photo-wrap { max-height: 200px !important; aspect-ratio: 3 / 2 !important; }
+  .info-block p { font-size: 14px !important; }
+  .proj-marquee { margin: 0 -14px !important; height: 100px !important; }
+}
 </style>
 </head>
 <body>

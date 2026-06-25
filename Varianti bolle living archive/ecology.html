@@ -30,7 +30,31 @@ html, body { width: 100%; min-height: 100%; background: #ffffff; font-family: 'L
 .project-title { font-family: 'LFT Etica Light', 'LFT Etica', sans-serif; font-weight: 300; font-size: 14px; letter-spacing: 0.03em; color: var(--blue); background: var(--yellow); padding: 0 3px; display: inline; }
 .grid-item:hover .student-name { background: var(--blue); color: var(--yellow); outline: 1px solid var(--yellow); }
 .grid-item:hover .project-title { background: var(--blue); color: var(--yellow); outline: 1px solid var(--yellow); }
-a.student-name { text-decoration: none; }</style>
+a.student-name { text-decoration: none; }
+@media (max-width: 768px) {
+
+  /* sidebar → horizontal top bar */
+  #menu-box {
+    position: fixed; top: 0; left: 0; right: 0; bottom: auto;
+    width: 100%; height: auto; padding: 10px 14px;
+    border-right: none; border-bottom: 1px solid var(--blue);
+    z-index: 100; background: #ffffff;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+  }
+  #menu-box nav { flex-direction: row; flex-wrap: nowrap; gap: 0 14px; overflow-x: auto; }
+  #menu-box nav a { font-size: 13px; white-space: nowrap; line-height: 2.4; letter-spacing: 0.03em; }
+  #site-logo { height: 70px; top: 8px; right: 12px; }
+
+  /* main content */
+  .content { margin-left: 0 !important; padding-top: 54px !important; padding-left: 14px !important; padding-right: 14px !important; }
+  .header h1, .header h1 { font-size: clamp(1.4rem, 6vw, 2rem); }
+  .divider, .header-inner-divider { margin-left: -14px; }
+  .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+  .grid-section { margin-left: -14px !important; margin-right: -14px !important; padding-left: 14px !important; padding-right: 14px !important; }
+  .student-name { font-size: 12px !important; }
+  .project-title { font-size: 12px !important; }
+}
+</style>
 </head>
 <body>
 <div id="menu-box"><nav>
